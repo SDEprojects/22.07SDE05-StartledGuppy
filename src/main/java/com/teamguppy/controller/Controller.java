@@ -14,4 +14,8 @@ public class Controller {
     System.out.println(view.getAsciiBanner());
   }
 
+  public void displayAboutGame() {
+    System.out.println(view.getAboutGame());
+  }
+
 }
