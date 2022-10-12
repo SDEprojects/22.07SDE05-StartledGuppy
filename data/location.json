@@ -1,0 +1,70 @@
+{
+  "Ocean Floor" : {
+    "south" : "Ocean plant forest",
+    "east": "Sunk Ship",
+    "west": "Mariana Trench"
+  },
+
+  "Mariana Trench" : {
+    "east" : "Ocean Floor",
+    "north" : "Challenger Deep",
+    "animal" : "Goblin Shark"
+  },
+
+  "Challenger Deep" : {
+    "south" : "Mariana Trench",
+    "item" : "Cloak"
+  },
+
+  "Sunk Ship" : {
+    "east": "Bridge",
+    "west" : "Ocean floor",
+    "south" : "Bedroom"
+  },
+
+  "Bridge" : {
+    "west" : "Sunk Ship",
+    "south": "Bathroom",
+    "animal" : "Turtle"
+  },
+
+  "Bathroom" : {
+    "north": "Bridge",
+    "west" : "Bedroom"
+  },
+
+  "Bedroom" : {
+    "south": "Engine Room",
+    "East" : "Bathroom",
+    "north": "Sunk Ship",
+    "animal" : "Jellyfish"
+  },
+
+  "Engine Room" : {
+    "north": "Bedroom",
+    "animal": "Guppy"
+  },
+
+  "Ocean Plant Forest" : {
+    "west" : "Coral Reef",
+    "south": "Kelp Forest",
+    "north" : "Ocean Floor"
+  },
+
+  "Kelp Forest" : {
+    "north": "Ocean Plant Forest",
+    "item" : "Medicine"
+  },
+
+  "Coral Reef" : {
+    "east": "Ocean Plant Forest",
+    "west" : "Seaweed Forest",
+    "item" : "Key"
+  },
+
+  "Seaweed Forest" : {
+    "east" : "Coral Reef",
+    "item" : "Blood Grenade"
+  }
+
+}
