@@ -11,6 +11,7 @@ public class Main {
     View view = new View();
     Controller controller = new Controller(view);
     controller.displayAsciiBanner();
+    controller.displayAboutGame();
 
     String location = "Ocean floor";
     try (Scanner sc = new Scanner(System.in)) {
