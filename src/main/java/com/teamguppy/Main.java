@@ -1,12 +1,18 @@
 package com.teamguppy;
 
+import com.teamguppy.controller.Controller;
+import com.teamguppy.view.View;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
 
-
   public static void main(String[] args) {
+    View view = new View();
+    Controller controller = new Controller(view);
+    controller.displayAsciiBanner();
+    controller.displayAboutGame();
+
     String location = "Ocean floor";
     try (Scanner sc = new Scanner(System.in)) {
       label:
