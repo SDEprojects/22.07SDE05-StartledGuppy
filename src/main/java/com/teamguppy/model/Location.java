@@ -11,10 +11,18 @@ import org.json.simple.parser.ParseException;
 
 public class Location {
 
-  private static String location;
+  private static String name;
 
-  public Location(String location) {
-    this.location = location;
+  public Location(String name) {
+    this.name = name;
+  }
+
+  public static void setName(String name) {
+    Location.name = name;
+  }
+
+  public static String getName() {
+    return name;
   }
 
   public static Location findLocation(String location, String direction)
@@ -29,28 +37,18 @@ public class Location {
 
     Map locationList = (Map) jsonObject.get(location);
 
+
     Iterator<Entry> itr1 = locationList.entrySet().iterator();
     while (itr1.hasNext()) {
       Entry pair = itr1.next();
-//      System.out.println(pair);
-//      System.out.println(pair.getKey() + " : " + pair.getValue());
-//      System.out.println(pair.getKey());
-//      System.out.println(pair.getValue());
-//      if(pair.equals("Ocean Floor")){
-//        if(pair.getKey().equals("east")) {
-//          System.out.println("You have " + pair.getValue() + " in your east.");
-//        } else if (pair.getKey().equals("west")) {
-//          System.out.println("You have " + pair.getValue() + " in your west.");
-//        }
-//      }
       if (pair.getKey().equals(direction)) {
         System.out.println(pair.getValue());
         String location1 = pair.getValue().toString();
         location2 = new Location(location1);
 
       }
-
     }
+   }
     System.out.println("location2 is " + location2);
     return location2;
   }
@@ -58,11 +56,12 @@ public class Location {
 
   @Override
   public String toString() {
-    return location;
+    return getName();
   }
 
+
   public static void main(String[] args) throws IOException, ParseException {
-//findLocation("Ocean Floor");
+
   }
 }
 
