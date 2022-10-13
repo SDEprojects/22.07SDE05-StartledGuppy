@@ -14,11 +14,6 @@ public class Controller {
     this.view = view;
   }
 
-
-
-  public void displayAsciiBanner() {
-    System.out.println(view.getAsciiBanner());
-
   public void displayGameTitle() {
     System.out.println(view.getGameTitle());
   }
