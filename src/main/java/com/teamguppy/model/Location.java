@@ -12,10 +12,18 @@ import org.json.simple.parser.ParseException;
 
 public class Location {
 
-  private static String location;
+  private static String name;
 
-  public Location(String location) {
-    this.location = location;
+  public Location(String name) {
+    this.name = name;
+  }
+
+  public static void setName(String name) {
+    Location.name = name;
+  }
+
+  public static String getName() {
+    return name;
   }
 
   public void findLocation(String location) throws IOException, ParseException {

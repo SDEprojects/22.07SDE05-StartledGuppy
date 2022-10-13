@@ -7,7 +7,16 @@ public class Game {
   private static Location currentLocation;
 
   public Game() {
-    currentLocation = new Location("Ocean Floor");
+    Location startingLocation = new Location("Ocean Floor");
+    setCurrentLocation(startingLocation);
+  }
+
+  private void setCurrentLocation(Location location) {
+    this.currentLocation = location;
+  }
+
+  public static Location getCurrentLocation() {
+    return currentLocation;
   }
 
   public static void landingRoom() {
@@ -63,6 +72,7 @@ public class Game {
       landingRoom();
     }
   }
+
 
   // parsing user input for the verb + noun
   // we can make function for each verb, and call the function in here
