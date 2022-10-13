@@ -37,12 +37,12 @@ public class Game {
               break label;
           }
         }
-      } while(validInput(command));
+      } while(validStartInput(command));
 
     }
   }
 
-  private static Boolean validInput(String input){
+  private static Boolean validStartInput(String input){
     if (!input.equals("yes") || !input.equals("quit")){
       System.out.println("Sorry, I don't understand" );
     }return(true);
@@ -85,25 +85,37 @@ public class Game {
 
   // parsing user input for the verb + noun
   // we can make function for each verb, and call the function in here
-  private static void userMove(){
-    System.out.println("What would you like to do? ");
-    Scanner sc = new Scanner(System.in);
-    String input = sc.nextLine();
-    String arr[] = input.toLowerCase().split(" ", 2);
-
-    String move = arr[0];
-    String item = arr[1];
-    System.out.println(move);
-    if (move.equals("go")){
+  private static void userMove() {
+    boolean valid;
+    String move;
+    String item;
+    do {
+      System.out.println("What would you like to do? ");
+      Scanner sc = new Scanner(System.in);
+      String input = sc.nextLine();
+      String arr[] = input.toLowerCase().split(" ", 2);
+      move = arr[0];
+      item = arr[1];
+      valid = validMove(move);
+      System.out.println(valid);
+    }while(!valid);
+    if (move.equals("go")) {
       //function for go
       System.out.println(move);
-
-    }else if(move.equals("look")){
+    } else if (move.equals("look")) {
       System.out.println("not working");
       //function for look
     }
-
   }
 
+  // validate user's move input
+  private static Boolean validMove(String move){
+    System.out.println("this " + move);
+    if (move.equals("go") || move.equals("look") || move.equals("help") || move.equals("ask")) {
+      return true;
+    }else {
+      System.out.println("Sorry, I don't understand. Please check the Game Commands.");
+    } return false;
+  }
 }
 
