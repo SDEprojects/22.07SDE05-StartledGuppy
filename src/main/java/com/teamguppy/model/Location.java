@@ -25,12 +25,15 @@ public class Location {
     return name;
   }
 
-  public void findLocation(String location) throws IOException, ParseException {
+  public static Location findLocation(String location, String direction)
+      throws IOException, ParseException {
+    System.out.println("Hit here" + location + direction);
     JSONParser parser = new JSONParser();
     String file = "location.json";
     Object obj = parser.parse(new FileReader(file));
 
     JSONObject jsonObject = (JSONObject) obj;
+    Location location2 = null;
 
     Map locationList = (Map) jsonObject.get(location);
 
@@ -38,11 +41,18 @@ public class Location {
     Iterator<Entry> itr1 = locationList.entrySet().iterator();
     while (itr1.hasNext()) {
       Entry pair = itr1.next();
-      System.out.println(pair.getKey() + " : " + pair.getValue());
+      if (pair.getKey().equals(direction)) {
+        System.out.println(pair.getValue());
+        String location1 = pair.getValue().toString();
+        location2 = new Location(location1);
 
+      }
     }
-
+   }
+    System.out.println("location2 is " + location2);
+    return location2;
   }
+
 
   @Override
   public String toString() {
@@ -51,8 +61,6 @@ public class Location {
 
 
   public static void main(String[] args) throws IOException, ParseException {
-    Location location = new Location("Ocean Floor");
-    location.findLocation("Ocean Floor");
 
   }
 }

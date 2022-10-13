@@ -1,6 +1,8 @@
 package com.teamguppy.model;
 
+import java.io.IOException;
 import java.util.Scanner;
+import org.json.simple.parser.ParseException;
 
 public class Game {
 
@@ -19,8 +21,9 @@ public class Game {
     return currentLocation;
   }
 
-  public static void landingRoom() {
-    String command = null;
+
+  public static void landingRoom() throws IOException, ParseException {
+
 
     try (Scanner sc = new Scanner(System.in)) {
       label:
@@ -42,14 +45,17 @@ public class Game {
     }
   }
 
+
   private static Boolean validStartInput(String input){
     if (!input.equals("yes") || !input.equals("quit")){
       System.out.println("Sorry, I don't understand" );
     }return(true);
   }
-  private static void startGame() {
+  private static void startGame() throws IOException, ParseException {
+
 
     userMove();
+    System.out.println("Enter 'go south' or 'go east' or 'go west' to enter into new room.");
     try (Scanner sc = new Scanner(System.in)) {
       do {
         String command = sc.nextLine();
@@ -68,8 +74,8 @@ public class Game {
   }
 
 
+  private static void endGame() throws IOException, ParseException {
 
-  private static void endGame() {
     System.out.println(
         "Are you sure you wish to exit the game?\nEnter 'yes' to exit and 'no' to return.");
     Scanner sc = new Scanner(System.in);
@@ -85,6 +91,7 @@ public class Game {
 
   // parsing user input for the verb + noun
   // we can make function for each verb, and call the function in here
+  
   private static void userMove() {
     boolean valid;
     String move;
@@ -100,8 +107,9 @@ public class Game {
       System.out.println(valid);
     }while(!valid);
     if (move.equals("go")) {
+     currentLocation = Location.findLocation(currentLocation.toString(), item);
       //function for go
-      System.out.println(move);
+      System.out.println("Your current location " + currentLocation);
     } else if (move.equals("look")) {
       System.out.println("not working");
       //function for look
