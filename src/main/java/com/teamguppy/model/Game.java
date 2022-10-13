@@ -20,13 +20,14 @@ public class Game {
   }
 
   public static void landingRoom() {
+    String command = null;
 
     try (Scanner sc = new Scanner(System.in)) {
       label:
       do {
         if (currentLocation.toString().equals("Ocean Floor")) {
-          System.out.println("Welcome! enter 'yes' to continue and 'quit' to end the game.");
-          String command = sc.nextLine();
+          System.out.println("Enter 'yes' to continue and 'quit' to end the game.");
+          command = sc.nextLine();
           switch (command) {
             case "yes":
               startGame();
@@ -36,10 +37,16 @@ public class Game {
               break label;
           }
         }
-      } while (true);
+      } while(validInput(command));
+
     }
   }
 
+  private static Boolean validInput(String input){
+    if (!input.equals("yes") || !input.equals("quit")){
+      System.out.println("Sorry, I don't understand" );
+    }return(true);
+  }
   private static void startGame() {
 
     userMove();
@@ -59,6 +66,8 @@ public class Game {
       } while (true);
     }
   }
+
+
 
   private static void endGame() {
     System.out.println(
@@ -95,5 +104,6 @@ public class Game {
     }
 
   }
+
 }
 
