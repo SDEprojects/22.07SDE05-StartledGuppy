@@ -1,7 +1,5 @@
 # Project exclude paths
-.idea
-/.gradle/
-build/
+
 
 *.iml
 
@@ -24,6 +22,8 @@ build/
 hs_err_pid*
 
 #build dir
+/target/
+.gradle/
 build/
 
 #IntelliJ
@@ -35,3 +35,13 @@ bin/
 #Project metadata
 .idea/
 *.iml
+
+# Floobits related
+.floo*
+
+
+# OSX related
+.DS_Store
+
+# misc
+test.puml
