@@ -62,6 +62,18 @@ public class Game {
       landingRoom();
     }
   }
-}
 
+  private static void userMove(){
+    System.out.println("What would you like to do? ");
+    Scanner sc = new Scanner(System.in);
+    String input = sc.nextLine();
+    String arr[] = input.toLowerCase().split(" ", 2);
+    String move = arr[0];
+    String item = arr[1];
+    if (move == "go"){
+
+    }
+
+  }
+}
 
