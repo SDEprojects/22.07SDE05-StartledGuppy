@@ -23,6 +23,7 @@ public class Game {
 
 
   public static void landingRoom() throws IOException, ParseException {
+    String command = null;
 
 
     try (Scanner sc = new Scanner(System.in)) {
@@ -92,7 +93,7 @@ public class Game {
   // parsing user input for the verb + noun
   // we can make function for each verb, and call the function in here
   
-  private static void userMove() {
+  private static void userMove() throws IOException, ParseException {
     boolean valid;
     String move;
     String item;

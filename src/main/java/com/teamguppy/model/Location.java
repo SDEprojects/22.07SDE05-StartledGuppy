@@ -48,7 +48,6 @@ public class Location {
 
       }
     }
-   }
     System.out.println("location2 is " + location2);
     return location2;
   }
