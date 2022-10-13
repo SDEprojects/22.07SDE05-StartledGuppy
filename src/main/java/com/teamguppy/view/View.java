@@ -23,8 +23,9 @@ public class View {
       + "go [north, south, east, west]\n"
       + "get [key, medicine, blood grenade, cloak]\n"
       + "use [key, medicine, blood grenade, cloak]\n"
+      + "look [key, medicine, blood grenade, cloak]\n"
       + "ask [turtle]\n"
-      + "help - displays a list of game commands";
+      + "help - displays a list of game commands\n";
 
   public String getGameTitle() {
     return GAME_TITLE;

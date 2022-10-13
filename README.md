@@ -10,6 +10,7 @@
 * **go** [north, south, east, west]
 * **get** [key, medicine, blood grenade, cloak]
 * **use** [key, medicine, blood grenade, cloak]
+* **look** [key, medicine, blood grenade, cloak]
 * **ask** [turtle]
 * **help** - displays a list of game commands
 
