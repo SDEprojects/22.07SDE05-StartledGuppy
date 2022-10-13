@@ -14,6 +14,8 @@ public class Controller {
     this.view = view;
   }
 
+
+
   public void displayAsciiBanner() {
     System.out.println(view.getAsciiBanner());
   }

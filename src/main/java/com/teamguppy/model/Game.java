@@ -32,7 +32,8 @@ public class Game {
   }
 
   private static void startGame() {
-    System.out.println("Enter 'go south' or 'go east' or 'go west' to enter into new room.");
+
+    userMove();
     try (Scanner sc = new Scanner(System.in)) {
       do {
         String command = sc.nextLine();
@@ -63,17 +64,26 @@ public class Game {
     }
   }
 
-//  private static void userMove(){
-//    System.out.println("What would you like to do? ");
-//    Scanner sc = new Scanner(System.in);
-//    String input = sc.nextLine();
-//    String arr[] = input.toLowerCase().split(" ", 2);
-//    String move = arr[0];
-//    String item = arr[1];
-//    if (move == "go"){
-//
-//    }
-//
-//  }
+  // parsing user input for the verb + noun
+  // we can make function for each verb, and call the function in here
+  private static void userMove(){
+    System.out.println("What would you like to do? ");
+    Scanner sc = new Scanner(System.in);
+    String input = sc.nextLine();
+    String arr[] = input.toLowerCase().split(" ", 2);
+
+    String move = arr[0];
+    String item = arr[1];
+    System.out.println(move);
+    if (move.equals("go")){
+      //function for go
+      System.out.println(move);
+
+    }else if(move.equals("look")){
+      System.out.println("not working");
+      //function for look
+    }
+
+  }
 }
 
