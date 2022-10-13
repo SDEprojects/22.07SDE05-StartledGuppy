@@ -3,7 +3,6 @@ package com.teamguppy;
 import com.teamguppy.controller.Controller;
 import com.teamguppy.model.Game;
 import com.teamguppy.view.View;
-import java.util.Scanner;
 
 
 public class Main {
@@ -17,6 +16,7 @@ public class Main {
     controller.displayAboutGame();
     controller.displayCommands();
     Game.landingRoom();
+
 
   }
 }
