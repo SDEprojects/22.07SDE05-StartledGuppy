@@ -11,7 +11,7 @@
 * **get** [key, medicine, blood grenade, cloak]
 * **use** [key, medicine, blood grenade, cloak]
 * **ask** [turtle]
-* **help**
+* **help** - displays a list of game commands
 
 ### Story Summary, Items, Description:
 [Link to Story Summary, Items, Description etc.](https://docs.google.com/document/d/183DWHLu4vnn9fNMJ0D2NmQQc8ry2zeDTYKRRdbovpNg/edit#heading=h.b0xl519w4g9a)

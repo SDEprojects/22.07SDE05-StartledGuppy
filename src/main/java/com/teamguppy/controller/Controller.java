@@ -18,10 +18,17 @@ public class Controller {
 
   public void displayAsciiBanner() {
     System.out.println(view.getAsciiBanner());
+
+  public void displayGameTitle() {
+    System.out.println(view.getGameTitle());
   }
 
   public void displayAboutGame() {
     System.out.println(view.getAboutGame());
+  }
+
+  public void displayCommands() {
+    System.out.println(view.getCommands());
   }
 
 }

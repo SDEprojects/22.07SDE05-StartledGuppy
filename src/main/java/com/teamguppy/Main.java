@@ -12,8 +12,9 @@ public class Main {
     Game game = new Game();
     View view = new View();
     Controller controller = new Controller(game, view);
-    controller.displayAsciiBanner();
+    controller.displayGameTitle();
     controller.displayAboutGame();
+    controller.displayCommands();
     Game.landingRoom();
 
 
