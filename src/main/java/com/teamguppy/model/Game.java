@@ -4,14 +4,18 @@ import java.util.Scanner;
 
 public class Game {
 
-  private static String currentLocation = "Ocean floor";
+  private static Location currentLocation;
+
+  public Game() {
+    currentLocation = new Location("Ocean Floor");
+  }
 
   public static void landingRoom() {
 
     try (Scanner sc = new Scanner(System.in)) {
       label:
       do {
-        if (currentLocation.equals("Ocean floor")) {
+        if (currentLocation.toString().equals("Ocean Floor")) {
           System.out.println("Welcome! enter 'yes' to continue and 'quit' to end the game.");
           String command = sc.nextLine();
           switch (command) {
