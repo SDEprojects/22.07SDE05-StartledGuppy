@@ -2,7 +2,6 @@ package com.teamguppy.model;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -34,22 +33,28 @@ public class Location {
     JSONObject jsonObject = (JSONObject) obj;
 
     Map locationList = (Map) jsonObject.get(location);
-    ArrayList locationArray = null;
+
 
     Iterator<Entry> itr1 = locationList.entrySet().iterator();
     while (itr1.hasNext()) {
       Entry pair = itr1.next();
       System.out.println(pair.getKey() + " : " + pair.getValue());
-      locationArray.add(pair);
+
     }
 
   }
 
   @Override
   public String toString() {
-    return location;
+    return getName();
   }
 
+
+  public static void main(String[] args) throws IOException, ParseException {
+    Location location = new Location("Ocean Floor");
+    location.findLocation("Ocean Floor");
+
+  }
 }
 
 
