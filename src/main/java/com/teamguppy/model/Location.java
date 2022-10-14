@@ -40,15 +40,18 @@ public class Location {
     Iterator<Entry> itr1 = locationList.entrySet().iterator();
     while (itr1.hasNext()) {
       Entry pair = itr1.next();
-
       if (pair.getKey().equals(direction)) {
 //        System.out.println(pair.getValue());
-        String location1 = pair.getValue().toString();
-        location2 = new Location(location1);
-
+          String location1 = pair.getValue().toString();
+          location2 = new Location(location1);
+          break;
+      }else{
+        location2 = new Location(location);
       }
     }
-//    System.out.println("location2 is " + location2);
+    if (location2.toString().equals(location)){
+      System.out.println("There is no room in " + direction);
+    }
     return location2;
   }
 
@@ -60,25 +63,30 @@ public class Location {
     Iterator<Entry> itr1 = locationList.entrySet().iterator();
     while (itr1.hasNext()) {
       Entry pair = itr1.next();
-      Object pairKey = pair.getKey();
-      Object pairValue = pair.getValue();
-      if (pairKey.equals("east")) {
-        System.out.println("This room has " + pairValue + " on " + pairKey);
-      } else if (pairKey.equals("west")) {
-        System.out.println("This room has " + pairValue + " on " + pairKey);
-      } else if (pairKey.equals("south")) {
-        System.out.println("This room has " + pairValue + " on " + pairKey);
-      } else if (pairKey.equals("north")) {
-        System.out.println("This room has " + pairValue + " on " + pairKey);
-      } else if (pairKey.equals("item")) {
-        System.out.println("This room has " + pairValue + " " + pairKey);
-      } else if (pairKey.equals("animal")) {
-        System.out.println("This room has " + pairValue + " " + pairKey);
-      } else {
-        System.out.println("There is noting.");
-      }
+      String pairKey = pair.getKey().toString();
+      String pairValue = pair.getValue().toString();
+        if (pairKey.equals("east") || pairKey.equals("west") || pairKey.equals("south")
+            || pairKey.equals("north")) {
+          System.out.println("[This room has " + pairValue + " on " + pairKey + ".]");
+        }
     }
   }
+  public static void itemsInRoom(String location) throws IOException, ParseException {
+    JSONParser jsonParser = new JSONParser();
+    //Parsing the contents of the JSON file
+    JSONObject jsonObject = (JSONObject) jsonParser.parse(new FileReader("location.json"));
+    Map locationList = (Map) jsonObject.get(location);
+    Iterator<Entry> itr1 = locationList.entrySet().iterator();
+    Entry pair = itr1.next();
+    String pairKey = pair.getKey().toString();
+    String pairValue = pair.getValue().toString();
+      if (pairKey.equals("item") || pairKey.equals("animal")) {
+        System.out.println("This room has " + pairValue + " " + pairKey);
+      } else {
+        System.out.println("[There is no item or animal in the room.]");
+      }
+    }
+
 
   @Override
   public String toString() {
