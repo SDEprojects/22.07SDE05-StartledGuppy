@@ -1,0 +1,26 @@
+{
+  "Cloak": {
+    "foundLocation": "Challenge Deep",
+    "description": {
+      "general": "You can hide under the cloak when you encounter jelly fish monster",
+      "inventory": "There’s a jiggly Jellyfish monster in this room! Oh, whatever should I do?!\nUse the use cloak command to sneak past the Jellyfish monster!\nMove south to the Engine Room, north to the Forward part of the Sunk Ship, or east to the Bathroom",
+      "notInInventory": "There’s a jiggly Jellyfish monster in this room!\nThe Jellyfish stung you and you took some damage!\nYou’ve fainted and were sent back to the Ocean Floor.\nFind an item to heal yourself, or an item to sneak past the Jellyfish monster!\n"
+    }
+  },
+  "Key": {
+    "foundLocation": "Coral Reef",
+    "description": {
+      "general": "You can open one of the locked door with this key",
+      "inventory": "You’ve found Startled Baby Guppy! But Baby Guppy is trapped behind a locked door!\nUse the use key command to set Baby Guppy free!\nMove north to go to the Bedroom",
+      "notInInventory": "You’ve found Startled Baby Guppy! But Baby Guppy is trapped behind a locked door!\nI better find a key to set Baby Guppy free!\nMove north to go to the Bedroom"
+    },
+    "Blood Grenade": {
+      "foundLocation": "Seaweed Forest",
+      "description": {
+        "general": "You can use the blood Grenade to lure the Goblin shark away",
+        "inventory": "Use the use blood grenade command to lure the shark away!",
+        "notInInventory": "There’s a big scary Goblin Shark monster in here!\nYou’ve taken some damage from the Goblin Shark and fainted!\nYou were sent back to the Ocean Floor.\nFind an item to heal damage, or lure the Goblin Shark monster away!\n"
+      }
+    }
+  }
+}
