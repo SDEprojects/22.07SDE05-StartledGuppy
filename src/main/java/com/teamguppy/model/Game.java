@@ -1,7 +1,11 @@
 package com.teamguppy.model;
 
+import com.teamguppy.controller.Controller;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 import org.json.simple.parser.ParseException;
 
 public class Game {
@@ -63,8 +67,7 @@ public class Game {
 
     System.out.println(
         "Are you sure you wish to exit the game?\nEnter 'yes' to exit and 'no' to return.");
-    Scanner sc = new Scanner(System.in);
-    String input = sc.nextLine();
+    String input = userInput();
     if (input.equals("yes")) {
       System.out.println("Bye! See you later.");
     } else if (input.equals("no")) {
@@ -78,18 +81,27 @@ public class Game {
   private static void userMove() throws IOException, ParseException {
     boolean valid;
     String move;
-    String item;
+    String item = "";
+
     do {
       System.out.println("What would you like to do? ");
-      Scanner sc = new Scanner(System.in);
-      String input = sc.nextLine();
-      String arr[] = input.toLowerCase().split(" ", 2);
+      String input = userInput();
+      String[] arr = input.toLowerCase().split(" ");
       move = arr[0];
-      item = arr[1];
       valid = validMove(move);
+
 //      System.out.println(valid);
     } while (!valid);
     if (move.equals("go")) {
+
+      if (arr.length == 2) {
+        item = arr[1];
+      }
+    } while(!(valid && validItem(item)));
+    if (move.equals("help")) {
+      userHelp();
+    } else if (move.equals("go")) {
+     currentLocation = Location.findLocation(currentLocation.toString(), item);
       //function for go
       currentLocation = Location.findLocation(currentLocation.toString(), item);
       System.out.println("Your current location " + currentLocation);
@@ -101,15 +113,40 @@ public class Game {
 
   }
 
+  public static void userHelp() {
+    Controller con = new Controller();
+    con.displayCommands();
+  }
+
   // validate user's move input
+
   private static Boolean validMove(String move) {
     System.out.println("this " + move);
+
     if (move.equals("go") || move.equals("look") || move.equals("help") || move.equals("ask")) {
       return true;
     } else {
       System.out.println("Sorry, I don't understand. Please check the Game Commands.");
     }
     return false;
+  }
+
+
+
+  private static Boolean validItem(String item) {
+    Set<String> items = new HashSet<>(Arrays.asList("north", "south", "east", "west", "key", "medicine", "blood grenade", "cloak", "turtle", ""));
+    if (items.contains(item)) {
+      return true;
+    } else {
+      System.out.println("Sorry, I don't understand. Please check the Game Commands.");
+      return false;
+    }
+  }
+
+  private static String userInput() {
+    Scanner sc = new Scanner(System.in);
+    String input = sc.nextLine();
+    return input;
   }
 }
 
