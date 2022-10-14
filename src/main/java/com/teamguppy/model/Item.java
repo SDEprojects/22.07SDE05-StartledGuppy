@@ -44,7 +44,6 @@ public class Item {
     JSONObject jsonObject = (JSONObject) obj;
     //make the input in lower case to find in from item.json.
     String parsingItem = item.toLowerCase();
-
     Map locationList = (Map) jsonObject.get(parsingItem);
 
     Iterator<Entry> itr1 = locationList.entrySet().iterator();
