@@ -82,36 +82,29 @@ public class Game {
     boolean valid;
     String move;
     String item = "";
-
     do {
       System.out.println("What would you like to do? ");
       String input = userInput();
       String[] arr = input.toLowerCase().split(" ");
       move = arr[0];
       valid = validMove(move);
-
-//      System.out.println(valid);
-    } while (!valid);
-    if (move.equals("go")) {
-
       if (arr.length == 2) {
         item = arr[1];
       }
-    } while(!(valid && validItem(item)));
+    } while (!(valid && validItem(item)));
     if (move.equals("help")) {
       userHelp();
     } else if (move.equals("go")) {
-     currentLocation = Location.findLocation(currentLocation.toString(), item);
-      //function for go
       currentLocation = Location.findLocation(currentLocation.toString(), item);
+      //function for go
       System.out.println("Your current location " + currentLocation);
       Location.roomDescription(currentLocation.toString());
     } else if (move.equals("look")) {
       System.out.println("not working");
       //function for look
     }
-
   }
+
 
   public static void userHelp() {
     Controller con = new Controller();
@@ -132,9 +125,10 @@ public class Game {
   }
 
 
-
   private static Boolean validItem(String item) {
-    Set<String> items = new HashSet<>(Arrays.asList("north", "south", "east", "west", "key", "medicine", "blood grenade", "cloak", "turtle", ""));
+    Set<String> items = new HashSet<>(
+        Arrays.asList("north", "south", "east", "west", "key", "medicine", "blood grenade", "cloak",
+            "turtle", ""));
     if (items.contains(item)) {
       return true;
     } else {
