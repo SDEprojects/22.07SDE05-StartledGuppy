@@ -51,9 +51,7 @@ public class Item {
       Entry pair = itr1.next();
 
       if (pair.getKey().equals("description")) {
-//        System.out.println(pair.getValue());
         String description = pair.getValue().toString();
-//        Item lookingItem = new Item(item, description);
         System.out.println(description);
       }
     }

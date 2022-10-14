@@ -97,10 +97,9 @@ public class Game {
     } else if (verb.equals("go")) {
       currentLocation = Location.findLocation(currentLocation.toString(), noun);
       //function for go
-      System.out.println("Your current location " + currentLocation);
+      System.out.println("Your current location: " + currentLocation);
       Location.roomDescription(currentLocation.toString());
     } else if (verb.equals("look")) {
-      System.out.println("hit here");
       Item.findDescription(noun);
     } else{
       System.out.println("something not working ");
@@ -119,7 +118,7 @@ public class Game {
     if (move.equals("go") || move.equals("look") || move.equals("help") || move.equals("ask")) {
       return true;
     } else {
-      System.out.println("Sorry, I don't understand. Please check the Game Commands.");
+      System.out.println("Sorry, I don't understand. Please check the Game Commands for valid move.");
     }
     return false;
   }
@@ -127,12 +126,12 @@ public class Game {
 
   private static Boolean validItem(String item) {
     Set<String> items = new HashSet<>(
-        Arrays.asList("north", "south", "east", "west", "key", "medicine", "blood grenade", "cloak",
+        Arrays.asList("north", "south", "east", "west", "key", "medicine", "squid", "cloak",
             "turtle", ""));
     if (items.contains(item)) {
       return true;
     } else {
-      System.out.println("Sorry, I don't understand. Please check the Game Commands.");
+      System.out.println("Sorry, I don't understand. Please check the Game Commands for valid item.");
       return false;
     }
   }
