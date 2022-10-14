@@ -97,8 +97,9 @@ public class Game {
     } else if (verb.equals("go")) {
       currentLocation = Location.findLocation(currentLocation.toString(), noun);
       //function for go
-      System.out.println("Your current location " + currentLocation);
-      Location.roomDescription(currentLocation.toString());
+        System.out.println("Your current location " + currentLocation);
+        Location.roomDescription(currentLocation.toString());
+        Location.itemsInRoom(currentLocation.toString());
     } else if (verb.equals("look")) {
       System.out.println("hit here");
       Item.findDescription(noun);
