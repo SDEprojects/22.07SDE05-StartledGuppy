@@ -80,31 +80,32 @@ public class Game {
 
   private static void userMove() throws IOException, ParseException {
     boolean valid;
-    String move;
-    String item = "";
+    String verb;
+    String noun = "";
     do {
       System.out.println("What would you like to do? ");
       String input = userInput();
       String[] arr = input.toLowerCase().split(" ");
-      move = arr[0];
-      valid = validMove(move);
+      verb = arr[0];
+      valid = validMove(verb);
       if (arr.length == 2) {
-        item = arr[1];
+        noun = arr[1];
       }
-    } while (!(valid && validItem(item)));
-    if (move.equals("help")) {
+    } while (!(valid && validItem(noun)));
+    if (verb.equals("help")) {
       userHelp();
-    } else if (move.equals("go")) {
-      currentLocation = Location.findLocation(currentLocation.toString(), item);
+    } else if (verb.equals("go")) {
+      currentLocation = Location.findLocation(currentLocation.toString(), noun);
       //function for go
       System.out.println("Your current location " + currentLocation);
       Location.roomDescription(currentLocation.toString());
-    } else if (move.equals("look")) {
-      System.out.println("not working");
-      //function for look
+    } else if (verb.equals("look")) {
+      System.out.println("hit here");
+      Item.findDescription(noun);
+    } else{
+      System.out.println("something not working ");
     }
   }
-
 
   public static void userHelp() {
     Controller con = new Controller();
@@ -114,7 +115,6 @@ public class Game {
   // validate user's move input
 
   private static Boolean validMove(String move) {
-    System.out.println("this " + move);
 
     if (move.equals("go") || move.equals("look") || move.equals("help") || move.equals("ask")) {
       return true;
