@@ -8,6 +8,10 @@ public class Controller {
 
   private static View view;
 
+  public Controller() {
+
+  }
+
   public Controller(Game game, View view) {
     super();
     this.game = game;
