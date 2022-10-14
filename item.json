@@ -7,9 +7,9 @@
     "foundLocation": "Coral Reef",
     "description": "You can open one of the locked door with this key"
     },
-  "blood grenade": {
+  "squid": {
       "foundLocation": "Seaweed Forest",
-      "description": "You can use the blood Grenade to lure the Goblin shark away"
+      "description": "You can use squid ink to blind Goblin Shark"
     },
   "medicine": {
     "foundLocation": "Kelp Forest",
