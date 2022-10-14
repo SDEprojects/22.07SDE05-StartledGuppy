@@ -1,0 +1,18 @@
+{
+  "cloak": {
+    "foundLocation": "Challenge Deep",
+    "description":  "You can hide under the cloak when you encounter jelly fish monster"
+  },
+  "key": {
+    "foundLocation": "Coral Reef",
+    "description": "You can open one of the locked door with this key"
+    },
+  "blood grenade": {
+      "foundLocation": "Seaweed Forest",
+      "description": "You can use the blood Grenade to lure the Goblin shark away"
+    },
+  "medicine": {
+    "foundLocation": "Kelp Forest",
+    "description": "You can use the medicine when you get wounded by any sea monsters"
+  }
+}
