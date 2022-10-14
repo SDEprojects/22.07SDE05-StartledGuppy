@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+java{
+    toolchain{
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
+group 'com.tlglearning'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    def junitVersion = '5.9.0'
+    testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+clean{
+    delete += file("${projectDir}/docs/api")
+}
+assemble{
+    dependsOn javadoc
+}
