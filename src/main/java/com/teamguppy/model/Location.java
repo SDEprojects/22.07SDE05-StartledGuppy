@@ -32,10 +32,9 @@ public class Location {
 
   public static Location findLocation(String location, String direction)
       throws URISyntaxException, IOException, ParseException {
+
     Location location2 = null;
-
     Map locationList = jsonParsing(location);
-
     Iterator<Entry> itr1 = locationList.entrySet().iterator();
     while (itr1.hasNext()) {
       Entry pair = itr1.next();
@@ -105,7 +104,6 @@ public class Location {
   public String toString() {
     return getName();
   }
-
 
 }
 

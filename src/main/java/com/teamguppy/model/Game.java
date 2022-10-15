@@ -27,10 +27,6 @@ public class Game {
 
   private void setCurrentInventory(Inventory inventory) { this.currentInventory = inventory;}
 
-  public static Location getCurrentLocation() {
-    return currentLocation;
-  }
-
 
   public static void landingRoom() throws IOException, ParseException, URISyntaxException {
     String command = null;
@@ -85,7 +81,7 @@ public class Game {
   // we can make function for each verb, and call the function in here
 
   private static void userMove() throws IOException, ParseException, URISyntaxException {
-    boolean valid;
+    boolean validMove;
     String verb;
     String noun = "";
     do {
@@ -93,11 +89,11 @@ public class Game {
       String input = userInput();
       String[] arr = input.toLowerCase().split(" ");
       verb = arr[0];
-      valid = validMove(verb);
+      validMove = validMove(verb);
       if (arr.length == 2) {
         noun = arr[1];
       }
-    } while (!(valid && validItem(noun)));
+    } while (!(validMove && validItem(noun)));
     if (verb.equals("help")) {
       userHelp();
     } else if (verb.equals("go")) {
@@ -125,8 +121,8 @@ public class Game {
       return true;
     } else {
       System.out.println("Sorry, I don't understand. Please check the Game Commands for valid move.");
+      return false;
     }
-    return false;
   }
 
 
