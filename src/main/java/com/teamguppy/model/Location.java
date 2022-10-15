@@ -39,15 +39,16 @@ public class Location {
 //    System.out.println("Hit here" + location + direction);
 
 
-    URL file = Location.class.getResource("/location.json");
+    URL file = Location.class.getResource("/data/location.json");
+    if (file == null){
+      System.out.println("no file found");
+    }
     Path path = Paths.get(file.toURI());
     byte[] bytes = Files.readAllBytes(path);
     String fileContent = new String(bytes);
     System.out.println(location);
 
-    if (file == null){
-      System.out.println("no file found");
-    }
+
 
 
     JSONParser parser = new JSONParser();
@@ -78,7 +79,7 @@ public class Location {
 
   public static void roomDescription(String location) throws IOException, ParseException, URISyntaxException {
 
-    URL file = Location.class.getResource("/location.json");
+    URL file = Location.class.getResource("/data/location.json");
     Path path = Paths.get(file.toURI());
     byte[] bytes = Files.readAllBytes(path);
     String fileContent = new String(bytes);
@@ -104,7 +105,7 @@ public class Location {
   }
   public static void itemsInRoom(String location) throws IOException, ParseException, URISyntaxException {
 
-    URL file = Location.class.getResource("/location.json");
+    URL file = Location.class.getResource("/data/location.json");
     Path path = Paths.get(file.toURI());
     byte[] bytes = Files.readAllBytes(path);
     String fileContent = new String(bytes);
