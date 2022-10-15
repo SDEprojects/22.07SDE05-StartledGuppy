@@ -2,6 +2,7 @@ package com.teamguppy.model;
 
 import com.teamguppy.controller.Controller;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -26,7 +27,7 @@ public class Game {
   }
 
 
-  public static void landingRoom() throws IOException, ParseException {
+  public static void landingRoom() throws IOException, ParseException, URISyntaxException {
     String command = null;
     try (Scanner sc = new Scanner(System.in)) {
       label:
@@ -56,14 +57,14 @@ public class Game {
     return (true);
   }
 
-  private static void startGame() throws IOException, ParseException {
+  private static void startGame() throws IOException, ParseException, URISyntaxException {
     do {
       userMove();
     } while (true);
   }
 
 
-  private static void endGame() throws IOException, ParseException {
+  private static void endGame() throws IOException, ParseException, URISyntaxException {
 
     System.out.println(
         "Are you sure you wish to exit the game?\nEnter 'yes' to exit and 'no' to return.");
@@ -78,7 +79,7 @@ public class Game {
   // parsing user input for the verb + noun
   // we can make function for each verb, and call the function in here
 
-  private static void userMove() throws IOException, ParseException {
+  private static void userMove() throws IOException, ParseException, URISyntaxException {
     boolean valid;
     String verb;
     String noun = "";

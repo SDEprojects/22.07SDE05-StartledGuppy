@@ -1,7 +1,12 @@
 package com.teamguppy.model;
 
-import java.io.FileReader;
+
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -25,12 +30,28 @@ public class Location {
     return name;
   }
 
+
+
+
+
   public static Location findLocation(String location, String direction)
-      throws IOException, ParseException {
+      throws IOException, ParseException, URISyntaxException {
 //    System.out.println("Hit here" + location + direction);
+
+
+    URL file = Location.class.getResource("/location.json");
+    Path path = Paths.get(file.toURI());
+    byte[] bytes = Files.readAllBytes(path);
+    String fileContent = new String(bytes);
+    System.out.println(location);
+
+    if (file == null){
+      System.out.println("no file found");
+    }
+
+
     JSONParser parser = new JSONParser();
-    String file = "location.json";
-    Object obj = parser.parse(new FileReader(file));
+    Object obj = parser.parse(fileContent);
 
     JSONObject jsonObject = (JSONObject) obj;
     Location location2 = null;
@@ -55,10 +76,20 @@ public class Location {
     return location2;
   }
 
-  public static void roomDescription(String location) throws IOException, ParseException {
-    JSONParser jsonParser = new JSONParser();
-    //Parsing the contents of the JSON file
-    JSONObject jsonObject = (JSONObject) jsonParser.parse(new FileReader("location.json"));
+  public static void roomDescription(String location) throws IOException, ParseException, URISyntaxException {
+
+    URL file = Location.class.getResource("/location.json");
+    Path path = Paths.get(file.toURI());
+    byte[] bytes = Files.readAllBytes(path);
+    String fileContent = new String(bytes);
+
+
+    JSONParser parser = new JSONParser();
+    Object obj = parser.parse(fileContent);
+
+    JSONObject jsonObject = (JSONObject) obj;
+
+
     Map locationList = (Map) jsonObject.get(location);
     Iterator<Entry> itr1 = locationList.entrySet().iterator();
     while (itr1.hasNext()) {
@@ -71,10 +102,18 @@ public class Location {
         }
     }
   }
-  public static void itemsInRoom(String location) throws IOException, ParseException {
-    JSONParser jsonParser = new JSONParser();
-    //Parsing the contents of the JSON file
-    JSONObject jsonObject = (JSONObject) jsonParser.parse(new FileReader("location.json"));
+  public static void itemsInRoom(String location) throws IOException, ParseException, URISyntaxException {
+
+    URL file = Location.class.getResource("/location.json");
+    Path path = Paths.get(file.toURI());
+    byte[] bytes = Files.readAllBytes(path);
+    String fileContent = new String(bytes);
+
+    JSONParser parser = new JSONParser();
+    Object obj = parser.parse(fileContent);
+
+    JSONObject jsonObject = (JSONObject) obj;
+
     Map locationList = (Map) jsonObject.get(location);
     Iterator<Entry> itr1 = locationList.entrySet().iterator();
     Entry pair = itr1.next();
@@ -93,9 +132,9 @@ public class Location {
     return getName();
   }
 
-  public static void main(String[] args) throws IOException, ParseException {
-    roomDescription("Ocean Floor");
-  }
+//  public static void main(String[] args) throws IOException, ParseException, URISyntaxException {
+//    roomDescription("Ocean Floor");
+//  }
 
 }
 
