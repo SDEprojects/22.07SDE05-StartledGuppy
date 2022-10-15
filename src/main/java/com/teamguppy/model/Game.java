@@ -12,15 +12,20 @@ import org.json.simple.parser.ParseException;
 public class Game {
 
   private static Location currentLocation;
+  private Inventory currentInventory;
 
   public Game() {
     Location startingLocation = new Location("Ocean Floor");
+    Inventory startingInventory = new Inventory("");
     setCurrentLocation(startingLocation);
+    setCurrentInventory(startingInventory);
   }
 
   private void setCurrentLocation(Location location) {
     this.currentLocation = location;
   }
+
+  private void setCurrentInventory(Inventory inventory) { this.currentInventory = inventory;}
 
   public static Location getCurrentLocation() {
     return currentLocation;
@@ -96,7 +101,7 @@ public class Game {
     if (verb.equals("help")) {
       userHelp();
     } else if (verb.equals("go")) {
-      currentLocation = Location.findLocation(currentLocation.toString(), noun);
+      currentLocation = (Location.findLocation(currentLocation.toString(), noun));
       System.out.println("Your current location " + currentLocation);
       Location.roomDescription(currentLocation.toString());
       Location.itemsInRoom(currentLocation.toString());
