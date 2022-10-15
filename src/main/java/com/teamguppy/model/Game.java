@@ -21,8 +21,8 @@ public class Game {
     setCurrentInventory(startingInventory);
   }
 
-  private void setCurrentLocation(Location location) {
-    this.currentLocation = location;
+  private static void setCurrentLocation(Location location) {
+    currentLocation = location;
   }
 
   private void setCurrentInventory(Inventory inventory) { this.currentInventory = inventory;}
@@ -97,15 +97,35 @@ public class Game {
     if (verb.equals("help")) {
       userHelp();
     } else if (verb.equals("go")) {
-      currentLocation = (Location.findLocation(currentLocation.toString(), noun));
-      System.out.println("Your current location " + currentLocation);
-      Location.roomDescription(currentLocation.toString());
-      Location.itemsInRoom(currentLocation.toString());
+      findLocation(currentLocation.toString(), noun);
+      roomDescription(currentLocation.toString());
+      itemsInRoom(currentLocation.toString());
     } else if (verb.equals("look")) {
-      Item.findDescription(noun);
+      displayItemDescription(noun);
     } else{
       System.out.println("something not working ");
     }
+  }
+
+  public static void findLocation(String location, String direction)
+      throws URISyntaxException, IOException, ParseException {
+    Location newLocation = Location.findLocation(location, direction);
+    setCurrentLocation(newLocation);
+    System.out.println("Your current location " + currentLocation);
+  }
+
+  public static void roomDescription(String location)
+      throws IOException, ParseException, URISyntaxException {
+    Location.roomDescription(location);
+  }
+
+  public static void itemsInRoom(String location)
+      throws IOException, ParseException, URISyntaxException {
+    Location.itemsInRoom(location);
+  }
+
+  public static void displayItemDescription(String item) throws IOException, ParseException {
+    Item.findDescription(item);
   }
 
   public static void userHelp() {
