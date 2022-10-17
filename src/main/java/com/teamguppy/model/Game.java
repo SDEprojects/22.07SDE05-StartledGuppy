@@ -2,6 +2,7 @@ package com.teamguppy.model;
 
 import com.teamguppy.controller.Controller;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -11,22 +12,23 @@ import org.json.simple.parser.ParseException;
 public class Game {
 
   private static Location currentLocation;
+  private Inventory currentInventory;
 
   public Game() {
     Location startingLocation = new Location("Ocean Floor");
+    Inventory startingInventory = new Inventory("");
     setCurrentLocation(startingLocation);
+    setCurrentInventory(startingInventory);
   }
 
-  private void setCurrentLocation(Location location) {
-    this.currentLocation = location;
+  private static void setCurrentLocation(Location location) {
+    currentLocation = location;
   }
 
-  public static Location getCurrentLocation() {
-    return currentLocation;
-  }
+  private void setCurrentInventory(Inventory inventory) { this.currentInventory = inventory;}
 
 
-  public static void landingRoom() throws IOException, ParseException {
+  public static void landingRoom() throws IOException, ParseException, URISyntaxException {
     String command = null;
     try (Scanner sc = new Scanner(System.in)) {
       label:
@@ -56,14 +58,14 @@ public class Game {
     return (true);
   }
 
-  private static void startGame() throws IOException, ParseException {
+  private static void startGame() throws IOException, ParseException, URISyntaxException {
     do {
       userMove();
     } while (true);
   }
 
 
-  private static void endGame() throws IOException, ParseException {
+  private static void endGame() throws IOException, ParseException, URISyntaxException {
 
     System.out.println(
         "Are you sure you wish to exit the game?\nEnter 'yes' to exit and 'no' to return.");
@@ -78,8 +80,8 @@ public class Game {
   // parsing user input for the verb + noun
   // we can make function for each verb, and call the function in here
 
-  private static void userMove() throws IOException, ParseException {
-    boolean valid;
+  private static void userMove() throws IOException, ParseException, URISyntaxException {
+    boolean validMove;
     String verb;
     String noun = "";
     do {
@@ -87,23 +89,43 @@ public class Game {
       String input = userInput();
       String[] arr = input.toLowerCase().split(" ");
       verb = arr[0];
-      valid = validMove(verb);
+      validMove = validMove(verb);
       if (arr.length == 2) {
         noun = arr[1];
       }
-    } while (!(valid && validItem(noun)));
+    } while (!(validMove && validItem(noun)));
     if (verb.equals("help")) {
       userHelp();
     } else if (verb.equals("go")) {
-      currentLocation = Location.findLocation(currentLocation.toString(), noun);
-      System.out.println("Your current location " + currentLocation);
-      Location.roomDescription(currentLocation.toString());
-      Location.itemsInRoom(currentLocation.toString());
+      findLocation(currentLocation.toString(), noun);
+      roomDescription(currentLocation.toString());
+      itemsInRoom(currentLocation.toString());
     } else if (verb.equals("look")) {
-      Item.findDescription(noun);
+      displayItemDescription(noun);
     } else{
       System.out.println("something not working ");
     }
+  }
+
+  public static void findLocation(String location, String direction)
+      throws URISyntaxException, IOException, ParseException {
+    Location newLocation = Location.findLocation(location, direction);
+    setCurrentLocation(newLocation);
+    System.out.println("Your current location " + currentLocation);
+  }
+
+  public static void roomDescription(String location)
+      throws IOException, ParseException, URISyntaxException {
+    Location.roomDescription(location);
+  }
+
+  public static void itemsInRoom(String location)
+      throws IOException, ParseException, URISyntaxException {
+    Location.itemsInRoom(location);
+  }
+
+  public static void displayItemDescription(String item) throws IOException, ParseException {
+    Item.findDescription(item);
   }
 
   public static void userHelp() {
@@ -119,8 +141,8 @@ public class Game {
       return true;
     } else {
       System.out.println("Sorry, I don't understand. Please check the Game Commands for valid move.");
+      return false;
     }
-    return false;
   }
 
 
