@@ -13,9 +13,17 @@ import org.json.simple.parser.ParseException;
 
 public class Location {
   private static String name;
+  private String item;
+  private String animal;
+
 
   public Location(String name) {
-    Location.name = name;
+    this.name = name;
+  }
+  public Location(String name, String item, String animal) {
+    this.name = name;
+    this.item = item;
+    this.animal = animal;
   }
 
   public static String getName() {

@@ -8,7 +8,8 @@ import org.json.simple.JSONObject;
 public class Inventory {
 
   private static String item;
-  public Inventory(String item) {this.item = item;}
+  public Inventory() {this.item = String.valueOf(item);}
+
 
   public static void setItem(String item) {
     Inventory.item = item;

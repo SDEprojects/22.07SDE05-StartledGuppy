@@ -3,6 +3,7 @@ package com.teamguppy.model;
 import com.teamguppy.controller.Controller;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -13,20 +14,20 @@ public class Game {
 
 
   private Location currentLocation;
-  private Inventory currentInventory;
+  private String[] currentInventory;
+  private Boolean wounded = false;
+  private static final Location startingLocation = new Location("Ocean Floor");
+
 
   public Game() {
-    Location startingLocation = new Location("Ocean Floor");
-    Inventory startingInventory = new Inventory("");
+    this.currentInventory = null;
     setCurrentLocation(startingLocation);
-    setCurrentInventory(startingInventory);
   }
 
   private void setCurrentLocation(Location location) {
     this.currentLocation = location;
   }
 
-  private void setCurrentInventory(Inventory inventory) { this.currentInventory = inventory;}
 
 
   public void landingRoom() throws IOException, ParseException, URISyntaxException {
@@ -103,6 +104,8 @@ public class Game {
       itemsInRoom(currentLocation.toString());
     } else if (verb.equals("look")) {
       displayItemDescription(noun);
+    }else if (verb.equals("use")) {
+      // function for use
     } else{
       System.out.println("something not working ");
     }
@@ -113,6 +116,46 @@ public class Game {
     Location newLocation = Location.findLocation(location, direction);
     setCurrentLocation(newLocation);
     System.out.println("Your current location " + currentLocation);
+  }
+
+  public void encounterMonster(String monster) {
+    if (monster.toLowerCase().equals("goblin shark")) {
+      System.out.println("There’s a big scary Goblin Shark monster in here!");
+      for (int i = 0; i <= currentInventory.length; i++) {
+        if (currentInventory[i].equals("medicine")) {
+          System.out.println(
+              "You’ve taken some damage from the Goblin Shark, but you can use your medicine to heal yourself.");
+          wounded = true;
+        } else if (currentInventory[i].equals("squid")) {
+          System.out.println(" Use the use squid command to blind shark with squid ink!");
+          wounded = true;
+        } else {
+          System.out.println(
+              "You've taken some damage from the Goblin Shark and fainted! \n You were sent back to the Ocean Floor.");
+          setCurrentLocation(new Location(startingLocation));
+        }
+      }
+    }
+    if (monster.equals("Jellyfish")) {
+      System.out.println(
+          "There’s a jiggly Jellyfish monster in this room!!  Oh, whatever should I do?!");
+      for (int i = 0; i <= currentInventory.length; i++) {
+        String item = currentInventory[i];
+        if (item.equals("medicine")) {
+          System.out.println(
+              "The Jellyfish stung you and you took some damage!, but you can use your medicine to heal yourself.");
+          wounded = true;
+        } else if (item.equals("Cloak")) {
+          System.out.println(
+              "The Jellyfish stung you and you took some damage! Use the use cloak command to sneak past the Jellyfish monster!");
+          wounded = true;
+        } else {
+          System.out.println(
+              "You’ve fainted and were sent back to the Ocean Floor.\n Find an item to heal yourself, or an item to sneak past the Jellyfish monster!\n");
+          setCurrentLocation(new Location(startingLocation));
+        }
+      }
+    }
   }
 
   public static void roomDescription(String location)
