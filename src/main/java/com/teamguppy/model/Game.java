@@ -3,6 +3,7 @@ package com.teamguppy.model;
 import com.teamguppy.controller.Controller;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -11,8 +12,9 @@ import org.json.simple.parser.ParseException;
 
 public class Game {
 
-  private static Location currentLocation;
+  private Location currentLocation;
   private Inventory currentInventory;
+  private ArrayList<String> itemArray = new ArrayList<>();
 
   public Game() {
     Location startingLocation = new Location("Ocean Floor");
@@ -21,14 +23,16 @@ public class Game {
     setCurrentInventory(startingInventory);
   }
 
-  private static void setCurrentLocation(Location location) {
+  private void setCurrentLocation(Location location) {
     currentLocation = location;
   }
 
-  private void setCurrentInventory(Inventory inventory) { this.currentInventory = inventory;}
+  private void setCurrentInventory(Inventory inventory) {
+    this.currentInventory = inventory;
+  }
 
 
-  public static void landingRoom() throws IOException, ParseException, URISyntaxException {
+  public void landingRoom() throws IOException, ParseException, URISyntaxException {
     String command = null;
     try (Scanner sc = new Scanner(System.in)) {
       label:
@@ -58,14 +62,14 @@ public class Game {
     return (true);
   }
 
-  private static void startGame() throws IOException, ParseException, URISyntaxException {
+  private void startGame() throws IOException, ParseException, URISyntaxException {
     do {
       userMove();
     } while (true);
   }
 
 
-  private static void endGame() throws IOException, ParseException, URISyntaxException {
+  private void endGame() throws IOException, ParseException, URISyntaxException {
 
     System.out.println(
         "Are you sure you wish to exit the game?\nEnter 'yes' to exit and 'no' to return.");
@@ -80,7 +84,7 @@ public class Game {
   // parsing user input for the verb + noun
   // we can make function for each verb, and call the function in here
 
-  private static void userMove() throws IOException, ParseException, URISyntaxException {
+  private void userMove() throws IOException, ParseException, URISyntaxException {
     boolean validMove;
     String verb;
     String noun = "";
@@ -100,28 +104,42 @@ public class Game {
       findLocation(currentLocation.toString(), noun);
       roomDescription(currentLocation.toString());
       itemsInRoom(currentLocation.toString());
+    } else if (verb.equals("get")) {
+      addItemToInventory(currentLocation.toString());
     } else if (verb.equals("look")) {
       displayItemDescription(noun);
-    } else{
+    } else if (verb.equals("use")) {
+      itemArray.remove(noun);
+      System.out.println(itemArray);
+    } else {
       System.out.println("something not working ");
     }
   }
 
-  public static void findLocation(String location, String direction)
+  private ArrayList<String> addItemToInventory(String location)
+      throws IOException, ParseException, URISyntaxException {
+    String currentItemInRoom = itemsInRoom(location);
+      itemArray.add(currentItemInRoom);
+      System.out.println(itemArray);
+      return itemArray;
+  }
+
+
+  public void findLocation(String location, String direction)
       throws URISyntaxException, IOException, ParseException {
     Location newLocation = Location.findLocation(location, direction);
     setCurrentLocation(newLocation);
     System.out.println("Your current location " + currentLocation);
   }
 
-  public static void roomDescription(String location)
+  public void roomDescription(String location)
       throws IOException, ParseException, URISyntaxException {
     Location.roomDescription(location);
   }
 
-  public static void itemsInRoom(String location)
+  public String itemsInRoom(String location)
       throws IOException, ParseException, URISyntaxException {
-    Location.itemsInRoom(location);
+    return Location.itemsInRoom(location);
   }
 
   public static void displayItemDescription(String item) throws IOException, ParseException {
@@ -137,10 +155,12 @@ public class Game {
 
   private static Boolean validMove(String move) {
 
-    if (move.equals("go") || move.equals("look") || move.equals("help") || move.equals("ask")) {
+    if (move.equals("go") || move.equals("look") || move.equals("help") || move.equals("ask")
+        || move.equals("get") || move.equals("use")) {
       return true;
     } else {
-      System.out.println("Sorry, I don't understand. Please check the Game Commands for valid move.");
+      System.out.println(
+          "Sorry, I don't understand. Please check the Game Commands for valid move.");
       return false;
     }
   }
@@ -153,7 +173,8 @@ public class Game {
     if (items.contains(item)) {
       return true;
     } else {
-      System.out.println("Sorry, I don't understand. Please check the Game Commands for valid item.");
+      System.out.println(
+          "Sorry, I don't understand. Please check the Game Commands for valid item.");
       return false;
     }
   }
@@ -163,5 +184,9 @@ public class Game {
     String input = sc.nextLine();
     return input;
   }
+
+//  public static void main(String[] args) throws IOException, ParseException, URISyntaxException {
+//    addItemToInventory("Bedroom");
+//  }
 }
 

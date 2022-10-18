@@ -8,11 +8,13 @@ import org.json.simple.JSONObject;
 public class Inventory {
 
   private static String item;
+
   public Inventory(String item) {this.item = item;}
 
   public static void setItem(String item) {
     Inventory.item = item;
   }
+
 
   public static void saveItem(String item) throws FileNotFoundException{
 
