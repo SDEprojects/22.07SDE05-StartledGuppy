@@ -12,7 +12,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class Location {
-
   private static String name;
 
   public Location(String name) {
@@ -85,7 +84,6 @@ public class Location {
 
     JSONParser parser = new JSONParser();
     String file = "data/location.json";
-
     Object obj = parser.parse(new InputStreamReader(Location.class.getClassLoader().getResourceAsStream(file)));
     JSONObject jsonObject = (JSONObject)obj;
 
