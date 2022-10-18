@@ -2,11 +2,8 @@ package com.teamguppy.model;
 
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -15,7 +12,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class Location {
-
   private static String name;
 
   public Location(String name) {
@@ -86,16 +82,14 @@ public class Location {
   public static Map jsonParsing(String location)
       throws URISyntaxException, IOException, ParseException {
 
-    URL file = Location.class.getResource("/data/location.json");
+    JSONParser parser = new JSONParser();
+    String file = "data/location.json";
+    Object obj = parser.parse(new InputStreamReader(Location.class.getClassLoader().getResourceAsStream(file)));
+    JSONObject jsonObject = (JSONObject)obj;
+
     if (file == null) {
       System.out.println("no file found");
     }
-    Path path = Paths.get(file.toURI());
-    byte[] bytes = Files.readAllBytes(path);
-    String fileContent = new String(bytes);
-    JSONParser parser = new JSONParser();
-    Object obj = parser.parse(fileContent);
-    JSONObject jsonObject = (JSONObject) obj;
 
     return (Map) jsonObject.get(location);
   }
