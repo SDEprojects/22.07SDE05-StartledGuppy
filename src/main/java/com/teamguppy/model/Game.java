@@ -11,7 +11,8 @@ import org.json.simple.parser.ParseException;
 
 public class Game {
 
-  private static Location currentLocation;
+
+  private Location currentLocation;
   private Inventory currentInventory;
 
   public Game() {
@@ -21,14 +22,14 @@ public class Game {
     setCurrentInventory(startingInventory);
   }
 
-  private static void setCurrentLocation(Location location) {
-    currentLocation = location;
+  private void setCurrentLocation(Location location) {
+    this.currentLocation = location;
   }
 
   private void setCurrentInventory(Inventory inventory) { this.currentInventory = inventory;}
 
 
-  public static void landingRoom() throws IOException, ParseException, URISyntaxException {
+  public void landingRoom() throws IOException, ParseException, URISyntaxException {
     String command = null;
     try (Scanner sc = new Scanner(System.in)) {
       label:
@@ -58,14 +59,14 @@ public class Game {
     return (true);
   }
 
-  private static void startGame() throws IOException, ParseException, URISyntaxException {
+  private void startGame() throws IOException, ParseException, URISyntaxException {
     do {
       userMove();
     } while (true);
   }
 
 
-  private static void endGame() throws IOException, ParseException, URISyntaxException {
+  private void endGame() throws IOException, ParseException, URISyntaxException {
 
     System.out.println(
         "Are you sure you wish to exit the game?\nEnter 'yes' to exit and 'no' to return.");
@@ -80,7 +81,7 @@ public class Game {
   // parsing user input for the verb + noun
   // we can make function for each verb, and call the function in here
 
-  private static void userMove() throws IOException, ParseException, URISyntaxException {
+  private void userMove() throws IOException, ParseException, URISyntaxException {
     boolean validMove;
     String verb;
     String noun = "";
@@ -107,7 +108,7 @@ public class Game {
     }
   }
 
-  public static void findLocation(String location, String direction)
+  public void findLocation(String location, String direction)
       throws URISyntaxException, IOException, ParseException {
     Location newLocation = Location.findLocation(location, direction);
     setCurrentLocation(newLocation);
