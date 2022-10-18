@@ -2,6 +2,7 @@ package com.teamguppy.model;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -36,12 +37,10 @@ public class Item {
     return description;
   }
 
-
   public static void findDescription(String item) throws IOException, ParseException {
-
     JSONParser parser = new JSONParser();
-    String file = "item.json";
-    Object obj = parser.parse(new FileReader(file));
+    String file = "data/item.json";
+    Object obj = parser.parse(new InputStreamReader(Item.class.getClassLoader().getResourceAsStream(file)));
     JSONObject jsonObject = (JSONObject) obj;
     //make the input in lower case to find in from item.json.
     String parsingItem = item.toLowerCase();
@@ -55,10 +54,8 @@ public class Item {
         String description = pair.getValue().toString();
         System.out.println(description);
       }
-
-
-      }
     }
   }
+}
 
 
