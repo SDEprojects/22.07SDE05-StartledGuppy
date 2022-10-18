@@ -1,5 +1,7 @@
 package com.teamguppy.model;
 
+import static com.teamguppy.model.Inventory.removeItemFromInventory;
+
 import com.teamguppy.controller.Controller;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -105,23 +107,31 @@ public class Game {
       roomDescription(currentLocation.toString());
       itemsInRoom(currentLocation.toString());
     } else if (verb.equals("get")) {
-      addItemToInventory(currentLocation.toString());
+      Inventory.addItemToInventory(currentLocation.toString());
     } else if (verb.equals("look")) {
       displayItemDescription(noun);
     } else if (verb.equals("use")) {
-      itemArray.remove(noun);
+      itemArray = removeItemFromInventory(noun);
       System.out.println(itemArray);
     } else {
       System.out.println("something not working ");
     }
   }
 
-  private ArrayList<String> addItemToInventory(String location)
+
+
+//  private ArrayList<String> addItemToInventory(String location)
+//      throws IOException, ParseException, URISyntaxException {
+//    String currentItemInRoom = itemsInRoom(location);
+//      itemArray.add(currentItemInRoom);
+//      System.out.println(itemArray);
+//      return itemArray;
+//  }
+
+  private void displayInventory(Inventory inventory)
       throws IOException, ParseException, URISyntaxException {
-    String currentItemInRoom = itemsInRoom(location);
-      itemArray.add(currentItemInRoom);
-      System.out.println(itemArray);
-      return itemArray;
+//    this.itemArray = itemArray;
+    System.out.println(itemArray);
   }
 
 
@@ -144,6 +154,7 @@ public class Game {
 
   public static void displayItemDescription(String item) throws IOException, ParseException {
     Item.findDescription(item);
+
   }
 
   public static void userHelp() {
