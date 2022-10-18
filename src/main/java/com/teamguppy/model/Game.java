@@ -83,8 +83,9 @@ public class Game {
   private static void userMove() throws IOException, ParseException, URISyntaxException {
     boolean validMove;
     String verb;
-    String noun = "";
+    String noun;
     do {
+      noun = "";
       System.out.println("What would you like to do? ");
       String input = userInput();
       String[] arr = input.toLowerCase().split(" ");
