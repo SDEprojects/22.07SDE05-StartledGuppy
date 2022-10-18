@@ -11,27 +11,28 @@ import org.json.simple.parser.ParseException;
 
 public class Item {
 
-  private static String name;
-  private static String description;
+  private String name;
+  private String description;
+
 
   public Item(String name, String description) {
     this.name = name;
     this.description = description;
   }
 
-  public static void setName(String name) {
-    Item.name = name;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public static void setDescription(String description) {
-    Item.description = description;
+  public void setDescription(String description) {
+    this.description = description;
   }
 
-  public static String getName() {
+  public String getName() {
     return name;
   }
 
-  public static String getDescription(String item) {
+  public String getDescription() {
     return description;
   }
 
@@ -54,6 +55,10 @@ public class Item {
         String description = pair.getValue().toString();
         System.out.println(description);
       }
+
+
+      }
     }
   }
-}
+
+
