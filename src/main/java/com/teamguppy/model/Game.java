@@ -14,18 +14,26 @@ public class Game {
 
 
   private Location currentLocation;
-  private String[] currentInventory;
+  private ArrayList<String> currentInventory = new ArrayList<>();
   private Boolean wounded = false;
-  private static final Location startingLocation = new Location("Ocean Floor");
+  private static final String startingLocation = "Ocean Floor";
 
 
+  private static final String startingItem = "Medicine";
   public Game() {
-    this.currentInventory = null;
+    setCurrentInventory(startingItem);
     setCurrentLocation(startingLocation);
   }
 
-  private void setCurrentLocation(Location location) {
-    this.currentLocation = location;
+  public ArrayList<String> getCurrentInventory() {
+    return currentInventory;
+  }
+
+  private void setCurrentInventory(String item) {
+    currentInventory.add(item);
+  }
+  private void setCurrentLocation(String location) {
+    this.currentLocation = new Location(location);
   }
 
 
@@ -85,8 +93,9 @@ public class Game {
   private void userMove() throws IOException, ParseException, URISyntaxException {
     boolean validMove;
     String verb;
-    String noun = "";
+    String noun;
     do {
+      noun = "";
       System.out.println("What would you like to do? ");
       String input = userInput();
       String[] arr = input.toLowerCase().split(" ");
@@ -96,15 +105,23 @@ public class Game {
         noun = arr[1];
       }
     } while (!(validMove && validItem(noun)));
-    if (verb.equals("help")) {
+      if (verb.equals("help")) {
       userHelp();
-    } else if (verb.equals("go")) {
+    } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
       findLocation(currentLocation.toString(), noun);
+      if (currentLocation.toString().equals("Mariana Trench")) {
+        System.out.println(getCurrentInventory());
+        encounterMonster("Goblin Shark");
+      }else if (currentLocation.toString().equals("Bedroom")){
+        System.out.println(getCurrentInventory());
+        encounterMonster("Jellyfish");
+      }
       roomDescription(currentLocation.toString());
       itemsInRoom(currentLocation.toString());
-    } else if (verb.equals("look")) {
+
+    } else if (verb.equals("look") || verb.equals("examine")) {
       displayItemDescription(noun);
-    }else if (verb.equals("use")) {
+    } else if (verb.equals("use")) {
       // function for use
     } else{
       System.out.println("something not working ");
@@ -113,46 +130,51 @@ public class Game {
 
   public void findLocation(String location, String direction)
       throws URISyntaxException, IOException, ParseException {
-    Location newLocation = Location.findLocation(location, direction);
+    String newLocation = Location.findLocation(location, direction);
     setCurrentLocation(newLocation);
     System.out.println("Your current location " + currentLocation);
   }
 
   public void encounterMonster(String monster) {
-    if (monster.toLowerCase().equals("goblin shark")) {
+    if (monster.equals("Goblin Shark")) {
       System.out.println("There’s a big scary Goblin Shark monster in here!");
-      for (int i = 0; i <= currentInventory.length; i++) {
-        if (currentInventory[i].equals("medicine")) {
+      for (String item : currentInventory) {
+        if (item.equals("Medicine")) {
           System.out.println(
               "You’ve taken some damage from the Goblin Shark, but you can use your medicine to heal yourself.");
           wounded = true;
-        } else if (currentInventory[i].equals("squid")) {
-          System.out.println(" Use the use squid command to blind shark with squid ink!");
+          // need use item function here
+        } else if (item.equals("Squid")) {
+          System.out.println(" Use the use squid command to blind the Goblin Shark with squid ink!");
           wounded = true;
+          // need use item function here
         } else {
+          setCurrentLocation(startingLocation);
           System.out.println(
-              "You've taken some damage from the Goblin Shark and fainted! \n You were sent back to the Ocean Floor.");
-          setCurrentLocation(new Location(startingLocation));
+              "You've taken some damage from the Goblin Shark and fainted! \nYou were sent back to the Ocean Floor.");
+          System.out.println("Your are now in " + currentLocation);
         }
       }
     }
     if (monster.equals("Jellyfish")) {
       System.out.println(
-          "There’s a jiggly Jellyfish monster in this room!!  Oh, whatever should I do?!");
-      for (int i = 0; i <= currentInventory.length; i++) {
-        String item = currentInventory[i];
-        if (item.equals("medicine")) {
+          "There’s a jiggly Jellyfish monster in this room!!  Oh, what should I do?!");
+      for (String item : currentInventory){
+        if (item.equals("Medicine")) {
           System.out.println(
-              "The Jellyfish stung you and you took some damage!, but you can use your medicine to heal yourself.");
+              "The Jellyfish stung you and you took some damage, but you can use your medicine to heal yourself.");
           wounded = true;
+          // need use item function here
         } else if (item.equals("Cloak")) {
           System.out.println(
               "The Jellyfish stung you and you took some damage! Use the use cloak command to sneak past the Jellyfish monster!");
           wounded = true;
+          // need use item function here
         } else {
           System.out.println(
               "You’ve fainted and were sent back to the Ocean Floor.\n Find an item to heal yourself, or an item to sneak past the Jellyfish monster!\n");
-          setCurrentLocation(new Location(startingLocation));
+          setCurrentLocation(startingLocation);
+          System.out.println("Your are now in " + currentLocation);
         }
       }
     }
@@ -178,17 +200,15 @@ public class Game {
   }
 
   // validate user's move input
-
   private static Boolean validMove(String move) {
-
-    if (move.equals("go") || move.equals("look") || move.equals("help") || move.equals("ask")) {
+    Set<String> moves = new HashSet<>(Arrays.asList("go", "swim", "move", "get", "grab", "look", "examine", "help", "ask"));
+    if (moves.contains(move)) {
       return true;
     } else {
       System.out.println("Sorry, I don't understand. Please check the Game Commands for valid move.");
       return false;
     }
   }
-
 
   private static Boolean validItem(String item) {
     Set<String> items = new HashSet<>(
@@ -208,4 +228,3 @@ public class Game {
     return input;
   }
 }
-
