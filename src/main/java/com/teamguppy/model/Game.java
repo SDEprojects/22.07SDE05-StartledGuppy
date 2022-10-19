@@ -137,7 +137,7 @@ public class Game {
 //          System.exit(0);
         }
 
-    } else if (verb.equals("get")) {
+    } else if (verb.equals("get") || verb.equals("grab")) {
         currentInventory = Inventory.addItemToInventory(currentLocation.toString());
         System.out.println(currentInventory);
       } else if (verb.equals("use")) {
@@ -256,7 +256,7 @@ public class Game {
 
   private static Boolean validItem(String item) {
     Set<String> items = new HashSet<>(
-        Arrays.asList("north", "south", "east", "west", "key", "medicine", "squid", "cloak", "turtle", ""));
+        Arrays.asList("north", "south", "east", "west", "key", "medicine", "squid", "cloak", "turtle", "guppy", ""));
     if (items.contains(item)) {
       return true;
     } else {
