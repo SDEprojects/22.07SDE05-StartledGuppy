@@ -41,4 +41,8 @@ public class Controller {
     System.out.println(view.getTurtleTalk());
   }
 
+  public void displayPlayerWins() {
+    System.out.println(view.getPlayerWins());
+  }
+
 }

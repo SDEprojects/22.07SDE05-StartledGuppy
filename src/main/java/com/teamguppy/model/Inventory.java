@@ -4,6 +4,7 @@ import static com.teamguppy.model.Location.itemsInRoom;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import org.json.simple.parser.ParseException;
@@ -14,8 +15,8 @@ import java.util.ArrayList;
 public class Inventory {
 
   private String item;
-  private static Set<String> itemArray = new HashSet<>();
-
+//  private static Set<String> itemArray = new HashSet<>();
+  private static Set<String> itemArray = new HashSet<>(Arrays.asList("guppy"));
 
   public Inventory(String item) {
     this.item = item;
