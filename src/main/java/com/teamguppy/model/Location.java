@@ -1,8 +1,12 @@
 package com.teamguppy.model;
 
 
+import com.google.gson.Gson;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.Map;
@@ -111,6 +115,117 @@ public class Location {
 
   }
 
+  public static void deleteItemFromRoom(String item) throws FileNotFoundException {
+    JSONObject testing = new JSONObject();
+
+//    (Map) jsonObject.get(location);
+
+    // putting data to JSONObject
+//    testing.put("item", item);
+    String file = "/Users/alicehuh/Desktop/JavaProject/22.07SDE05-StartledGuppy/src/main/resources/data/testing.json";
+
+//    testing.putAll(jsonParsing("yes"));
+//    testing.remove("Challenger Deep");
+        // putting data to JSONObject
+//    testing.replace("Mariana Trench", "east", "newValue");
+    PrintWriter pw = new PrintWriter(file);
+    pw.write(testing.toJSONString());
+
+    pw.flush();
+    pw.close();
+
+  }
+
+  public static void copyJson() throws FileNotFoundException {
+    JSONObject testing = new JSONObject();
+
+    // putting data to JSONObject
+//    testing.put("item", item);
+    String file = "src/main/resources/data/testing.json";
+//
+    testing.putAll(jsonParsing("Challenger Deep"));
+    PrintWriter pw = new PrintWriter(file);
+      pw.write(testing.toJSONString());
+      pw.flush();
+      pw.close();
+//    testing.remove("Challenger Deep");
+    // putting data to JSONObject
+
+//    Location location = new Location("cloak");
+//    if(testing.containsValue(location)){
+//      System.out.println("found it");;
+//      PrintWriter pw = new PrintWriter(file);
+//      pw.write(testing.toJSONString());
+//      pw.flush();
+//      pw.close();
+//
+//    };
+
+
+
+  }
+
+  public static void testingParsing(String location, String item) throws IOException {
+
+    JSONParser parser = new JSONParser();
+
+    String file = "src/main/resources/data/testing.json";
+//    Object obj = null;
+//    try {
+//      obj = parser.parse(new InputStreamReader(Location.class.getClassLoader().getResourceAsStream(file)));
+//    } catch (IOException e) {
+//      System.out.println(e);
+//    } catch (ParseException e) {
+//      System.out.println(e);
+//    }
+    JSONObject jsonObject = new JSONObject();
+    jsonObject.replace("item", "cloak", "");
+
+      FileWriter files = new FileWriter(file);
+      files.write(jsonObject.toJSONString());
+
+      files.flush();
+      files.close();
+
+
+//    Map locationList = (Map) jsonObject.get(location);
+//    Map.Entry<String, String> newEntry = new SimpleEntry<>("item","");
+//
+//    Iterator<Entry> itr1 = locationList.entrySet().iterator();
+//    while (itr1.hasNext()) {
+//      Entry pair = itr1.next();
+//      String pairKey = pair.getKey().toString();
+//      String pairValue = pair.getValue().toString();
+//      if (pairKey.equals("item")) {
+//        pair.setValue(newEntry);
+//        System.out.println(newEntry);
+//      }
+//    }
+
+
+  }
+
+  public static void createLocation(){
+    JSONParser parser = new JSONParser();
+    String file = "data/location.json";
+    Object obj = null;
+    try {
+      obj = parser.parse(new InputStreamReader(Location.class.getClassLoader().getResourceAsStream(file)));
+    } catch (IOException e) {
+      System.out.println(e);
+    } catch (ParseException e) {
+      System.out.println(e);
+    }
+
+    JSONObject jsonObject = (JSONObject)obj;
+
+
+    Gson gson = new Gson();
+    GameMap locationObj = (GameMap) gson.fromJson(jsonObject.toString(),Map.class);
+
+    System.out.println(locationObj);
+
+  }
 
 
   public static Map jsonParsing(String location){
@@ -131,7 +246,8 @@ public class Location {
       System.out.println("no file found");
     }
 
-    return (Map) jsonObject.get(location);
+    return (Map) jsonObject;
+//    return (Map) jsonObject.get(location);
   }
 
   @Override
@@ -140,7 +256,11 @@ public class Location {
   }
 
   public static void main(String[] args) throws IOException, ParseException, URISyntaxException {
-    itemsInRoom("Kelp Forest");
+//    itemsInRoom("Kelp Forest");
+//    copyJson();
+    createLocation();
+//    testingParsing("Challenger Deep", "cloak");
+//    deleteItemFromRoom("testing and testing hope this working");
   }
 
 }

@@ -1,70 +1,68 @@
-{
-  "Ocean Floor" : {
+[
+
+  { "name":"Ocean Floor",
     "south" : "Ocean Plant Forest",
     "east": "Sunk Ship",
     "west": "Mariana Trench"
   },
 
-  "Mariana Trench" : {
+  { "name":"Mariana Trench",
     "east" : "Ocean Floor",
     "north" : "Challenger Deep",
     "animal" : "Goblin Shark"
   },
 
-  "Challenger Deep" : {
+  { "name": "Challenger Deep",
     "south" : "Mariana Trench",
-    "item" : "cloak"
+    "item" : "Cloak"
   },
 
-  "Sunk Ship" : {
+  {"name": "Sunk Ship",
     "east": "Bridge",
     "west" : "Ocean Floor",
     "south" : "Bedroom"
   },
-
-  "Bridge" : {
+  {"name": "Bridge",
     "west" : "Sunk Ship",
     "south": "Bathroom",
     "animal" : "Turtle"
   },
 
-  "Bathroom" : {
+  {"name": "Bathroom",
     "north": "Bridge",
     "west" : "Bedroom"
   },
 
-  "Bedroom" : {
+  {"name":"Bedroom",
     "south": "Engine Room",
     "East" : "Bathroom",
     "north": "Sunk Ship",
     "animal" : "Jellyfish"
   },
 
-  "Engine Room" : {
+  {"name": "Engine Room",
     "north": "Bedroom",
     "animal": "Guppy"
   },
 
-  "Ocean Plant Forest" : {
+  {"name": "Ocean Plant Forest",
     "west" : "Coral Reef",
     "south": "Kelp Forest",
     "north" : "Ocean Floor"
   },
 
-  "Kelp Forest" : {
+  {"name": "Kelp Forest",
     "north": "Ocean Plant Forest",
-    "item" : "medicine"
+    "item" : "Medicine"
   },
 
-  "Coral Reef" : {
+  {"name": "Coral Reef",
     "east": "Ocean Plant Forest",
     "west" : "Seaweed Forest",
-    "item" : "key"
+    "item" : "Key"
   },
-
-  "Seaweed Forest" : {
+  {"name": "Seaweed Forest",
     "east" : "Coral Reef",
-    "item" : "squid"
+    "item" : "Squid"
   }
-
-}
+]
