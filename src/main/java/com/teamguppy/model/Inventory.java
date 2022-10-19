@@ -1,50 +1,63 @@
 package com.teamguppy.model;
 
+import static com.teamguppy.model.Location.itemsInRoom;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.HashSet;
+import java.util.Set;
+import org.json.simple.parser.ParseException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 
 public class Inventory {
 
-
-
-  public Inventory() {this.item = item;}
-
-
   private String item;
-  private static ArrayList<String> itemArray = new ArrayList<>();
+  private static Set<String> itemArray = new HashSet<>();
 
-  public Inventory(String item) {this.item = item;}
 
+  public Inventory(String item) {
+    this.item = item;
+  }
 
   public void setItem(String item) {
     this.item = item;
   }
-
-  // We need to pass the item as an argument from the Game instead of call the itemsInRoom function in here.
-  public static ArrayList<String> addItemToInventory(String location, String item) {
-    String currentItemInRoom = item;
-    itemArray.add(currentItemInRoom);
-    displayItemsInInventory(itemArray);
-    System.out.println(itemArray);
+  public static void setItemArray(Set<String> itemArray) {
+    Inventory.itemArray = itemArray;
+  }
+  public static Set<String> getItemArray() {
     return itemArray;
   }
 
 
-  private static void displayItemsInInventory(ArrayList<String> itemArray) {
+  public static Set<String> addItemToInventory(String location)
+      throws IOException, ParseException, URISyntaxException {
+    String currentItemInRoom = itemsInRoom(location);
+    itemArray.add(currentItemInRoom);
+    displayItemsInInventory();
+    return itemArray;
+  }
+  public static void displayItemsInInventory() {
     System.out.println(itemArray);
   }
-  static ArrayList<String> removeItemFromInventory(String item) {
-    displayItemsInInventory(itemArray);
-    if (itemArray.contains(item)){
-     itemArray.remove(item);
-     return itemArray;
-    }
-    return null;
+
+  public static Set<String> removeItemFromInventory(String item) {
+      if (itemArray.contains(item)) {
+        itemArray.remove(item);
+        System.out.println("Your have used " + item + " from your inventory");
+        System.out.println(itemArray);
+        return itemArray;
+      }else {
+        System.out.println("You don't have " + item + " in your inventory.");
+      }
+    System.out.println(itemArray);
+    return itemArray;
   }
 
-
+//    System.out.println(itemArray);
+//    displayItemsInInventory(itemArray);
 //  public static void saveItem(String item) throws FileNotFoundException{
 //
 //    JSONObject userInventory = new JSONObject();
@@ -60,8 +73,10 @@ public class Inventory {
 //
 //  }
 
-  public static void main(String[] args) throws FileNotFoundException {
-//    saveItem("testing1");
+  public static void main(String[] args) throws IOException, ParseException, URISyntaxException {
+    addItemToInventory("Coral Reef");
+//    displayItemsInInventory();
+    removeItemFromInventory("Key");
   }
 }
 

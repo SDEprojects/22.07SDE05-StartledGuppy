@@ -39,16 +39,18 @@ public class Location {
     this.name = name;
   }
 
-  public static String findLocation(String location, String direction)
+  public static Location findLocation(String location, String direction)
       throws URISyntaxException, IOException, ParseException {
 
     String location1 = null;
+    Location location2 = new Location(location);
     Map locationList = jsonParsing(location);
     Iterator<Entry> itr1 = locationList.entrySet().iterator();
     while (itr1.hasNext()) {
       Entry pair = itr1.next();
       if (pair.getKey().equals(direction)) {
         location1 = pair.getValue().toString();
+        location2 = new Location(location1);
         break;
       } else {
         location1 = null;
@@ -58,7 +60,7 @@ public class Location {
     if (location1.equals(location)) {
       System.out.println("\nThere is no room in " + direction);
     }
-    return location1;
+    return location2;
   }
 
   public static void roomDescription(String location)
@@ -76,7 +78,6 @@ public class Location {
       }
     }
   }
-
   public static String itemsInRoom(String location)
       throws IOException, ParseException, URISyntaxException {
 
