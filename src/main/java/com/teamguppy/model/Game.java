@@ -229,7 +229,7 @@ public class Game {
 
   // validate user's move input
   private static Boolean validMove(String move) {
-    Set<String> moves = new HashSet<>(Arrays.asList("go", "swim", "move", "get", "grab", "look", "examine", "help", "talk"));
+    Set<String> moves = new HashSet<>(Arrays.asList("go", "swim", "move", "get", "grab", "look", "examine", "help", "talk", "use"));
     if (moves.contains(move)) {
       return true;
     } else {
