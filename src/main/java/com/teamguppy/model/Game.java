@@ -11,8 +11,14 @@ import org.json.simple.parser.ParseException;
 
 public class Game {
 
+
   private Location currentLocation;
   private Set<String> currentInventory;
+
+  private static Location currentLocation;
+  // private Inventory currentInventory;
+  private Controller con = new Controller();
+
 
   public Game() {
     Location startingLocation = new Location("Ocean Floor");
@@ -21,13 +27,15 @@ public class Game {
 //    setCurrentInventory(startingInventory);
   }
 
-  private void setCurrentLocation(Location location) {
+  private static void setCurrentLocation(Location location) {
     currentLocation = location;
   }
+
 
   public void setCurrentInventory(Set<String> currentInventory) {
     this.currentInventory = currentInventory;
   }
+
 
   public Set<String> getCurrentInventory() {
     return currentInventory;
@@ -39,7 +47,7 @@ public class Game {
       label:
       do {
         if (currentLocation.toString().equals("Ocean Floor")) {
-          System.out.println("Enter 'yes' to continue and 'quit' to end the game.");
+          System.out.println("\nEnter 'yes' to continue and 'quit' to end the game.");
           command = sc.nextLine();
           switch (command) {
             case "yes":
@@ -91,7 +99,7 @@ public class Game {
     String noun;
     do {
       noun = "";
-      System.out.println("What would you like to do? ");
+      System.out.println("\nWhat would you like to do? ");
       String input = userInput();
       String[] arr = input.toLowerCase().split(" ");
       verb = arr[0];
@@ -102,7 +110,7 @@ public class Game {
     } while (!(validMove && validItem(noun)));
     if (verb.equals("help")) {
       userHelp();
-    } else if (verb.equals("go")) {
+    } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
       findLocation(currentLocation.toString(), noun);
       roomDescription(currentLocation.toString());
       itemsInRoom(currentLocation.toString());
@@ -115,53 +123,56 @@ public class Game {
       System.out.println(currentInventory);
     } else if (verb.equals("look")) {
       displayItemDescription(noun);
+    } else if (verb.equals("look") || verb.equals("examine")) {
+      displayItemDescription(noun);
+    } else if (verb.equals("talk") && noun.equals("turtle")) {
+      turtleTalk();
     } else {
-      System.out.println("something not working ");
+      System.out.println("You try to talk to the " + noun + ", but the " + noun + " doesn't talk back...");
     }
   }
 
 
+
   public void findLocation(String location, String direction)
-      throws URISyntaxException, IOException, ParseException {
+  throws URISyntaxException, IOException, ParseException {
     Location newLocation = Location.findLocation(location, direction);
     setCurrentLocation(newLocation);
-    System.out.println("Your current location " + currentLocation);
+    System.out.println("\nYour current location " + currentLocation);
   }
 
-  public void roomDescription(String location)
+  public static void roomDescription(String location)
       throws IOException, ParseException, URISyntaxException {
     Location.roomDescription(location);
   }
 
-  public String itemsInRoom(String location)
+  public static void itemsInRoom(String location)
       throws IOException, ParseException, URISyntaxException {
-    return Location.itemsInRoom(location);
+    Location.itemsInRoom(location);
   }
 
   public static void displayItemDescription(String item) throws IOException, ParseException {
     Item.findDescription(item);
-
   }
 
-  public static void userHelp() {
-    Controller con = new Controller();
+  public void userHelp() {
     con.displayCommands();
   }
 
+  public void turtleTalk() {
+    con.displayTurtleTalk();
+  }
+
   // validate user's move input
-
   private static Boolean validMove(String move) {
-
-    if (move.equals("go") || move.equals("look") || move.equals("help") || move.equals("ask")
-        || move.equals("get") || move.equals("use")) {
+    Set<String> moves = new HashSet<>(Arrays.asList("go", "swim", "move", "get", "grab", "look", "examine", "help", "talk"));
+    if (moves.contains(move)) {
       return true;
     } else {
-      System.out.println(
-          "Sorry, I don't understand. Please check the Game Commands for valid move.");
+      System.out.println("Sorry, I don't understand. Please check the Game Commands for valid move.");
       return false;
     }
   }
-
 
   private static Boolean validItem(String item) {
     Set<String> items = new HashSet<>(
@@ -170,8 +181,7 @@ public class Game {
     if (items.contains(item)) {
       return true;
     } else {
-      System.out.println(
-          "Sorry, I don't understand. Please check the Game Commands for valid item.");
+      System.out.println("Sorry, I don't understand. Please check the Game Commands for valid item.");
       return false;
     }
   }
@@ -181,7 +191,6 @@ public class Game {
     String input = sc.nextLine();
     return input;
   }
-
 
 }
 

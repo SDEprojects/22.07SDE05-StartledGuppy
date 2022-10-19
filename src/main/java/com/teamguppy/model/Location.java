@@ -45,7 +45,7 @@ public class Location {
       }
     }
     if (location2.toString().equals(location)) {
-      System.out.println("There is no room in " + direction);
+      System.out.println("\nThere is no room in " + direction);
     }
     return location2;
   }
