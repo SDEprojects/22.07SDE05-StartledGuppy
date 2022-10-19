@@ -21,6 +21,10 @@ public class Controller {
     this.view = view;
   }
 
+  public void landingRoom() throws IOException, ParseException, URISyntaxException {
+    game.landingRoom();
+  }
+
   public void displayGameTitle() {
     System.out.println(view.getGameTitle());
   }
@@ -33,7 +37,8 @@ public class Controller {
     System.out.println(view.getCommands());
   }
 
-  public void landingRoom() throws IOException, ParseException, URISyntaxException {
-    game.landingRoom();
+  public void displayTurtleTalk() {
+    System.out.println(view.getTurtleTalk());
   }
+
 }

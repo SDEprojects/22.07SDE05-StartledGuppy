@@ -1,19 +1,15 @@
 package com.teamguppy.model;
 
-import static com.teamguppy.model.Location.itemsInRoom;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import org.json.simple.parser.ParseException;
 
 
 public class Inventory {
 
 
 
-  public Inventory() {this.item = String.valueOf(item);}
+  public Inventory() {this.item = item;}
 
 
   private String item;
@@ -26,14 +22,16 @@ public class Inventory {
     this.item = item;
   }
 
-  public static ArrayList<String> addItemToInventory(String location)
-      throws IOException, ParseException, URISyntaxException {
-    String currentItemInRoom = itemsInRoom(location);
+  // We need to pass the item as an argument from the Game instead of call the itemsInRoom function in here.
+  public static ArrayList<String> addItemToInventory(String location, String item) {
+    String currentItemInRoom = item;
     itemArray.add(currentItemInRoom);
     displayItemsInInventory(itemArray);
-//    System.out.println(itemArray);
+    System.out.println(itemArray);
     return itemArray;
   }
+
+
   private static void displayItemsInInventory(ArrayList<String> itemArray) {
     System.out.println(itemArray);
   }

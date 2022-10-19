@@ -54,8 +54,9 @@ public class Location {
         location1 = null;
       }
     }
+
     if (location1.equals(location)) {
-      System.out.println("There is no room in " + direction);
+      System.out.println("\nThere is no room in " + direction);
     }
     return location1;
   }
@@ -111,12 +112,18 @@ public class Location {
 
 
 
-  public static Map jsonParsing(String location)
-      throws URISyntaxException, IOException, ParseException {
+  public static Map jsonParsing(String location){
 
     JSONParser parser = new JSONParser();
     String file = "data/location.json";
-    Object obj = parser.parse(new InputStreamReader(Location.class.getClassLoader().getResourceAsStream(file)));
+    Object obj = null;
+    try {
+      obj = parser.parse(new InputStreamReader(Location.class.getClassLoader().getResourceAsStream(file)));
+    } catch (IOException e) {
+      System.out.println(e);
+    } catch (ParseException e) {
+      System.out.println(e);
+    }
     JSONObject jsonObject = (JSONObject)obj;
 
     if (file == null) {

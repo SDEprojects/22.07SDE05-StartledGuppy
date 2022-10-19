@@ -25,8 +25,13 @@ public class View {
       + "get/grab     [key, medicine, blood grenade, cloak]\n"
       + "look/examine [key, medicine, blood grenade, cloak]\n"
       + "use          [key, medicine, blood grenade, cloak]\n"
-      + "ask          [turtle]\n"
-      + "help         Displays a list of game commands\n";
+      + "talk         [turtle]\n"
+      + "help         Displays a list of game commands";
+
+  private final String TURTLE_TALK =
+      "\nA...Startled Guppy you say?\n"
+      + "Saw one flapping by no more than an hour ago heading south in a hurry.\n"
+      + "But be careful...legend has it those who delve deeper into this ship don't always...return.";
 
   public String getGameTitle() {
     return GAME_TITLE;
@@ -38,6 +43,10 @@ public class View {
 
   public String getCommands() {
     return COMMANDS;
+  }
+
+  public String getTurtleTalk() {
+    return TURTLE_TALK;
   }
 
 
