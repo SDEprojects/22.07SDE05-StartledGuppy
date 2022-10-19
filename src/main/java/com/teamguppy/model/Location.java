@@ -13,11 +13,22 @@ import org.json.simple.parser.ParseException;
 
 public class Location {
 
-  private String name;
+  private static String name;
+  private String item;
+  private String animal;
+
+
+
 
 
   public Location(String name) {
     this.name = name;
+
+  }
+  public Location(String name, String item, String animal) {
+    this.name = name;
+    this.item = item;
+    this.animal = animal;
   }
 
   public String getName() {
@@ -28,26 +39,26 @@ public class Location {
     this.name = name;
   }
 
-  public static Location findLocation(String location, String direction)
+  public static String findLocation(String location, String direction)
       throws URISyntaxException, IOException, ParseException {
 
-    Location location2 = null;
+    String location1 = null;
     Map locationList = jsonParsing(location);
     Iterator<Entry> itr1 = locationList.entrySet().iterator();
     while (itr1.hasNext()) {
       Entry pair = itr1.next();
       if (pair.getKey().equals(direction)) {
-        String location1 = pair.getValue().toString();
-        location2 = new Location(location1);
+        location1 = pair.getValue().toString();
         break;
       } else {
-        location2 = new Location(location);
+        location1 = null;
       }
     }
-    if (location2.toString().equals(location)) {
-      System.out.println("There is no room in " + direction);
+
+    if (location1.equals(location)) {
+      System.out.println("\nThere is no room in " + direction);
     }
-    return location2;
+    return location1;
   }
 
   public static void roomDescription(String location)
@@ -100,12 +111,18 @@ public class Location {
 
 
 
-  public static Map jsonParsing(String location)
-      throws URISyntaxException, IOException, ParseException {
+  public static Map jsonParsing(String location){
 
     JSONParser parser = new JSONParser();
     String file = "data/location.json";
-    Object obj = parser.parse(new InputStreamReader(Location.class.getClassLoader().getResourceAsStream(file)));
+    Object obj = null;
+    try {
+      obj = parser.parse(new InputStreamReader(Location.class.getClassLoader().getResourceAsStream(file)));
+    } catch (IOException e) {
+      System.out.println(e);
+    } catch (ParseException e) {
+      System.out.println(e);
+    }
     JSONObject jsonObject = (JSONObject)obj;
 
     if (file == null) {

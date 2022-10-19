@@ -7,6 +7,8 @@ import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.Set;
 import org.json.simple.parser.ParseException;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 
 public class Inventory {
@@ -76,7 +78,5 @@ public class Inventory {
 //    displayItemsInInventory();
     removeItemFromInventory("Key");
   }
-
-
 }
 

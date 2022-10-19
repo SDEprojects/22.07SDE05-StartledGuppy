@@ -17,14 +17,21 @@ public class View {
       + "As the parent, it’s your job to find baby guppy before baby guppy is lost forever!\n"
       + "Rescue the startled baby guppy to save the day and win the game!\n"
       + "Find items to sneak past monsters, open doors, and receive clues from a special turtle.\n"
-      + "When the Startled Guppy is found, bring them back home to the Ocean Floor.\n";
+      + "When the Startled Guppy is found, bring them back home to the Ocean Floor.";
 
-  private final String COMMANDS = "=================== Game Commands ===================\n"
-      + "go [north, south, east, west]\n"
-      + "get [key, medicine, blood grenade, cloak]\n"
-      + "use [key, medicine, blood grenade, cloak]\n"
-      + "ask [turtle]\n"
-      + "help - displays a list of game commands";
+  private final String COMMANDS =
+      "\n=================== Game Commands ===================\n"
+      + "go/swim/move [north, south, east, west]\n"
+      + "get/grab     [key, medicine, blood grenade, cloak]\n"
+      + "look/examine [key, medicine, blood grenade, cloak]\n"
+      + "use          [key, medicine, blood grenade, cloak]\n"
+      + "talk         [turtle]\n"
+      + "help         Displays a list of game commands";
+
+  private final String TURTLE_TALK =
+      "\nA...Startled Guppy you say?\n"
+      + "Saw one flapping by no more than an hour ago heading south in a hurry.\n"
+      + "But be careful...legend has it those who delve deeper into this ship don't always...return.";
 
   public String getGameTitle() {
     return GAME_TITLE;
@@ -36,6 +43,10 @@ public class View {
 
   public String getCommands() {
     return COMMANDS;
+  }
+
+  public String getTurtleTalk() {
+    return TURTLE_TALK;
   }
 
 
