@@ -16,6 +16,7 @@ public class Game {
   private Controller con = new Controller();
 //  private ArrayList<String> currentInventory1 = new ArrayList<>();
   private Boolean wounded = false;
+//  private static final String startingLocation = "Ocean Floor";
   private static final String startingLocation = "Ocean Floor";
   private Set<String> currentInventory;
 
@@ -118,16 +119,24 @@ public class Game {
         noun = arr[1];
       }
     } while (!(validMove && validItem(noun)));
+//      if (currentLocation.toString().equals("Ocean Floor")) {
+//        System.out.println("TEST WIN!");
+//      }
       if (verb.equals("help")) {
       userHelp();
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
-
         findLocation(currentLocation.toString(), noun);
       // checking if the player enter the location with monster, and if so, call the encounterMonster function.
         checkMonster(currentLocation.toString());
         roomDescription(currentLocation.toString());
         itemsInRoom(currentLocation.toString());
         Inventory.displayItemsInInventory();
+
+        if (!playerWins()) {
+          con.displayPlayerWins();
+//          System.exit(0);
+        }
+
     } else if (verb.equals("get")) {
         currentInventory = Inventory.addItemToInventory(currentLocation.toString());
         System.out.println(currentInventory);
@@ -216,6 +225,14 @@ public class Game {
 
   public static void displayItemDescription(String item) throws IOException, ParseException {
     Item.findDescription(item);
+  }
+
+  public boolean playerWins() {
+    boolean playerWon = false;
+    if (currentLocation.toString().equals("Ocean Floor") && Inventory.getItemArray().contains("guppy")) {
+      playerWon = true;
+    }
+    return playerWon;
   }
 
   public void userHelp() {

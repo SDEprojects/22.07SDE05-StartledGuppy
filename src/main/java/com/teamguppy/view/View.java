@@ -33,6 +33,17 @@ public class View {
       + "Saw one flapping by no more than an hour ago heading south in a hurry.\n"
       + "But be careful...legend has it those who delve deeper into this ship don't always...return.";
 
+  private final String PLAYER_WINS =
+      " __     ______  _    _     __          _______ _   _   _ _ \n"
+      + " \\ \\   / / __ \\| |  | |    \\ \\        / /_   _| \\ | | | | |\n"
+      + "  \\ \\_/ / |  | | |  | |     \\ \\  /\\  / /  | | |  \\| | | | |\n"
+      + "   \\   /| |  | | |  | |      \\ \\/  \\/ /   | | | . ` | | | |\n"
+      + "    | | | |__| | |__| |       \\  /\\  /   _| |_| |\\  | |_|_|\n"
+      + "    |_|  \\____/ \\____/         \\/  \\/   |_____|_| \\_| (_|_)\n"
+      + "                                                           \n"
+      + "                                                           \n"
+      + "Startled Guppy has been rescued and you got them back home safely!";
+
   public String getGameTitle() {
     return GAME_TITLE;
   }
@@ -47,6 +58,10 @@ public class View {
 
   public String getTurtleTalk() {
     return TURTLE_TALK;
+  }
+
+  public String getPlayerWins() {
+    return PLAYER_WINS;
   }
 
 
