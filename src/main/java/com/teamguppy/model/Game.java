@@ -3,6 +3,7 @@ package com.teamguppy.model;
 import com.teamguppy.controller.Controller;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -11,23 +12,34 @@ import org.json.simple.parser.ParseException;
 
 public class Game {
 
+
   private static Location currentLocation;
-  private Inventory currentInventory;
   private Controller con = new Controller();
+  private ArrayList<String> currentInventory = new ArrayList<>();
+  private Boolean wounded = false;
+  private static final String startingLocation = "Ocean Floor";
 
+
+  private static final String startingItem = "Medicine";
   public Game() {
-    Location startingLocation = new Location("Ocean Floor");
-    Inventory startingInventory = new Inventory("");
+    setCurrentInventory(startingItem);
     setCurrentLocation(startingLocation);
-    setCurrentInventory(startingInventory);
   }
 
-  private static void setCurrentLocation(Location location) {
-    currentLocation = location;
+  public ArrayList<String> getCurrentInventory() {
+    return currentInventory;
   }
 
-  private void setCurrentInventory(Inventory inventory) { this.currentInventory = inventory;}
+  private void setCurrentInventory(String item) {
+    currentInventory.add(item);
+  }
+  private void setCurrentLocation(String location) {
+    this.currentLocation = new Location(location);
+  }
 
+  public static Location getCurrentLocation() {
+    return currentLocation;
+  }
 
   public void landingRoom() throws IOException, ParseException, URISyntaxException {
     String command = null;
@@ -65,7 +77,6 @@ public class Game {
     } while (true);
   }
 
-
   private void endGame() throws IOException, ParseException, URISyntaxException {
 
     System.out.println(
@@ -81,10 +92,13 @@ public class Game {
   // parsing user input for the verb + noun
   // we can make function for each verb, and call the function in here
 
+
   private void userMove() throws IOException, ParseException, URISyntaxException {
     boolean validMove;
     String verb;
     String noun;
+
+
     do {
       noun = "";
       System.out.println("\nWhat would you like to do? ");
@@ -96,14 +110,17 @@ public class Game {
         noun = arr[1];
       }
     } while (!(validMove && validItem(noun)));
-    if (verb.equals("help")) {
+      if (verb.equals("help")) {
       userHelp();
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
-      findLocation(currentLocation.toString(), noun);
-      roomDescription(currentLocation.toString());
-      itemsInRoom(currentLocation.toString());
+        findLocation(currentLocation.toString(), noun);
+      // checking if the player enter the location with monster, and if so, call the encounterMonster function.
+        checkMonster(currentLocation.toString());
+        roomDescription(currentLocation.toString());
+        itemsInRoom(currentLocation.toString());
     } else if (verb.equals("look") || verb.equals("examine")) {
       displayItemDescription(noun);
+
     } else if (verb.equals("talk") && noun.equals("turtle")) {
       turtleTalk();
     } else {
@@ -111,11 +128,66 @@ public class Game {
     }
   }
 
-  public static void findLocation(String location, String direction)
+
+  public void findLocation(String location, String direction)
       throws URISyntaxException, IOException, ParseException {
-    Location newLocation = Location.findLocation(location, direction);
+    String newLocation = Location.findLocation(location, direction);
     setCurrentLocation(newLocation);
-    System.out.println("\nYour current location " + currentLocation);
+    System.out.println("\nYour current location is " + currentLocation);
+  }
+
+  // checks if the player entered the monster room
+  private void checkMonster(String location) {
+    if (currentLocation.toString().equals("Mariana Trench")) {
+      encounterMonster("Goblin Shark");
+    }else if (currentLocation.toString().equals("Bedroom")){
+      encounterMonster("Jellyfish");
+    }
+  }
+
+  // when the players go to the monster room, this function will be called.
+  // This will check the user's inventory and if there's no item that can be used against moster,
+  // the player will be sent back to the starting place.
+  public void encounterMonster(String monster) {
+    if (monster.equals("Goblin Shark")) {
+      System.out.println("There’s a big scary Goblin Shark monster in here!");
+      for (String item : currentInventory) {
+        if (item.equals("Medicine")) {
+          System.out.println("You’ve taken some damage from the Goblin Shark, but you can use your medicine to heal yourself.");
+          wounded = true;
+          // need use item function here
+        } else if (item.equals("Squid")) {
+          System.out.println(" Use the use squid command to blind the Goblin Shark with squid ink!");
+          wounded = true;
+          // need use item function here
+        } else {
+          setCurrentLocation(startingLocation);
+          System.out.println("You've taken some damage from the Goblin Shark and fainted! \nYou were sent back to the Ocean Floor.");
+          System.out.println("Your are now in " + currentLocation);
+        }
+      }
+    }
+    if (monster.equals("Jellyfish")) {
+      System.out.println("There’s a jiggly Jellyfish monster in this room!!  Oh, what should I do?!");
+      for (String item : currentInventory){
+        if (item.equals("Medicine")) {
+          System.out.println(
+              "The Jellyfish stung you and you took some damage, but you can use your medicine to heal yourself.");
+          wounded = true;
+          // need use item function here
+        } else if (item.equals("Cloak")) {
+          System.out.println(
+              "The Jellyfish stung you and you took some damage! Use the use cloak command to sneak past the Jellyfish monster!");
+          wounded = true;
+          // need use item function here
+        } else {
+          System.out.println(
+              "You’ve fainted and were sent back to the Ocean Floor.\n Find an item to heal yourself, or an item to sneak past the Jellyfish monster!\n");
+          setCurrentLocation(startingLocation);
+          System.out.println("Your are now in " + currentLocation);
+        }
+      }
+    }
   }
 
   public static void roomDescription(String location)
@@ -123,7 +195,7 @@ public class Game {
     Location.roomDescription(location);
   }
 
-  public static void itemsInRoom(String location)
+  public void itemsInRoom(String location)
       throws IOException, ParseException, URISyntaxException {
     Location.itemsInRoom(location);
   }
