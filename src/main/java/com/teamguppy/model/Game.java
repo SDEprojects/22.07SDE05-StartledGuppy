@@ -1,6 +1,7 @@
 package com.teamguppy.model;
 
 import com.teamguppy.controller.Controller;
+import com.teamguppy.view.Learn;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -131,8 +132,9 @@ public class Game {
         roomDescription(currentLocation.toString());
         itemsInRoom(currentLocation.toString());
         Inventory.displayItemsInInventory();
+        Learn.learnAboutOceanForest(currentLocation.toString());
 
-        if (!playerWins()) {
+        if (playerWins()) {
           con.displayPlayerWins();
 //          System.exit(0);
         }
