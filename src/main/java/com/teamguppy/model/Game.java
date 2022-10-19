@@ -37,6 +37,9 @@ public class Game {
     this.currentLocation = new Location(location);
   }
 
+  public static Location getCurrentLocation() {
+    return currentLocation;
+  }
 
   public void landingRoom() throws IOException, ParseException, URISyntaxException {
     String command = null;
@@ -89,10 +92,13 @@ public class Game {
   // parsing user input for the verb + noun
   // we can make function for each verb, and call the function in here
 
+
   private void userMove() throws IOException, ParseException, URISyntaxException {
     boolean validMove;
     String verb;
     String noun;
+
+
     do {
       noun = "";
       System.out.println("\nWhat would you like to do? ");
@@ -107,18 +113,11 @@ public class Game {
       if (verb.equals("help")) {
       userHelp();
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
-      findLocation(currentLocation.toString(), noun);
+        findLocation(currentLocation.toString(), noun);
       // checking if the player enter the location with monster, and if so, call the encounterMonster function.
-      if (currentLocation.toString().equals("Mariana Trench")) {
-        System.out.println(getCurrentInventory());
-        encounterMonster("Goblin Shark");
-      }else if (currentLocation.toString().equals("Bedroom")){
-        System.out.println(getCurrentInventory());
-        encounterMonster("Jellyfish");
-      }
-      roomDescription(currentLocation.toString());
-      itemsInRoom(currentLocation.toString());
-
+        checkMonster(currentLocation.toString());
+        roomDescription(currentLocation.toString());
+        itemsInRoom(currentLocation.toString());
     } else if (verb.equals("look") || verb.equals("examine")) {
       displayItemDescription(noun);
 
@@ -129,11 +128,21 @@ public class Game {
     }
   }
 
+
   public void findLocation(String location, String direction)
       throws URISyntaxException, IOException, ParseException {
     String newLocation = Location.findLocation(location, direction);
     setCurrentLocation(newLocation);
-    System.out.println("\nYour current location " + currentLocation);
+    System.out.println("\nYour current location is " + currentLocation);
+  }
+
+  // checks if the player entered the monster room
+  private void checkMonster(String location) {
+    if (currentLocation.toString().equals("Mariana Trench")) {
+      encounterMonster("Goblin Shark");
+    }else if (currentLocation.toString().equals("Bedroom")){
+      encounterMonster("Jellyfish");
+    }
   }
 
   // when the players go to the monster room, this function will be called.
@@ -144,8 +153,7 @@ public class Game {
       System.out.println("There’s a big scary Goblin Shark monster in here!");
       for (String item : currentInventory) {
         if (item.equals("Medicine")) {
-          System.out.println(
-              "You’ve taken some damage from the Goblin Shark, but you can use your medicine to heal yourself.");
+          System.out.println("You’ve taken some damage from the Goblin Shark, but you can use your medicine to heal yourself.");
           wounded = true;
           // need use item function here
         } else if (item.equals("Squid")) {
@@ -154,15 +162,13 @@ public class Game {
           // need use item function here
         } else {
           setCurrentLocation(startingLocation);
-          System.out.println(
-              "You've taken some damage from the Goblin Shark and fainted! \nYou were sent back to the Ocean Floor.");
+          System.out.println("You've taken some damage from the Goblin Shark and fainted! \nYou were sent back to the Ocean Floor.");
           System.out.println("Your are now in " + currentLocation);
         }
       }
     }
     if (monster.equals("Jellyfish")) {
-      System.out.println(
-          "There’s a jiggly Jellyfish monster in this room!!  Oh, what should I do?!");
+      System.out.println("There’s a jiggly Jellyfish monster in this room!!  Oh, what should I do?!");
       for (String item : currentInventory){
         if (item.equals("Medicine")) {
           System.out.println(
