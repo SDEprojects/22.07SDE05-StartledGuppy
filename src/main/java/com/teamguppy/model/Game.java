@@ -125,17 +125,18 @@ public class Game {
       if (verb.equals("help")) {
       userHelp();
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
-        if (!playerWins()) {
-          con.displayPlayerWins();
-//          System.exit(0);
-        }
-
         findLocation(currentLocation.toString(), noun);
       // checking if the player enter the location with monster, and if so, call the encounterMonster function.
         checkMonster(currentLocation.toString());
         roomDescription(currentLocation.toString());
         itemsInRoom(currentLocation.toString());
         Inventory.displayItemsInInventory();
+
+        if (!playerWins()) {
+          con.displayPlayerWins();
+//          System.exit(0);
+        }
+
     } else if (verb.equals("get")) {
         currentInventory = Inventory.addItemToInventory(currentLocation.toString());
         System.out.println(currentInventory);
