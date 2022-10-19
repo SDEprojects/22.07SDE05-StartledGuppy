@@ -23,17 +23,17 @@ public class Game {
   private static final String startingItem = "Medicine";
   public Game() {
     String startingLocation = "Ocean Floor";
-    Inventory startingInventory = new Inventory("");
     setCurrentLocation(startingLocation);
+    this.currentInventory = new HashSet<>();
   }
 
 //  public ArrayList<String> getCurrentInventory1() {
 //    return currentInventory1;
 //  }
 
-  private void setCurrentInventory(String item) {
-    currentInventory.add(item);
-  }
+//  private void setCurrentInventory(String item) {
+//    currentInventory.add(item);
+//  }
   private void setCurrentLocation(String location) {
     this.currentLocation = new Location(location);
   }
@@ -121,6 +121,7 @@ public class Game {
       if (verb.equals("help")) {
       userHelp();
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
+
         findLocation(currentLocation.toString(), noun);
       // checking if the player enter the location with monster, and if so, call the encounterMonster function.
         checkMonster(currentLocation.toString());
@@ -166,41 +167,39 @@ public class Game {
   public void encounterMonster(String monster) {
     if (monster.equals("Goblin Shark")) {
       System.out.println("There’s a big scary Goblin Shark monster in here!");
-      for (String item : currentInventory) {
-        if (item.equals("Medicine")) {
-          System.out.println("You’ve taken some damage from the Goblin Shark, but you can use your medicine to heal yourself.");
-          wounded = true;
-          // need use item function here
-        } else if (item.equals("Squid")) {
-          System.out.println(" Use the use squid command to blind the Goblin Shark with squid ink!");
-          wounded = true;
-          // need use item function here
-        } else {
-          setCurrentLocation(startingLocation);
-          System.out.println("You've taken some damage from the Goblin Shark and fainted! \nYou were sent back to the Ocean Floor.");
-          System.out.println("Your are now in " + currentLocation);
-        }
+      if (currentInventory.contains("medicine")) {
+        System.out.println("You’ve taken some damage from the Goblin Shark, but you can use your medicine to heal yourself.");
+        wounded = true;
+        // need use item function here
+      } else if (currentInventory.contains("squid")) {
+        System.out.println(" Use the use squid command to blind the Goblin Shark with squid ink!");
+        wounded = true;
+        // need use item function here
+      } else {
+        setCurrentLocation(startingLocation);
+        System.out.println("You've taken some damage from the Goblin Shark and fainted! \nYou were sent back to the Ocean Floor.");
+        System.out.println("Your are now in " + currentLocation);
       }
     }
+
     if (monster.equals("Jellyfish")) {
       System.out.println("There’s a jiggly Jellyfish monster in this room!!  Oh, what should I do?!");
-      for (String item : currentInventory){
-        if (item.equals("Medicine")) {
-          System.out.println(
-              "The Jellyfish stung you and you took some damage, but you can use your medicine to heal yourself.");
-          wounded = true;
-          // need use item function here
-        } else if (item.equals("Cloak")) {
-          System.out.println(
-              "The Jellyfish stung you and you took some damage! Use the use cloak command to sneak past the Jellyfish monster!");
-          wounded = true;
-          // need use item function here
-        } else {
-          System.out.println(
-              "You’ve fainted and were sent back to the Ocean Floor.\n Find an item to heal yourself, or an item to sneak past the Jellyfish monster!\n");
-          setCurrentLocation(startingLocation);
-          System.out.println("Your are now in " + currentLocation);
-        }
+
+      if (currentInventory.contains("medicine")) {
+        System.out.println(
+            "The Jellyfish stung you and you took some damage, but you can use your medicine to heal yourself.");
+        wounded = true;
+        // need use item function here
+      } else if (currentInventory.contains("cloak")) {
+        System.out.println(
+            "The Jellyfish stung you and you took some damage! Use the use cloak command to sneak past the Jellyfish monster!");
+        wounded = true;
+        // need use item function here
+      } else {
+        System.out.println(
+            "You’ve fainted and were sent back to the Ocean Floor.\n Find an item to heal yourself, or an item to sneak past the Jellyfish monster!\n");
+        setCurrentLocation(startingLocation);
+        System.out.println("Your are now in " + currentLocation);
       }
     }
   }
