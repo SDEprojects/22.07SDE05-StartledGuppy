@@ -3,7 +3,6 @@ package com.teamguppy.model;
 import com.teamguppy.controller.Controller;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -15,7 +14,7 @@ public class Game {
 
   private static Location currentLocation;
   private Controller con = new Controller();
-  private ArrayList<String> currentInventory1 = new ArrayList<>();
+//  private ArrayList<String> currentInventory1 = new ArrayList<>();
   private Boolean wounded = false;
   private static final String startingLocation = "Ocean Floor";
   private Set<String> currentInventory;
@@ -23,22 +22,24 @@ public class Game {
 
   private static final String startingItem = "Medicine";
   public Game() {
-    Location startingLocation = new Location("Ocean Floor");
+    String startingLocation = "Ocean Floor";
     Inventory startingInventory = new Inventory("");
     setCurrentLocation(startingLocation);
   }
 
-  public ArrayList<String> getCurrentInventory() {
-    return currentInventory;
-  }
+//  public ArrayList<String> getCurrentInventory1() {
+//    return currentInventory1;
+//  }
 
   private void setCurrentInventory(String item) {
     currentInventory.add(item);
   }
   private void setCurrentLocation(String location) {
     this.currentLocation = new Location(location);
+  }
   public void setCurrentInventory(Set<String> currentInventory) {
     this.currentInventory = currentInventory;
+
   }
 
   public static Location getCurrentLocation() {
@@ -146,7 +147,7 @@ public class Game {
   public void findLocation(String location, String direction)
       throws URISyntaxException, IOException, ParseException {
     Location newLocation = Location.findLocation(location, direction);
-    setCurrentLocation(newLocation);
+    setCurrentLocation(newLocation.toString());
     System.out.println("\nYour current location is " + currentLocation);
   }
 
