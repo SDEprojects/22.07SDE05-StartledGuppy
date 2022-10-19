@@ -42,7 +42,7 @@
 
   "Engine Room" : {
     "north": "Bedroom",
-    "animal": "Guppy"
+    "item": "guppy"
   },
 
   "Ocean Plant Forest" : {
