@@ -1,11 +1,8 @@
 package com.teamguppy.model;
 
-import static com.teamguppy.model.Inventory.removeItemFromInventory;
-
 import com.teamguppy.controller.Controller;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -15,24 +12,26 @@ import org.json.simple.parser.ParseException;
 public class Game {
 
   private Location currentLocation;
-  private Inventory currentInventory;
-  private ArrayList<String> itemArray = new ArrayList<>();
+  private Set<String> currentInventory;
 
   public Game() {
     Location startingLocation = new Location("Ocean Floor");
     Inventory startingInventory = new Inventory("");
     setCurrentLocation(startingLocation);
-    setCurrentInventory(startingInventory);
+//    setCurrentInventory(startingInventory);
   }
 
   private void setCurrentLocation(Location location) {
     currentLocation = location;
   }
 
-  private void setCurrentInventory(Inventory inventory) {
-    this.currentInventory = inventory;
+  public void setCurrentInventory(Set<String> currentInventory) {
+    this.currentInventory = currentInventory;
   }
 
+  public Set<String> getCurrentInventory() {
+    return currentInventory;
+  }
 
   public void landingRoom() throws IOException, ParseException, URISyntaxException {
     String command = null;
@@ -107,32 +106,18 @@ public class Game {
       findLocation(currentLocation.toString(), noun);
       roomDescription(currentLocation.toString());
       itemsInRoom(currentLocation.toString());
+      Inventory.displayItemsInInventory();
     } else if (verb.equals("get")) {
-      Inventory.addItemToInventory(currentLocation.toString());
+      currentInventory = Inventory.addItemToInventory(currentLocation.toString());
+      System.out.println(currentInventory);
+    } else if (verb.equals("use")) {
+      currentInventory = Inventory.removeItemFromInventory(noun);
+      System.out.println(currentInventory);
     } else if (verb.equals("look")) {
       displayItemDescription(noun);
-    } else if (verb.equals("use")) {
-      itemArray = removeItemFromInventory(noun);
-      System.out.println(itemArray);
     } else {
       System.out.println("something not working ");
     }
-  }
-
-
-
-//  private ArrayList<String> addItemToInventory(String location)
-//      throws IOException, ParseException, URISyntaxException {
-//    String currentItemInRoom = itemsInRoom(location);
-//      itemArray.add(currentItemInRoom);
-//      System.out.println(itemArray);
-//      return itemArray;
-//  }
-
-  private void displayInventory(Inventory inventory)
-      throws IOException, ParseException, URISyntaxException {
-//    this.itemArray = itemArray;
-    System.out.println(itemArray);
   }
 
 
@@ -181,7 +166,7 @@ public class Game {
   private static Boolean validItem(String item) {
     Set<String> items = new HashSet<>(
         Arrays.asList("north", "south", "east", "west", "key", "medicine", "squid", "cloak",
-            "turtle", ""));
+            "turtle", "inventory", ""));
     if (items.contains(item)) {
       return true;
     } else {
@@ -197,8 +182,6 @@ public class Game {
     return input;
   }
 
-//  public static void main(String[] args) throws IOException, ParseException, URISyntaxException {
-//    addItemToInventory("Bedroom");
-//  }
+
 }
 

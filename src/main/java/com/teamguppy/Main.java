@@ -19,8 +19,5 @@ public class Main {
     controller.displayAboutGame();
     controller.displayCommands();
     game.landingRoom();
-
   }
-
-
 }

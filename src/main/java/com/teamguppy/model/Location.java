@@ -65,7 +65,6 @@ public class Location {
       }
     }
   }
-
   public static String itemsInRoom(String location)
       throws IOException, ParseException, URISyntaxException {
 
