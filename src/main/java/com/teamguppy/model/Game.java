@@ -74,7 +74,6 @@ public class Game {
     } while (true);
   }
 
-
   private void endGame() throws IOException, ParseException, URISyntaxException {
 
     System.out.println(
@@ -89,7 +88,6 @@ public class Game {
 
   // parsing user input for the verb + noun
   // we can make function for each verb, and call the function in here
-
   private void userMove() throws IOException, ParseException, URISyntaxException {
     boolean validMove;
     String verb;
@@ -109,6 +107,7 @@ public class Game {
       userHelp();
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
       findLocation(currentLocation.toString(), noun);
+      // checking if the player enter the location with monster, and if so, call the encounterMonster function.
       if (currentLocation.toString().equals("Mariana Trench")) {
         System.out.println(getCurrentInventory());
         encounterMonster("Goblin Shark");
@@ -135,6 +134,9 @@ public class Game {
     System.out.println("Your current location " + currentLocation);
   }
 
+  // when the players go to the monster room, this function will be called.
+  // This will check the user's inventory and if there's no item that can be used against moster,
+  // the player will be sent back to the starting place.
   public void encounterMonster(String monster) {
     if (monster.equals("Goblin Shark")) {
       System.out.println("There’s a big scary Goblin Shark monster in here!");
