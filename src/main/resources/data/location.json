@@ -13,7 +13,7 @@
 
   "Challenger Deep" : {
     "south" : "Mariana Trench",
-    "item" : "Cloak"
+    "item" : "cloak"
   },
 
   "Sunk Ship" : {
@@ -42,7 +42,7 @@
 
   "Engine Room" : {
     "north": "Bedroom",
-    "animal": "Guppy"
+    "item": "guppy"
   },
 
   "Ocean Plant Forest" : {
@@ -53,18 +53,18 @@
 
   "Kelp Forest" : {
     "north": "Ocean Plant Forest",
-    "item" : "Medicine"
+    "item" : "medicine"
   },
 
   "Coral Reef" : {
     "east": "Ocean Plant Forest",
     "west" : "Seaweed Forest",
-    "item" : "Key"
+    "item" : "key"
   },
 
   "Seaweed Forest" : {
     "east" : "Coral Reef",
-    "item" : "Squid"
+    "item" : "squid"
   }
 
 }
