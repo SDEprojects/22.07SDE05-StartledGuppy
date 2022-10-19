@@ -13,6 +13,7 @@ public class Game {
 
   private static Location currentLocation;
   private Inventory currentInventory;
+  private Controller con = new Controller();
 
   public Game() {
     Location startingLocation = new Location("Ocean Floor");
@@ -28,13 +29,13 @@ public class Game {
   private void setCurrentInventory(Inventory inventory) { this.currentInventory = inventory;}
 
 
-  public static void landingRoom() throws IOException, ParseException, URISyntaxException {
+  public void landingRoom() throws IOException, ParseException, URISyntaxException {
     String command = null;
     try (Scanner sc = new Scanner(System.in)) {
       label:
       do {
         if (currentLocation.toString().equals("Ocean Floor")) {
-          System.out.println("Enter 'yes' to continue and 'quit' to end the game.");
+          System.out.println("\nEnter 'yes' to continue and 'quit' to end the game.");
           command = sc.nextLine();
           switch (command) {
             case "yes":
@@ -58,14 +59,14 @@ public class Game {
     return (true);
   }
 
-  private static void startGame() throws IOException, ParseException, URISyntaxException {
+  private void startGame() throws IOException, ParseException, URISyntaxException {
     do {
       userMove();
     } while (true);
   }
 
 
-  private static void endGame() throws IOException, ParseException, URISyntaxException {
+  private void endGame() throws IOException, ParseException, URISyntaxException {
 
     System.out.println(
         "Are you sure you wish to exit the game?\nEnter 'yes' to exit and 'no' to return.");
@@ -80,13 +81,13 @@ public class Game {
   // parsing user input for the verb + noun
   // we can make function for each verb, and call the function in here
 
-  private static void userMove() throws IOException, ParseException, URISyntaxException {
+  private void userMove() throws IOException, ParseException, URISyntaxException {
     boolean validMove;
     String verb;
     String noun;
     do {
       noun = "";
-      System.out.println("What would you like to do? ");
+      System.out.println("\nWhat would you like to do? ");
       String input = userInput();
       String[] arr = input.toLowerCase().split(" ");
       verb = arr[0];
@@ -103,8 +104,10 @@ public class Game {
       itemsInRoom(currentLocation.toString());
     } else if (verb.equals("look") || verb.equals("examine")) {
       displayItemDescription(noun);
-    } else{
-      System.out.println("something not working ");
+    } else if (verb.equals("talk") && noun.equals("turtle")) {
+      turtleTalk();
+    } else {
+      System.out.println("You try to talk to the " + noun + ", but the " + noun + " doesn't talk back...");
     }
   }
 
@@ -112,7 +115,7 @@ public class Game {
       throws URISyntaxException, IOException, ParseException {
     Location newLocation = Location.findLocation(location, direction);
     setCurrentLocation(newLocation);
-    System.out.println("Your current location " + currentLocation);
+    System.out.println("\nYour current location " + currentLocation);
   }
 
   public static void roomDescription(String location)
@@ -129,14 +132,17 @@ public class Game {
     Item.findDescription(item);
   }
 
-  public static void userHelp() {
-    Controller con = new Controller();
+  public void userHelp() {
     con.displayCommands();
+  }
+
+  public void turtleTalk() {
+    con.displayTurtleTalk();
   }
 
   // validate user's move input
   private static Boolean validMove(String move) {
-    Set<String> moves = new HashSet<>(Arrays.asList("go", "swim", "move", "get", "grab", "look", "examine", "help", "ask"));
+    Set<String> moves = new HashSet<>(Arrays.asList("go", "swim", "move", "get", "grab", "look", "examine", "help", "talk"));
     if (moves.contains(move)) {
       return true;
     } else {
@@ -147,8 +153,7 @@ public class Game {
 
   private static Boolean validItem(String item) {
     Set<String> items = new HashSet<>(
-        Arrays.asList("north", "south", "east", "west", "key", "medicine", "squid", "cloak",
-            "turtle", ""));
+        Arrays.asList("north", "south", "east", "west", "key", "medicine", "squid", "cloak", "turtle", ""));
     if (items.contains(item)) {
       return true;
     } else {

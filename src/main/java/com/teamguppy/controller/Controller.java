@@ -30,4 +30,8 @@ public class Controller {
     System.out.println(view.getCommands());
   }
 
+  public void displayTurtleTalk() {
+    System.out.println(view.getTurtleTalk());
+  }
+
 }
