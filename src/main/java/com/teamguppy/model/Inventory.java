@@ -1,15 +1,11 @@
 package com.teamguppy.model;
 
-import static com.teamguppy.model.Location.itemsInRoom;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import org.json.simple.parser.ParseException;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 
 public class Inventory {
@@ -35,8 +31,8 @@ public class Inventory {
 
   public static Set<String> addItemToInventory(String location)
       throws IOException, ParseException, URISyntaxException {
-    String currentItemInRoom = itemsInRoom(location);
-    itemArray.add(currentItemInRoom);
+//    String currentItemInRoom =
+//    itemArray.add(currentItemInRoom);
     displayItemsInInventory();
     return itemArray;
   }

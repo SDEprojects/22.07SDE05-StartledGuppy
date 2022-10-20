@@ -86,8 +86,31 @@ public class Room {
   }
 
   public void deleteItem(String item) {
+
     this.item = null;
   }
+
+  public static void roomDescription(Room location) {
+    String south = location.getSouth();
+    String north = location.getNorth();
+    String west = location.getWest();
+    String east = location.getEast();
+    String direction = null;
+
+    if (south !=null) {
+      System.out.println("[This room has " + south + " on South.]");
+    }
+    if (north != null) {
+      System.out.println("[This room has " + north + " on North.]");
+    }
+    if (east != null) {
+      System.out.println("[This room has " + east + " on East.]");
+    }
+    if (west != null) {
+      System.out.println("[This room has " + west + " on West.]");
+    }
+  }
+
 
 }
 

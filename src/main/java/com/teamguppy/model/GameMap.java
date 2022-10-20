@@ -27,17 +27,17 @@ public class GameMap {
   }
 
 
-  public void createLocation(){
+  public GameMap createMap() {
     Gson gson = new Gson();
     BufferedReader br = null;
 
-
-    try{
+    GameMap location;
+    try {
       br = new BufferedReader(new FileReader("src/main/resources/data/location.json"));
-      GameMap location = gson.fromJson(br, GameMap.class);
+      location = gson.fromJson(br, GameMap.class);
 
       if (location != null) {
-        for (Room loc : location.getLocations()){
+        for (Room loc : location.getLocations()) {
         }
         System.out.println("game map created");
       }
@@ -45,7 +45,7 @@ public class GameMap {
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e);
     } finally {
-      if (br !=null) {
+      if (br != null) {
         try {
           br.close();
 
@@ -54,7 +54,41 @@ public class GameMap {
         }
       }
     }
+    return location;
   }
+
+  public Room findLocation(GameMap map, String location) {
+    Room findingLoc = null;
+    if (map != null) {
+      for (Room loc : map.getLocations()) {
+        if (loc.getName().equals(location)) {
+          findingLoc = loc;
+        }
+      }
+    }else if (map == null){
+      System.out.println("no map found");
+    }
+    return findingLoc;
+
+  }
+
+
+  public String displayItems(GameMap map, String location) {
+    String currentItem = null;
+    if (map != null) {
+      for (Room loc : map.getLocations()) {
+        if (loc.getName().equals(location)) {
+          System.out.println(loc.getItem());
+          currentItem = loc.getItem().toString();
+          System.out.println("This room has " + currentItem);
+        }
+      }
+      System.out.println("game map not showing");
+    }
+    return currentItem;
+  }
+
+
 
   public GameMap removeItemFromRoom(GameMap map, String item){
     if (map != null) {
@@ -71,6 +105,10 @@ public class GameMap {
   }
   public static void main(String[] args) {
     GameMap location = new GameMap();
-    location.createLocation();
+    location = location.createMap();
+    List<Room> map = location.getLocations();
+    location.findLocation(location, "Ocean Floor");
+
+
   }
 }

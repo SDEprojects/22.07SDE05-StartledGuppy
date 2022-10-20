@@ -39,29 +39,29 @@ public class Location {
     this.name = name;
   }
 
-  public static Location findLocation(String location, String direction)
-      throws URISyntaxException, IOException, ParseException {
-
-    String location1 = null;
-    Location location2 = new Location(location);
-    Map locationList = jsonParsing(location);
-    Iterator<Entry> itr1 = locationList.entrySet().iterator();
-    while (itr1.hasNext()) {
-      Entry pair = itr1.next();
-      if (pair.getKey().equals(direction)) {
-        location1 = pair.getValue().toString();
-        location2 = new Location(location1);
-        break;
-      } else {
-        location1 = null;
-      }
-    }
-
-    if (location1.equals(location)) {
-      System.out.println("\nThere is no room in " + direction);
-    }
-    return location2;
-  }
+//  public static Location findLocation(String location, String direction)
+//      throws URISyntaxException, IOException, ParseException {
+//
+//    String location1 = null;
+//    Location location2 = new Location(location);
+//    Map locationList = jsonParsing(location);
+//    Iterator<Entry> itr1 = locationList.entrySet().iterator();
+//    while (itr1.hasNext()) {
+//      Entry pair = itr1.next();
+//      if (pair.getKey().equals(direction)) {
+//        location1 = pair.getValue().toString();
+//        location2 = new Location(location1);
+//        break;
+//      } else {
+//        location1 = null;
+//      }
+//    }
+//
+//    if (location1.equals(location)) {
+//      System.out.println("\nThere is no room in " + direction);
+//    }
+//    return location2;
+//  }
 
   public static void roomDescription(String location)
       throws IOException, ParseException, URISyntaxException {
@@ -78,22 +78,22 @@ public class Location {
       }
     }
   }
-  public static String itemsInRoom(String location)
-      throws IOException, ParseException, URISyntaxException {
-
-    Map locationList = jsonParsing(location);
-    Iterator<Entry> itr1 = locationList.entrySet().iterator();
-    while (itr1.hasNext()) {
-      Entry pair = itr1.next();
-      String pairKey = pair.getKey().toString();
-      String pairValue = pair.getValue().toString();
-      if (pairKey.equals("item")) {
-        System.out.println("This room has " + pairValue + " " + pairKey);
-        return pairValue;
-      }
-    }
-    return null;
-  }
+//  public static String itemsInRoom(String location)
+//      throws IOException, ParseException, URISyntaxException {
+//
+//    Map locationList = jsonParsing(location);
+//    Iterator<Entry> itr1 = locationList.entrySet().iterator();
+//    while (itr1.hasNext()) {
+//      Entry pair = itr1.next();
+//      String pairKey = pair.getKey().toString();
+//      String pairValue = pair.getValue().toString();
+//      if (pairKey.equals("item")) {
+//        System.out.println("This room has " + pairValue + " " + pairKey);
+//        return pairValue;
+//      }
+//    }
+//    return null;
+//  }
 
   public static void animalInRoom(String location)
       throws IOException, ParseException, URISyntaxException {
@@ -153,7 +153,7 @@ public class Location {
   }
 
   public static void main(String[] args) throws IOException, ParseException, URISyntaxException {
-    itemsInRoom("Kelp Forest");
+//    itemsInRoom("Kelp Forest");
   }
 }
 
