@@ -144,7 +144,7 @@ public class Game {
       }
 
     } else if (verb.equals("get") || verb.equals("grab")) {
-      addItemToInventory(currentLocation.toString());
+      addItemToInventory(currentLocation.toString(), noun);
       System.out.println(currentInventory);
     } else if (verb.equals("use")) {
       currentInventory = Inventory.removeItemFromInventory(noun);
@@ -244,13 +244,13 @@ public class Game {
     }
   }
 
-  public void addItemToInventory(String location)
+  public void addItemToInventory(String location, String noun)
       throws IOException, ParseException, URISyntaxException {
     String item = Location.itemsInRoom(location);
-    if (item != null) {
+    if (item != null && item.equals(noun)) {
       currentInventory = Inventory.addItemToInventory(item);
     } else {
-      System.out.println("There is no item in this room.");
+      System.out.println("There is no " + noun + " in this room.");
     }
   }
 
