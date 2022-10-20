@@ -95,7 +95,7 @@ public class Location {
     return null;
   }
 
-  public static void animalInRoom(String location)
+  public static String animalInRoom(String location)
       throws IOException, ParseException, URISyntaxException {
 
     Map locationList = jsonParsing(location);
@@ -106,9 +106,11 @@ public class Location {
       String pairValue = pair.getValue().toString();
       if (pairKey.equals("animal")) {
         System.out.println("This room has " + pairValue + " " + pairKey);
+        System.out.println(pairValue);
+        return pairValue;
       }
     }
-
+    return null;
   }
 
 
@@ -140,7 +142,7 @@ public class Location {
   }
 
   public static void main(String[] args) throws IOException, ParseException, URISyntaxException {
-    itemsInRoom("Kelp Forest");
+    animalInRoom("Bridge");
   }
 
 }

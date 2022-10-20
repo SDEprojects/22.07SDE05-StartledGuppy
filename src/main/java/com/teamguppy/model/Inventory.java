@@ -1,15 +1,10 @@
 package com.teamguppy.model;
 
-import static com.teamguppy.model.Location.itemsInRoom;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import org.json.simple.parser.ParseException;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 
 public class Inventory {
@@ -25,34 +20,41 @@ public class Inventory {
   public void setItem(String item) {
     this.item = item;
   }
+
   public static void setItemArray(Set<String> itemArray) {
     Inventory.itemArray = itemArray;
   }
+
   public static Set<String> getItemArray() {
     return itemArray;
   }
 
 
-  public static Set<String> addItemToInventory(String location)
-      throws IOException, ParseException, URISyntaxException {
-    String currentItemInRoom = itemsInRoom(location);
-    itemArray.add(currentItemInRoom);
-    displayItemsInInventory();
+  //  public static Set<String> addItemToInventory(String location)
+//      throws IOException, ParseException, URISyntaxException {
+//    String currentItemInRoom = itemsInRoom(location);
+//    itemArray.add(currentItemInRoom);
+//    displayItemsInInventory();
+//    return itemArray;
+//  }
+  public static Set<String> addItemToInventory(String item) {
+    itemArray.add(item);
     return itemArray;
   }
+
   public static void displayItemsInInventory() {
     System.out.println(itemArray);
   }
 
   public static Set<String> removeItemFromInventory(String item) {
-      if (itemArray.contains(item)) {
-        itemArray.remove(item);
-        System.out.println("Your have used " + item + " from your inventory");
-        System.out.println(itemArray);
-        return itemArray;
-      }else {
-        System.out.println("You don't have " + item + " in your inventory.");
-      }
+    if (itemArray.contains(item)) {
+      itemArray.remove(item);
+      System.out.println("Your have used " + item + " from your inventory");
+      System.out.println(itemArray);
+      return itemArray;
+    } else {
+      System.out.println("You don't have " + item + " in your inventory.");
+    }
     System.out.println(itemArray);
     return itemArray;
   }

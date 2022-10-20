@@ -15,30 +15,33 @@ public class Game {
 
   private static Location currentLocation;
   private Controller con = new Controller();
-//  private ArrayList<String> currentInventory1 = new ArrayList<>();
+  //  private ArrayList<String> currentInventory1 = new ArrayList<>();
   private Boolean wounded = false;
-//  private static final String startingLocation = "Ocean Floor";
+  //  private static final String startingLocation = "Ocean Floor";
   private static final String startingLocation = "Ocean Floor";
   private Set<String> currentInventory;
 
 
   private static final String startingItem = "Medicine";
+
   public Game() {
     String startingLocation = "Ocean Floor";
     setCurrentLocation(startingLocation);
     this.currentInventory = new HashSet<>();
+    System.out.println(currentLocation);
   }
 
 //  public ArrayList<String> getCurrentInventory1() {
 //    return currentInventory1;
 //  }
 
-//  private void setCurrentInventory(String item) {
+  //  private void setCurrentInventory(String item) {
 //    currentInventory.add(item);
 //  }
   private void setCurrentLocation(String location) {
     this.currentLocation = new Location(location);
   }
+
   public void setCurrentInventory(Set<String> currentInventory) {
     this.currentInventory = currentInventory;
 
@@ -47,6 +50,7 @@ public class Game {
   public static Location getCurrentLocation() {
     return currentLocation;
   }
+
   public Set<String> getCurrentInventory() {
     return currentInventory;
   }
@@ -108,10 +112,11 @@ public class Game {
     String verb;
     String noun;
 
-
     do {
       noun = "";
-      System.out.println("\nWhat would you like to do? ");
+      System.out.println("\n[Your current location is " + currentLocation + ".]");
+      roomDescription(currentLocation.toString());
+      System.out.println("\nWhat would you like to do next? ");
       String input = userInput();
       String[] arr = input.toLowerCase().split(" ");
       verb = arr[0];
@@ -123,35 +128,37 @@ public class Game {
 //      if (currentLocation.toString().equals("Ocean Floor")) {
 //        System.out.println("TEST WIN!");
 //      }
-      if (verb.equals("help")) {
+    if (verb.equals("help")) {
       userHelp();
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
-        findLocation(currentLocation.toString(), noun);
+      findLocation(currentLocation.toString(), noun);
       // checking if the player enter the location with monster, and if so, call the encounterMonster function.
-        checkMonster(currentLocation.toString());
-        roomDescription(currentLocation.toString());
-        itemsInRoom(currentLocation.toString());
-        Inventory.displayItemsInInventory();
-        Learn.learnAboutOceanForest(currentLocation.toString());
+      checkMonster(currentLocation.toString());
+//      roomDescription(currentLocation.toString());
+      itemsInRoom(currentLocation.toString());
+      Inventory.displayItemsInInventory();
 
-        if (playerWins()) {
-          con.displayPlayerWins();
+      if (playerWins()) {
+        con.displayPlayerWins();
 //          System.exit(0);
-        }
+      }
 
     } else if (verb.equals("get") || verb.equals("grab")) {
-        currentInventory = Inventory.addItemToInventory(currentLocation.toString());
-        System.out.println(currentInventory);
-      } else if (verb.equals("use")) {
-        currentInventory = Inventory.removeItemFromInventory(noun);
-        System.out.println(currentInventory);
-      } else if (verb.equals("look") || verb.equals("examine")) {
+      addItemToInventory(currentLocation.toString());
+      System.out.println(currentInventory);
+    } else if (verb.equals("use")) {
+      currentInventory = Inventory.removeItemFromInventory(noun);
+      System.out.println(currentInventory);
+    } else if (verb.equals("look") || verb.equals("examine")) {
       displayItemDescription(noun);
 
+    } else if (verb.equals("learn")) {
+      learnAboutRoom(currentLocation.toString());
     } else if (verb.equals("talk") && noun.equals("turtle")) {
       turtleTalk();
     } else {
-      System.out.println("You try to talk to the " + noun + ", but the " + noun + " doesn't talk back...");
+      System.out.println(
+          "You try to talk to the " + noun + ", but the " + noun + " doesn't talk back...");
     }
   }
 
@@ -160,14 +167,14 @@ public class Game {
       throws URISyntaxException, IOException, ParseException {
     Location newLocation = Location.findLocation(location, direction);
     setCurrentLocation(newLocation.toString());
-    System.out.println("\nYour current location is " + currentLocation);
+//    System.out.println("\nYour current location is " + currentLocation);
   }
 
   // checks if the player entered the monster room
   private void checkMonster(String location) {
     if (currentLocation.toString().equals("Mariana Trench")) {
       encounterMonster("Goblin Shark");
-    }else if (currentLocation.toString().equals("Bedroom")){
+    } else if (currentLocation.toString().equals("Bedroom")) {
       encounterMonster("Jellyfish");
     }
   }
@@ -179,7 +186,8 @@ public class Game {
     if (monster.equals("Goblin Shark")) {
       System.out.println("There’s a big scary Goblin Shark monster in here!");
       if (currentInventory.contains("medicine")) {
-        System.out.println("You’ve taken some damage from the Goblin Shark, but you can use your medicine to heal yourself.");
+        System.out.println(
+            "You’ve taken some damage from the Goblin Shark, but you can use your medicine to heal yourself.");
         wounded = true;
         // need use item function here
       } else if (currentInventory.contains("squid")) {
@@ -188,13 +196,15 @@ public class Game {
         // need use item function here
       } else {
         setCurrentLocation(startingLocation);
-        System.out.println("You've taken some damage from the Goblin Shark and fainted! \nYou were sent back to the Ocean Floor.");
+        System.out.println(
+            "You've taken some damage from the Goblin Shark and fainted! \nYou were sent back to the Ocean Floor.");
         System.out.println("Your are now in " + currentLocation);
       }
     }
 
     if (monster.equals("Jellyfish")) {
-      System.out.println("There’s a jiggly Jellyfish monster in this room!!  Oh, what should I do?!");
+      System.out.println(
+          "There’s a jiggly Jellyfish monster in this room!!  Oh, what should I do?!");
 
       if (currentInventory.contains("medicine")) {
         System.out.println(
@@ -225,13 +235,33 @@ public class Game {
     Location.itemsInRoom(location);
   }
 
+  public static void learnAboutRoom(String location)
+      throws IOException, ParseException, URISyntaxException {
+    Learn.learnAboutOceanForest(location);
+    String animal = Location.animalInRoom(location);
+    if (animal != null) {
+      Learn.learnAboutOceanAnimal(animal);
+    }
+  }
+
+  public void addItemToInventory(String location)
+      throws IOException, ParseException, URISyntaxException {
+    String item = Location.itemsInRoom(location);
+    if (item != null) {
+      currentInventory = Inventory.addItemToInventory(item);
+    } else {
+      System.out.println("There is no item in this room.");
+    }
+  }
+
   public static void displayItemDescription(String item) throws IOException, ParseException {
     Item.findDescription(item);
   }
 
   public boolean playerWins() {
     boolean playerWon = false;
-    if (currentLocation.toString().equals("Ocean Floor") && Inventory.getItemArray().contains("guppy")) {
+    if (currentLocation.toString().equals("Ocean Floor") && Inventory.getItemArray()
+        .contains("guppy")) {
       playerWon = true;
     }
     return playerWon;
@@ -247,22 +277,27 @@ public class Game {
 
   // validate user's move input
   private static Boolean validMove(String move) {
-    Set<String> moves = new HashSet<>(Arrays.asList("go", "swim", "move", "get", "grab", "look", "examine", "help", "talk", "use"));
+    Set<String> moves = new HashSet<>(
+        Arrays.asList("go", "swim", "move", "get", "grab", "look", "examine", "help", "talk", "use",
+            "learn"));
     if (moves.contains(move)) {
       return true;
     } else {
-      System.out.println("Sorry, I don't understand. Please check the Game Commands for valid move.");
+      System.out.println(
+          "Sorry, I don't understand. Please check the Game Commands for valid move.");
       return false;
     }
   }
 
   private static Boolean validItem(String item) {
     Set<String> items = new HashSet<>(
-        Arrays.asList("north", "south", "east", "west", "key", "medicine", "squid", "cloak", "turtle", "guppy", ""));
+        Arrays.asList("north", "south", "east", "west", "key", "medicine", "squid", "cloak",
+            "turtle", "guppy", ""));
     if (items.contains(item)) {
       return true;
     } else {
-      System.out.println("Sorry, I don't understand. Please check the Game Commands for valid item.");
+      System.out.println(
+          "Sorry, I don't understand. Please check the Game Commands for valid item.");
       return false;
     }
   }
@@ -272,5 +307,9 @@ public class Game {
     String input = sc.nextLine();
     return input;
   }
+
+//  public static void main(String[] args) throws IOException, ParseException, URISyntaxException {
+//    learnAboutRoom("Bridge");
+//  }
 }
 
