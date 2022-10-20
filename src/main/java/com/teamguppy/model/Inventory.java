@@ -32,7 +32,7 @@ public class Inventory {
   public static Set<String> addItemToInventory(String item)
       throws IOException, ParseException, URISyntaxException {
 //    String currentItemInRoom =
-    itemArray.add(item);
+    itemArray.add(item.toUpperCase());
     displayItemsInInventory();
     return itemArray;
   }
@@ -41,8 +41,9 @@ public class Inventory {
   }
 
   public static Set<String> removeItemFromInventory(String item) {
-      if (itemArray.contains(item)) {
-        itemArray.remove(item);
+    String usedItem = item.toUpperCase();
+      if (itemArray.contains(usedItem)) {
+        itemArray.remove(usedItem);
         System.out.println("Your have used " + item + " from your inventory");
         System.out.println(itemArray);
         return itemArray;

@@ -26,12 +26,11 @@ public class GameMap {
     this.locations = locations;
   }
 
-
   public GameMap createMap() {
     Gson gson = new Gson();
     BufferedReader br = null;
-
     GameMap location;
+
     try {
       br = new BufferedReader(new FileReader("src/main/resources/data/location.json"));
       location = gson.fromJson(br, GameMap.class);
@@ -41,14 +40,12 @@ public class GameMap {
         }
         System.out.println("game map created");
       }
-
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e);
     } finally {
       if (br != null) {
         try {
           br.close();
-
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -69,9 +66,7 @@ public class GameMap {
       System.out.println("no map found");
     }
     return findingLoc;
-
   }
-
 
   public GameMap removeItemFromRoom(GameMap map, String item){
     String checkingItem = item.toLowerCase();
@@ -80,8 +75,6 @@ public class GameMap {
       for (Room loc : map.getLocations()) {
         if (loc.getItem()!=null && loc.getItem().equals(item)) {
           loc.deleteItem(item);
-          System.out.println("check "+ loc.getItem() +" " + loc.getItem());
-
         }
       }
     }else if (map == null){
@@ -89,6 +82,22 @@ public class GameMap {
     }
     return map;
   }
+
+  public GameMap removeAnimalFromRoom(GameMap map, String monster){
+    String checkingMonster = monster.toLowerCase();
+    Room updatedRoom = null;
+    if (map != null) {
+      for (Room loc : map.getLocations()) {
+        if (loc.getAnimal()!=null && loc.getAnimal().equals(monster)) {
+          loc.deleteAnimal(monster);
+        }
+      }
+    }else if (map == null){
+      System.out.println("no map found");
+    }
+    return map;
+  }
+
   public static void main(String[] args) {
     GameMap location = new GameMap();
     location = location.createMap();

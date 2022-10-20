@@ -86,8 +86,11 @@ public class Room {
   }
 
   public void deleteItem(String item) {
-
     this.item = null;
+  }
+
+  public void deleteAnimal(String animal) {
+    this.animal = null;
   }
 
   public static void roomDescription(Room location) {

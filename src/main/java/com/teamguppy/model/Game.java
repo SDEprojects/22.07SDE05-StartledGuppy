@@ -119,7 +119,6 @@ public class Game {
     String verb;
     String noun;
 
-
     do {
       noun = "";
       System.out.println("\nWhat would you like to do? ");
@@ -139,7 +138,7 @@ public class Game {
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
         System.out.println(getCurrentLocation().getName());
         findLocationByDirection(noun.toLowerCase());
-        checkMonster(currentLocation.toString());
+        checkMonster();
         roomDescription(currentLocation);
         itemsInRoom(currentLocation);
         Inventory.displayItemsInInventory();
@@ -154,7 +153,6 @@ public class Game {
         currentInventory = Inventory.addItemToInventory(currentItem);
         System.out.println(currentItem);
         gameMap.removeItemFromRoom(gameMap, currentItem);
-
 
 
       } else if (verb.equals("use")) {
@@ -193,11 +191,16 @@ public class Game {
   }
 
   // checks if the player entered the monster room
-  private void checkMonster(String location) {
-    if (currentLocation.toString().equals("Mariana Trench")) {
-      encounterMonster("Goblin Shark");
-    }else if (currentLocation.toString().equals("Bedroom")){
-      encounterMonster("Jellyfish");
+  private void checkMonster() {
+    String goblinShark = "Goblin Shark";
+    String jellyFish = "Jellyfish";
+    String monster = currentLocation.getAnimal();
+    if (monster != null) {
+      if (monster.equals(goblinShark)) {
+        encounterMonster(goblinShark);
+      } else if (monster.equals(jellyFish)) {
+        encounterMonster(jellyFish);
+      }
     }
   }
 
@@ -207,30 +210,30 @@ public class Game {
   public void encounterMonster(String monster) {
     if (monster.equals("Goblin Shark")) {
       System.out.println("There’s a big scary Goblin Shark monster in here!");
-      if (currentInventory.contains("medicine")) {
+      if (currentInventory.contains("MEDICINE")) {
         System.out.println("You’ve taken some damage from the Goblin Shark, but you can use your medicine to heal yourself.");
         wounded = true;
         // need use item function here
-      } else if (currentInventory.contains("squid")) {
+      } else if (currentInventory.contains("SQUID")) {
         System.out.println(" Use the use squid command to blind the Goblin Shark with squid ink!");
         wounded = true;
         // need use item function here
       } else {
 //        setCurrentLocation(startingLocation);
         System.out.println("You've taken some damage from the Goblin Shark and fainted! \nYou were sent back to the Ocean Floor.");
-        System.out.println("Your are now in " + currentLocation);
+        System.out.println("Your are now in " + currentLocation.getName());
       }
     }
 
     if (monster.equals("Jellyfish")) {
       System.out.println("There’s a jiggly Jellyfish monster in this room!!  Oh, what should I do?!");
 
-      if (currentInventory.contains("medicine")) {
+      if (currentInventory.contains("MEDICINE")) {
         System.out.println(
             "The Jellyfish stung you and you took some damage, but you can use your medicine to heal yourself.");
         wounded = true;
         // need use item function here
-      } else if (currentInventory.contains("cloak")) {
+      } else if (currentInventory.contains("CLOAK")) {
         System.out.println(
             "The Jellyfish stung you and you took some damage! Use the use cloak command to sneak past the Jellyfish monster!");
         wounded = true;
@@ -242,6 +245,7 @@ public class Game {
         System.out.println("Your are now in " + currentLocation);
       }
     }
+    gameMap.removeAnimalFromRoom(gameMap, monster);
   }
 
   public static void roomDescription(Room location)
