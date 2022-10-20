@@ -21,12 +21,15 @@ public class Game {
   private static final String startingLocation = "Ocean Floor";
   private Set<String> currentInventory;
 
+  private GameMap gameMap;
 
   private static final String startingItem = "Medicine";
   public Game() {
     String startingLocation = "Ocean Floor";
     setCurrentLocation(startingLocation);
     this.currentInventory = new HashSet<>();
+    gameMap = new GameMap();
+    gameMap.createLocation();
   }
 
 //  public ArrayList<String> getCurrentInventory1() {

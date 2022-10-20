@@ -1,78 +1,62 @@
 package com.teamguppy.model;
 
+import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
+import javax.annotation.processing.Generated;
+
+@Generated("jsonschema2pojo")
 public class GameMap {
-  private String name;
-  private String item;
-  private String south;
-  private String north;
-  private String west;
-  private String east;
-  private String animal;
 
+  @SerializedName("locations")
+  @Expose
+  private List<Room> locations = null;
 
-
-  public GameMap(){}
-
-  public String getName() {
-    return name;
+  public List<Room> getLocations() {
+    return locations;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setLocation(List<Room> locations) {
+    this.locations = locations;
   }
 
-  public String getItem() {
-    return item;
+
+  public void createLocation(){
+    Gson gson = new Gson();
+    BufferedReader br = null;
+    GameMap location = new GameMap();
+
+    try{
+      br = new BufferedReader(new FileReader("src/main/resources/data/location.json"));
+      location = gson.fromJson(br, GameMap.class);
+
+      if (location != null) {
+        for (Room loc : location.getLocations()){
+        }
+        System.out.println("game map created");
+      }
+
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(e);
+    } finally {
+      if (br !=null) {
+        try {
+          br.close();
+
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
-  public void setItem(String item) {
-    this.item = item;
+  public static void main(String[] args) {
+    GameMap location = new GameMap();
+    location.createLocation();
   }
-
-  public String getSouth() {
-    return south;
-  }
-
-  public void setSouth(String south) {
-    this.south = south;
-  }
-
-  public String getNorth() {
-    return north;
-  }
-
-  public void setNorth(String north) {
-    this.north = north;
-  }
-
-  public String getWest() {
-    return west;
-  }
-
-  public void setWest(String west) {
-    this.west = west;
-  }
-
-  public String getEast() {
-    return east;
-  }
-
-  public void setEast(String east) {
-    this.east = east;
-  }
-
-  public String getAnimal() {
-    return animal;
-  }
-
-  public void setAnimal(String animal) {
-    this.animal = animal;
-  }
-//  public Map(String name, String item, String south, String north, String west, String east, String animal){
-//
-//  }
-
-
-
-
 }
