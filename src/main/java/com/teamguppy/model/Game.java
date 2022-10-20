@@ -24,6 +24,11 @@ public class Game {
   private GameMap gameMap;
 
   private static final String startingItem = "Medicine";
+
+  public void setGameMap(GameMap gameMap) {
+    this.gameMap = gameMap;
+  }
+
   public Game() {
     String startingLocation = "Ocean Floor";
     setCurrentLocation(startingLocation);
@@ -32,13 +37,6 @@ public class Game {
     gameMap.createLocation();
   }
 
-//  public ArrayList<String> getCurrentInventory1() {
-//    return currentInventory1;
-//  }
-
-//  private void setCurrentInventory(String item) {
-//    currentInventory.add(item);
-//  }
   private void setCurrentLocation(String location) {
     this.currentLocation = new Location(location);
   }
@@ -130,7 +128,7 @@ public class Game {
       userHelp();
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
         findLocation(currentLocation.toString(), noun);
-      // checking if the player enter the location with monster, and if so, call the encounterMonster function.
+      // checking if the player enter the room that has monster, and if so, call the encounterMonster function.
         checkMonster(currentLocation.toString());
         roomDescription(currentLocation.toString());
         itemsInRoom(currentLocation.toString());
@@ -144,7 +142,9 @@ public class Game {
 
     } else if (verb.equals("get") || verb.equals("grab")) {
         currentInventory = Inventory.addItemToInventory(currentLocation.toString());
+        setGameMap(gameMap.removeItemFromRoom(gameMap, noun));
         System.out.println(currentInventory);
+
       } else if (verb.equals("use")) {
         currentInventory = Inventory.removeItemFromInventory(noun);
         System.out.println(currentInventory);

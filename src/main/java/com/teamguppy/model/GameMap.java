@@ -13,6 +13,7 @@ import javax.annotation.processing.Generated;
 @Generated("jsonschema2pojo")
 public class GameMap {
 
+
   @SerializedName("locations")
   @Expose
   private List<Room> locations = null;
@@ -29,11 +30,11 @@ public class GameMap {
   public void createLocation(){
     Gson gson = new Gson();
     BufferedReader br = null;
-    GameMap location = new GameMap();
+
 
     try{
       br = new BufferedReader(new FileReader("src/main/resources/data/location.json"));
-      location = gson.fromJson(br, GameMap.class);
+      GameMap location = gson.fromJson(br, GameMap.class);
 
       if (location != null) {
         for (Room loc : location.getLocations()){
@@ -55,6 +56,19 @@ public class GameMap {
     }
   }
 
+  public GameMap removeItemFromRoom(GameMap map, String item){
+    if (map != null) {
+      for (Room loc : map.getLocations()){
+        if (loc.getItem().equals("item")){
+          System.out.println(loc.getItem());
+          loc.deleteItem(item);
+          System.out.println(loc.getItem());
+        }
+      }
+      System.out.println("game map created");
+    }
+    return map;
+  }
   public static void main(String[] args) {
     GameMap location = new GameMap();
     location.createLocation();

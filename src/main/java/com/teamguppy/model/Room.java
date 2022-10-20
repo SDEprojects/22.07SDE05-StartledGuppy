@@ -85,6 +85,10 @@ public class Room {
     this.item = item;
   }
 
+  public void deleteItem(String item) {
+    this.item = null;
+  }
+
 }
 
 
