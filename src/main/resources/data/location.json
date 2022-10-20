@@ -42,7 +42,7 @@
 
   {"name": "Engine Room",
     "north": "Bedroom",
-    "animal": "Guppy"
+    "item": "guppy"
   },
 
   {"name": "Ocean Plant Forest",

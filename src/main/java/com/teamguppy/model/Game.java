@@ -1,6 +1,7 @@
 package com.teamguppy.model;
 
 import com.teamguppy.controller.Controller;
+import com.teamguppy.view.Learn;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -16,6 +17,7 @@ public class Game {
   private Controller con = new Controller();
 //  private ArrayList<String> currentInventory1 = new ArrayList<>();
   private Boolean wounded = false;
+//  private static final String startingLocation = "Ocean Floor";
   private static final String startingLocation = "Ocean Floor";
   private Set<String> currentInventory;
 
@@ -118,17 +120,26 @@ public class Game {
         noun = arr[1];
       }
     } while (!(validMove && validItem(noun)));
+//      if (currentLocation.toString().equals("Ocean Floor")) {
+//        System.out.println("TEST WIN!");
+//      }
       if (verb.equals("help")) {
       userHelp();
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
-
         findLocation(currentLocation.toString(), noun);
       // checking if the player enter the location with monster, and if so, call the encounterMonster function.
         checkMonster(currentLocation.toString());
         roomDescription(currentLocation.toString());
         itemsInRoom(currentLocation.toString());
         Inventory.displayItemsInInventory();
-    } else if (verb.equals("get")) {
+        Learn.learnAboutOceanForest(currentLocation.toString());
+
+        if (playerWins()) {
+          con.displayPlayerWins();
+//          System.exit(0);
+        }
+
+    } else if (verb.equals("get") || verb.equals("grab")) {
         currentInventory = Inventory.addItemToInventory(currentLocation.toString());
         System.out.println(currentInventory);
       } else if (verb.equals("use")) {
@@ -218,6 +229,14 @@ public class Game {
     Item.findDescription(item);
   }
 
+  public boolean playerWins() {
+    boolean playerWon = false;
+    if (currentLocation.toString().equals("Ocean Floor") && Inventory.getItemArray().contains("guppy")) {
+      playerWon = true;
+    }
+    return playerWon;
+  }
+
   public void userHelp() {
     con.displayCommands();
   }
@@ -239,7 +258,7 @@ public class Game {
 
   private static Boolean validItem(String item) {
     Set<String> items = new HashSet<>(
-        Arrays.asList("north", "south", "east", "west", "key", "medicine", "squid", "cloak", "turtle", ""));
+        Arrays.asList("north", "south", "east", "west", "key", "medicine", "squid", "cloak", "turtle", "guppy", ""));
     if (items.contains(item)) {
       return true;
     } else {
