@@ -221,6 +221,7 @@ public class Game {
       } else {
 //        setCurrentLocation(startingLocation);
         System.out.println("You've taken some damage from the Goblin Shark and fainted! \nYou were sent back to the Ocean Floor.");
+        setCurrentLocation(startingLocation);
         System.out.println("Your are now in " + currentLocation.getName());
       }
     }
@@ -241,7 +242,7 @@ public class Game {
       } else {
         System.out.println(
             "You’ve fainted and were sent back to the Ocean Floor.\n Find an item to heal yourself, or an item to sneak past the Jellyfish monster!\n");
-//        setCurrentLocation(startingLocation);
+        setCurrentLocation(startingLocation);
         System.out.println("Your are now in " + currentLocation);
       }
     }
