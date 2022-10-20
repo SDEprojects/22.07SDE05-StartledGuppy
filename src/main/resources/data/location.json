@@ -1,70 +1,78 @@
+
 {
-  "Ocean Floor" : {
-    "south" : "Ocean Plant Forest",
-    "east": "Sunk Ship",
-    "west": "Mariana Trench"
-  },
-
-  "Mariana Trench" : {
-    "east" : "Ocean Floor",
-    "north" : "Challenger Deep",
-    "animal" : "Goblin Shark"
-  },
-
-  "Challenger Deep" : {
-    "south" : "Mariana Trench",
-    "item" : "cloak"
-  },
-
-  "Sunk Ship" : {
-    "east": "Bridge",
-    "west" : "Ocean Floor",
-    "south" : "Bedroom"
-  },
-
-  "Bridge" : {
-    "west" : "Sunk Ship",
-    "south": "Bathroom",
-    "animal" : "Turtle"
-  },
-
-  "Bathroom" : {
-    "north": "Bridge",
-    "west" : "Bedroom"
-  },
-
-  "Bedroom" : {
-    "south": "Engine Room",
-    "East" : "Bathroom",
-    "north": "Sunk Ship",
-    "animal" : "Jellyfish"
-  },
-
-  "Engine Room" : {
-    "north": "Bedroom",
-    "item": "guppy"
-  },
-
-  "Ocean Plant Forest" : {
-    "west" : "Coral Reef",
-    "south": "Kelp Forest",
-    "north" : "Ocean Floor"
-  },
-
-  "Kelp Forest" : {
-    "north": "Ocean Plant Forest",
-    "item" : "medicine"
-  },
-
-  "Coral Reef" : {
-    "east": "Ocean Plant Forest",
-    "west" : "Seaweed Forest",
-    "item" : "key"
-  },
-
-  "Seaweed Forest" : {
-    "east" : "Coral Reef",
-    "item" : "squid"
-  }
-
+  "locations":
+  [
+    {
+      "name": "Ocean Floor",
+      "south": "Ocean Plant Forest",
+      "east": "Sunk Ship",
+      "west": "Mariana Trench"
+    },
+    {
+      "name": "Mariana Trench",
+      "east": "Ocean Floor",
+      "north": "Challenger Deep",
+      "animal": "Goblin Shark"
+    },
+    {
+      "name": "Challenger Deep",
+      "south": "Mariana Trench",
+      "item": "Cloak"
+    },
+    {
+      "name": "Sunk Ship",
+      "east": "Bridge",
+      "west": "Ocean Floor",
+      "south": "Bedroom"
+    },
+    {
+      "name": "Bridge",
+      "west": "Sunk Ship",
+      "south": "Bathroom",
+      "animal": "Turtle"
+    },
+    {
+      "name": "Bathroom",
+      "north": "Bridge",
+      "west": "Bedroom"
+    },
+    {
+      "name": "Bedroom",
+      "south": "Engine Room",
+      "east": "Bathroom",
+      "north": "Sunk Ship",
+      "animal": "Jellyfish"
+    },
+    {
+      "name": "Engine Room",
+      "north": "Bedroom",
+      "item": "guppy"
+    },
+    {
+      "name": "Ocean Plant Forest",
+      "west": "Coral Reef",
+      "south": "Kelp Forest",
+      "north": "Ocean Floor"
+    },
+    {
+      "name": "Kelp Forest",
+      "north": "Ocean Plant Forest",
+      "item": "Medicine"
+    },
+    {
+      "name": "Coral Reef",
+      "east": "Ocean Plant Forest",
+      "west": "Seaweed Forest",
+      "item": "Key"
+    },
+    {
+      "name": "Seaweed Forest",
+      "east": "Coral Reef",
+      "item": "Squid"
+    }
+    ]
 }
+
+
+
+

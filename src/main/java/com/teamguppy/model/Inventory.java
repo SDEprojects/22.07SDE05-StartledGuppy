@@ -1,5 +1,6 @@
 package com.teamguppy.model;
 
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashSet;
@@ -30,15 +31,10 @@ public class Inventory {
   }
 
 
-  //  public static Set<String> addItemToInventory(String location)
-//      throws IOException, ParseException, URISyntaxException {
-//    String currentItemInRoom = itemsInRoom(location);
-//    itemArray.add(currentItemInRoom);
-//    displayItemsInInventory();
-//    return itemArray;
-//  }
+
   public static Set<String> addItemToInventory(String item) {
-    itemArray.add(item);
+    itemArray.add(item.toUpperCase());
+    displayItemsInInventory();
     return itemArray;
   }
 
@@ -47,34 +43,18 @@ public class Inventory {
   }
 
   public static Set<String> removeItemFromInventory(String item) {
-    if (itemArray.contains(item)) {
-      itemArray.remove(item);
-      System.out.println("Your have used " + item + " from your inventory");
-      System.out.println(itemArray);
-      return itemArray;
-    } else {
-      System.out.println("You don't have " + item + " in your inventory.");
-    }
-    System.out.println(itemArray);
+
+    String usedItem = item.toUpperCase();
+      if (itemArray.contains(usedItem)) {
+        itemArray.remove(usedItem);
+        System.out.println("Your have used " + item + " from your inventory");
+        return itemArray;
+      }else {
+        System.out.println("You don't have " + item + " in your inventory.");
+      }
     return itemArray;
   }
 
-//    System.out.println(itemArray);
-//    displayItemsInInventory(itemArray);
-//  public static void saveItem(String item) throws FileNotFoundException{
-//
-//    JSONObject userInventory = new JSONObject();
-//
-//    // putting data to JSONObject
-//    userInventory.put("item", item);
-//
-//    PrintWriter pw = new PrintWriter("inventory.json");
-//    pw.write(userInventory.toJSONString());
-//
-////    pw.flush();
-////    pw.close();
-//
-//  }
 
   public static void main(String[] args) throws IOException, ParseException, URISyntaxException {
     addItemToInventory("Coral Reef");

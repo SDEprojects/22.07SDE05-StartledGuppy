@@ -19,8 +19,6 @@ public class Location {
 
 
 
-
-
   public Location(String name) {
     this.name = name;
 
@@ -112,8 +110,6 @@ public class Location {
     }
     return null;
   }
-
-
 
   public static Map jsonParsing(String location){
 
