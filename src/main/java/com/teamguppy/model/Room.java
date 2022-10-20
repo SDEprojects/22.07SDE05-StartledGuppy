@@ -112,6 +112,17 @@ public class Room {
   }
 
 
+  public static void displayItems(Room location) {
+    if (location.getItem() !=null ){
+      System.out.println("This room has " + location.getItem());
+    }else{
+      System.out.println("This room doesn't have any items");
+    }
+  }
+
+
+
+
 }
 
 

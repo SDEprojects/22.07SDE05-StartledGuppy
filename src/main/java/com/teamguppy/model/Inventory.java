@@ -29,10 +29,10 @@ public class Inventory {
   }
 
 
-  public static Set<String> addItemToInventory(String location)
+  public static Set<String> addItemToInventory(String item)
       throws IOException, ParseException, URISyntaxException {
 //    String currentItemInRoom =
-//    itemArray.add(currentItemInRoom);
+    itemArray.add(item);
     displayItemsInInventory();
     return itemArray;
   }

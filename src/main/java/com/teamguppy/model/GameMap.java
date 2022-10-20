@@ -73,33 +73,19 @@ public class GameMap {
   }
 
 
-  public String displayItems(GameMap map, String location) {
-    String currentItem = null;
+  public GameMap removeItemFromRoom(GameMap map, String item){
+    String checkingItem = item.toLowerCase();
+    Room updatedRoom = null;
     if (map != null) {
       for (Room loc : map.getLocations()) {
-        if (loc.getName().equals(location)) {
-          System.out.println(loc.getItem());
-          currentItem = loc.getItem().toString();
-          System.out.println("This room has " + currentItem);
-        }
-      }
-      System.out.println("game map not showing");
-    }
-    return currentItem;
-  }
-
-
-
-  public GameMap removeItemFromRoom(GameMap map, String item){
-    if (map != null) {
-      for (Room loc : map.getLocations()){
-        if (loc.getItem().equals("item")){
-          System.out.println(loc.getItem());
+        if (loc.getItem()!=null && loc.getItem().equals(item)) {
           loc.deleteItem(item);
-          System.out.println(loc.getItem());
+          System.out.println("check "+ loc.getItem() +" " + loc.getItem());
+
         }
       }
-      System.out.println("game map created");
+    }else if (map == null){
+      System.out.println("no map found");
     }
     return map;
   }
@@ -107,8 +93,8 @@ public class GameMap {
     GameMap location = new GameMap();
     location = location.createMap();
     List<Room> map = location.getLocations();
-    location.findLocation(location, "Ocean Floor");
-
+//    location.findLocation(location, "Ocean Floor");
+    location.removeItemFromRoom(location, "Medicine" );
 
   }
 }

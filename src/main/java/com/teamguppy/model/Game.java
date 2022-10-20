@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import org.json.simple.parser.ParseException;
@@ -23,6 +22,8 @@ public class Game {
   private Set<String> currentInventory;
 
   private GameMap gameMap = new GameMap();
+
+  private String currentItem;
 
   private static final String startingItem = "Medicine";
 
@@ -46,7 +47,15 @@ public class Game {
 
   }
 
-//  public static Location getCurrentLocation() {
+  public void setCurrentItem(String item) {
+    this.currentItem = item;
+  }
+
+  public static Room getCurrentLocation() {
+    return currentLocation;
+  }
+
+  //  public static Location getCurrentLocation() {
 //    return currentLocation;
 //  }
   public Set<String> getCurrentInventory() {
@@ -128,11 +137,11 @@ public class Game {
       if (verb.equals("help")) {
       userHelp();
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
-        findLocationWithDirection(noun.toLowerCase());
-      // checking if the player enter the room that has monster, and if so, call the encounterMonster function.
+        System.out.println(getCurrentLocation().getName());
+        findLocationByDirection(noun.toLowerCase());
         checkMonster(currentLocation.toString());
         roomDescription(currentLocation);
-        itemsInRoom(currentLocation.toString());
+        itemsInRoom(currentLocation);
         Inventory.displayItemsInInventory();
         Learn.learnAboutOceanForest(currentLocation.toString());
 
@@ -141,16 +150,18 @@ public class Game {
 //          System.exit(0);
         }
 
-    } else if (verb.equals("get") || verb.equals("grab")) {
-        currentInventory = Inventory.addItemToInventory(currentLocation.toString());
-        setGameMap(gameMap.removeItemFromRoom(gameMap, noun));
-        System.out.println(currentInventory);
+    } else if (verb.equals("get") || verb.equals("grab") && noun.toLowerCase().equals(currentItem.toLowerCase())) {
+        currentInventory = Inventory.addItemToInventory(currentItem);
+        System.out.println(currentItem);
+        gameMap.removeItemFromRoom(gameMap, currentItem);
+
+
 
       } else if (verb.equals("use")) {
         currentInventory = Inventory.removeItemFromInventory(noun);
         System.out.println(currentInventory);
       } else if (verb.equals("look") || verb.equals("examine")) {
-      displayItemDescription(noun);
+//      displayItemDescription(noun);
 
     } else if (verb.equals("talk") && noun.equals("turtle")) {
       turtleTalk();
@@ -159,7 +170,7 @@ public class Game {
     }
   }
 
-  public void findLocationWithDirection(String direction){
+  public void findLocationByDirection(String direction){
     String room = null;
     switch(direction) {
       case "south":
@@ -238,14 +249,15 @@ public class Game {
       Room.roomDescription(location);
   }
 
-  public void itemsInRoom(String location)
-      throws IOException, ParseException, URISyntaxException {
-    gameMap.displayItems(gameMap, location);
-  }
+  public void itemsInRoom(Room location) {
+    currentLocation.displayItems(currentLocation);
+    setCurrentItem(location.getItem());
+    }
 
-  public static void displayItemDescription(String item) throws IOException, ParseException {
-    Item.findDescription(item);
-  }
+
+//  public static void displayItemDescription(String item) throws IOException, ParseException {
+//    Item.findDescription(item);
+//  }
 
   public boolean playerWins() {
     boolean playerWon = false;
