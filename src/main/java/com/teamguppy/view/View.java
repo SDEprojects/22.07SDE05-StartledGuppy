@@ -1,5 +1,9 @@
 package com.teamguppy.view;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class View {
 
   private final String GAME_TITLE =
@@ -31,10 +35,22 @@ public class View {
       + "learn        Displays educational information about a location or sea animal\n"
       + "help         Displays a list of game commands";
 
-  private final String TURTLE_TALK =
-      "\nA...Startled Guppy you say?\n"
-      + "Saw one flapping by no more than an hour ago heading south in a hurry.\n"
-      + "But be careful...legend has it those who delve deeper into this ship don't always...return.";
+  private List<String> TURTLE_TALK = Arrays.asList(
+      "\nAhh...a Startled Guppy you say?\n"
+        + "Saw one flapping by no more than an hour ago heading south in a hurry.\n"
+        + "But be careful...legend has it those who delve deeper into this ship don't always...return.",
+      "I think I saw a wee little guppy...but I can't be quite sure...\n"
+        + "My memory isn't very good these days.\n"
+        + "Try talking to me again later and I might remember something.",
+      "Guppies shouldn't be around here, you know?\n"
+        + "However, I do recall seeing a Startled Guppy.\n"
+        + "I believe they headed deeper into this sunk ship."
+  );
+//    {
+//      "\nA...Startled Guppy you say?\n"
+//      + "Saw one flapping by no more than an hour ago heading south in a hurry.\n"
+//      + "But be careful...legend has it those who delve deeper into this ship don't always...return."
+//  };
 
   private final String PLAYER_WINS =
       " __     ______  _    _     __          _______ _   _   _ _ \n"
@@ -60,7 +76,8 @@ public class View {
   }
 
   public String getTurtleTalk() {
-    return TURTLE_TALK;
+    Collections.shuffle(TURTLE_TALK);
+    return TURTLE_TALK.get(0);
   }
 
   public String getPlayerWins() {
