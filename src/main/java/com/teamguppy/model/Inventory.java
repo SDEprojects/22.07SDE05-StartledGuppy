@@ -21,26 +21,29 @@ public class Inventory {
   public void setItem(String item) {
     this.item = item;
   }
+
   public static void setItemArray(Set<String> itemArray) {
     Inventory.itemArray = itemArray;
   }
+
   public static Set<String> getItemArray() {
     return itemArray;
   }
 
 
-  public static Set<String> addItemToInventory(String item)
-      throws IOException, ParseException, URISyntaxException {
-//    String currentItemInRoom =
+
+  public static Set<String> addItemToInventory(String item) {
     itemArray.add(item.toUpperCase());
     displayItemsInInventory();
     return itemArray;
   }
+
   public static void displayItemsInInventory() {
     System.out.println(itemArray);
   }
 
   public static Set<String> removeItemFromInventory(String item) {
+
     String usedItem = item.toUpperCase();
       if (itemArray.contains(usedItem)) {
         itemArray.remove(usedItem);
@@ -52,22 +55,6 @@ public class Inventory {
     return itemArray;
   }
 
-//    System.out.println(itemArray);
-//    displayItemsInInventory(itemArray);
-//  public static void saveItem(String item) throws FileNotFoundException{
-//
-//    JSONObject userInventory = new JSONObject();
-//
-//    // putting data to JSONObject
-//    userInventory.put("item", item);
-//
-//    PrintWriter pw = new PrintWriter("inventory.json");
-//    pw.write(userInventory.toJSONString());
-//
-////    pw.flush();
-////    pw.close();
-//
-//  }
 
   public static void main(String[] args) throws IOException, ParseException, URISyntaxException {
     addItemToInventory("Coral Reef");
