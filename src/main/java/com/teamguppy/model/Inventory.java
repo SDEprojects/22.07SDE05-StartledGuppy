@@ -45,12 +45,10 @@ public class Inventory {
       if (itemArray.contains(usedItem)) {
         itemArray.remove(usedItem);
         System.out.println("Your have used " + item + " from your inventory");
-        System.out.println(itemArray);
         return itemArray;
       }else {
         System.out.println("You don't have " + item + " in your inventory.");
       }
-    System.out.println(itemArray);
     return itemArray;
   }
 

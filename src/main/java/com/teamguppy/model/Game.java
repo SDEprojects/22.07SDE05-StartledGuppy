@@ -151,13 +151,10 @@ public class Game {
 
     } else if (verb.equals("get") || verb.equals("grab") && noun.toLowerCase().equals(currentItem.toLowerCase())) {
         currentInventory = Inventory.addItemToInventory(currentItem);
-        System.out.println(currentItem);
         gameMap.removeItemFromRoom(gameMap, currentItem);
-
 
       } else if (verb.equals("use")) {
         currentInventory = Inventory.removeItemFromInventory(noun);
-        System.out.println(currentInventory);
       } else if (verb.equals("look") || verb.equals("examine")) {
 //      displayItemDescription(noun);
 
