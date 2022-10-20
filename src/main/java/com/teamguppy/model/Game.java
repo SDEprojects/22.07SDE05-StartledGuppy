@@ -165,7 +165,19 @@ public class Game {
       case "south":
         room = currentLocation.getSouth();
         setCurrentLocation(room);
-    }
+        break;
+      case "north":
+        room = currentLocation.getNorth();
+        setCurrentLocation(room);
+        break;
+      case "east":
+        room = currentLocation.getEast();
+        setCurrentLocation(room);
+        break;
+      case "west":
+        room = currentLocation.getWest();
+        setCurrentLocation(room);
+      }
     System.out.println("\nYour current location is " + currentLocation.getName());
   }
 
