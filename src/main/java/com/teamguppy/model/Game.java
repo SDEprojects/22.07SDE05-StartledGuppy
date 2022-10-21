@@ -184,19 +184,19 @@ public class Game {
     switch (direction) {
       case "south":
         room = currentLocation.getSouth();
-        setCurrentLocation(room);
         break;
       case "north":
         room = currentLocation.getNorth();
-        setCurrentLocation(room);
         break;
       case "east":
         room = currentLocation.getEast();
-        setCurrentLocation(room);
         break;
       case "west":
         room = currentLocation.getWest();
-        setCurrentLocation(room);
+    }if(room != null){
+      setCurrentLocation(room);
+    }else{
+      System.out.println("Oops, there's nothing there");
     }
   }
 
@@ -316,7 +316,7 @@ public class Game {
 
   public boolean playerWins() {
     boolean playerWon = false;
-    if (currentLocation.toString().equals("Ocean Floor") && Inventory.getItemArray()
+    if (currentLocation.getName().equals(startingLocation) && Inventory.getItemArray()
         .contains("guppy")) {
       playerWon = true;
     }
