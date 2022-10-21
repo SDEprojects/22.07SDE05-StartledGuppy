@@ -133,6 +133,8 @@ public class Game {
 //      }
     if (verb.equals("help")) {
       userHelp();
+    } else if(verb.equals("save")) {
+      Inventory.saveInventoryToJson(currentInventory);
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
       findLocationByDirection(noun.toLowerCase());
       itemsInRoom(currentLocation);
@@ -298,7 +300,7 @@ public class Game {
   private static Boolean validMove(String move) {
     Set<String> moves = new HashSet<>(
         Arrays.asList("go", "swim", "move", "get", "grab", "look", "examine", "help", "talk", "use",
-            "learn"));
+            "learn", "save"));
     if (moves.contains(move)) {
       return true;
     } else {
