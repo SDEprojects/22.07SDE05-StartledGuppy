@@ -30,7 +30,7 @@ public class Game {
     setCurrentLocation(startingLocation);
     this.currentInventory = new HashSet<>();
     System.out.println(currentLocation);
-    setCurrentItem("star");
+//    setCurrentItem("star");
   }
 
   public void setGameMap(GameMap gameMap) {
@@ -119,6 +119,7 @@ public class Game {
       noun = "";
       roomDescription(currentLocation);
       System.out.println("\nWhat would you like to do next? ");
+      System.out.println(currentItem);
       String input = userInput();
       String[] arr = input.toLowerCase().split(" ");
       verb = arr[0];
@@ -143,7 +144,7 @@ public class Game {
         con.displayPlayerWins();
 //          System.exit(0);
       }
-    } else if (verb.equals("get") && noun.toLowerCase().equals(currentItem.toLowerCase())) {
+    } else if (verb.equals("get") && currentItem != null &&noun.toLowerCase().equals(currentItem.toLowerCase())) {
         currentInventory = Inventory.addItemToInventory(currentItem);
         gameMap.removeItemFromRoom(gameMap, currentItem);
     } else if (verb.equals("use")) {
@@ -158,7 +159,7 @@ public class Game {
     } else {
 //      System.out.println(
 //          "You try to talk to the " + noun + ", but the " + noun + " doesn't talk back...");
-      System.out.println("There's nothing you can do with " + noun + "here. ");
+      System.out.println("There's nothing you can do with " + noun + " here. ");
     }
   }
 
