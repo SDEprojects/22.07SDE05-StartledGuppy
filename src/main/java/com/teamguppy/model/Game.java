@@ -138,7 +138,7 @@ public class Game {
       findLocationByDirection(noun.toLowerCase());
       itemsInRoom(currentLocation);
       checkMonster(currentLocation);
-//      Inventory.displayItemsInInventory(currentInventory);
+
       if (playerWins()) {
         con.displayPlayerWins();
 //          System.exit(0);
