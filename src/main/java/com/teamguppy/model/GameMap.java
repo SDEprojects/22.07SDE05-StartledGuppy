@@ -34,9 +34,7 @@ public class GameMap {
     try {
       JsonReader reader = new JsonReader(
           new BufferedReader(new InputStreamReader(GameMap.class.getResourceAsStream("/data/location.json"))));
-
       location = gson.fromJson(reader, GameMap.class);
-
       if (location != null) {
         for (Room loc : location.getLocations()) {
         }
