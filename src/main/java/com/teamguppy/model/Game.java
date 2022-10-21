@@ -118,6 +118,7 @@ public class Game {
     do {
       noun = "";
       roomDescription(currentLocation);
+      Inventory.displayItemsInInventory();
       System.out.println("\nWhat would you like to do next? ");
       System.out.println(currentItem);
       String input = userInput();
@@ -136,24 +137,25 @@ public class Game {
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
       findLocationByDirection(noun.toLowerCase());
       itemsInRoom(currentLocation);
-      Learn.learnAboutOceanForest(currentLocation.toString());
-      checkMonster();
+      checkMonster(currentLocation);
       Inventory.displayItemsInInventory();
 
       if (playerWins()) {
         con.displayPlayerWins();
 //          System.exit(0);
       }
-    } else if (verb.equals("get") && currentItem != null &&noun.toLowerCase().equals(currentItem.toLowerCase())) {
-        currentInventory = Inventory.addItemToInventory(currentItem);
-        gameMap.removeItemFromRoom(gameMap, currentItem);
+    } else if (verb.equals("get") && currentItem != null && noun.toLowerCase()
+        .equals(currentItem.toLowerCase())) {
+      currentInventory = Inventory.addItemToInventory(currentItem);
+//      getItemCondition(currentItem);
+      gameMap.removeItemFromRoom(gameMap, currentItem);
     } else if (verb.equals("use")) {
-      currentInventory = Inventory.removeItemFromInventory(noun);
-      Inventory.displayItemsInInventory();
+      checkIfUserUsesCorrectItem(currentLocation, noun.toLowerCase());
+//      Inventory.displayItemsInInventory();
     } else if (verb.equals("look") || verb.equals("examine")) {
-    displayItemDescription(noun);
+      displayItemDescription(noun);
     } else if (verb.equals("learn")) {
-      learnAboutRoom(currentLocation.getName());
+      learnAboutRoom(currentLocation);
     } else if (verb.equals("talk") && noun.equals("turtle")) {
       turtleTalk();
     } else {
@@ -163,9 +165,23 @@ public class Game {
     }
   }
 
-  public void findLocationByDirection(String direction){
+  private void checkIfUserUsesCorrectItem(Room location, String noun) {
+    if (noun.equals("squid") || noun.equals("medicine") || noun.equals("cloak")) {
+      removeMonster(location, noun.toUpperCase());
+      currentInventory = Inventory.removeItemFromInventory(noun.toUpperCase());
+    } else if (noun.equals("key")) {
+      if (location.getName().equals("Engine Room")) {
+        System.out.println("You found Guppy. Key can be used to get Guppy.");
+      } else {
+        System.out.println("You can't use key here. You can use key to get Guppy.");
+      }
+    }
+  }
+
+
+  public void findLocationByDirection(String direction) {
     String room = null;
-    switch(direction) {
+    switch (direction) {
       case "south":
         room = currentLocation.getSouth();
         setCurrentLocation(room);
@@ -181,11 +197,10 @@ public class Game {
       case "west":
         room = currentLocation.getWest();
         setCurrentLocation(room);
-      }
+    }
   }
 
-  // checks if the player entered the monster room
-  private void checkMonster() {
+  public void checkMonster(Room currentLocation) {
     String goblinShark = "Goblin Shark";
     String jellyFish = "Jellyfish";
     String monster = currentLocation.getAnimal();
@@ -198,66 +213,88 @@ public class Game {
     }
   }
 
+  private void removeMonster(Room location, String item) {
+    String monster = location.getAnimal();
+//    if (monster != null) {
+    if (monster.equals("Goblin Shark")) {
+      if ((item.equals("MEDICINE") && currentInventory.contains("MEDICINE")) || ((
+          item.equals("SQUID") && currentInventory.contains("SQUID")))) {
+        gameMap.removeAnimalFromRoom(gameMap, monster);
+        System.out.println(monster + " is out of the way.");
+      }
+    }
+    if (monster.equals("Jellyfish")) {
+      if ((item.equals("MEDICINE") && currentInventory.contains("MEDICINE")) || ((
+          item.equals("CLOAK") && currentInventory.contains("CLOAK")))) {
+        gameMap.removeAnimalFromRoom(gameMap, monster);
+        System.out.println(monster + " is out of the way.");
+      }
+    }
+  }
+
 
   // when the players go to the monster room, this function will be called.
   // This will check the user's inventory and if there's no item that can be used against moster,
   // the player will be sent back to the starting place.
   public void encounterMonster(String monster) {
     if (monster.equals("Goblin Shark")) {
-      System.out.println("There’s a big scary Goblin Shark monster in here!");
+      System.out.println("You have encountered a giant Goblin Shark monster in here!"
+          + "You’ve taken some damage from the Goblin Shark.");
       if (currentInventory.contains("MEDICINE")) {
-        System.out.println("You’ve taken some damage from the Goblin Shark, but you can use your medicine to heal yourself.");
+        System.out.println("You can use your medicine to heal yourself.");
         wounded = true;
         // need use item function here
       } else if (currentInventory.contains("SQUID")) {
-        System.out.println(" Use the use squid command to blind the Goblin Shark with squid ink!");
+        System.out.println(
+            "You can use squid from your inventory to blind the Goblin Shark with squid ink!");
         wounded = true;
         // need use item function here
       } else {
-        System.out.println("You've taken some damage from the Goblin Shark and fainted! \nYou were sent back to the Ocean Floor.");
+        System.out.println(
+            "You are sent back to Ocean Floor.\n"
+                + "You need to get medicine to heal yourself when encounter Goblin Shark, or a squid to sneak past the Goblin shark monster!\n");
+//        System.out.println("Your are now in " + currentLocation.getName());
         setCurrentLocation(startingLocation);
-        System.out.println("Your are now in " + currentLocation.getName());
       }
     }
-
     if (monster.equals("Jellyfish")) {
       System.out.println(
-          "There’s a jiggly Jellyfish monster in this room!!  Oh, what should I do?!");
+          "You have encountered a giant Goblin Shark monster in here!"
+              + "The Jellyfish stung you and you took some damage");
       if (currentInventory.contains("MEDICINE")) {
         System.out.println(
-            "The Jellyfish stung you and you took some damage, but you can use your medicine to heal yourself.");
+            "You can use your medicine to heal yourself.");
         wounded = true;
         // need use item function here
       } else if (currentInventory.contains("CLOAK")) {
         System.out.println(
-            "The Jellyfish stung you and you took some damage! Use the use cloak command to sneak past the Jellyfish monster!");
+            "You can use cloak to sneak past the Jellyfish monster!");
         wounded = true;
       } else {
         System.out.println(
-            "You’ve fainted and were sent back to the Ocean Floor.\n Find an item to heal yourself, or an item to sneak past the Jellyfish monster!\n");
+            "You are sent back to Ocean Floor.\n"
+                + "You need to get medicine to heal yourself when encounter Jellyfish, or a cloak to sneak past the Jellyfish monster!\n");
         setCurrentLocation(startingLocation);
         System.out.println("Your are now in " + currentLocation);
       }
     }
-    gameMap.removeAnimalFromRoom(gameMap, monster);
+//    gameMap.removeAnimalFromRoom(gameMap, monster);
   }
 
   public static void roomDescription(Room location)
       throws IOException, ParseException, URISyntaxException {
-      Room.roomDescription(location);
+    Room.roomDescription(location);
   }
 
   public void itemsInRoom(Room location) {
-    currentLocation.displayItems(currentLocation);
+    location.displayItems(location);
     setCurrentItem(location.getItem());
+  }
 
-    }
 
-
-  public static void learnAboutRoom(String location)
-      throws IOException, ParseException, URISyntaxException {
-    Learn.learnAboutOceanForest(location);
-    String animal = currentLocation.getAnimal();
+  public static void learnAboutRoom(Room location) {
+    Learn.learnAboutOceanForest(location.getName());
+    String animal = location.getAnimal();
     if (animal != null) {
       Learn.learnAboutOceanAnimal(animal);
     }
