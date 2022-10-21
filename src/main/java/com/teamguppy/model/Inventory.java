@@ -1,11 +1,8 @@
 package com.teamguppy.model;
 
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.Set;
-import org.json.simple.parser.ParseException;
 
 
 public class Inventory {
@@ -37,37 +34,20 @@ public class Inventory {
         itemArray.add(item.toUpperCase());
         removeItemFromInventory("Key");
         displayItemsInInventory();
-
       } else {
         System.out.println("You can't get Guppy. You need Key to get Guppy.");
       }
     } else {
       itemArray.add(item.toUpperCase());
-      ;
     }
     return itemArray;
   }
-
-//  private Set<String> getItemCondition(String noun) {
-//    if (noun.equals("guppy")) {
-//      if (currentInventory.contains("KEY")) {
-//        currentInventory = Inventory.removeItemFromInventory("KEY");
-//        currentInventory = Inventory.addItemToInventory(noun);
-//      } else {
-//        System.out.println("You can't get Guppy.");
-//      }
-//    } else {
-//      currentInventory = Inventory.addItemToInventory(noun);
-//    }
-//    return currentInventory;
-//  }
 
   public static void displayItemsInInventory() {
     System.out.println("Your inventory: " + itemArray);
   }
 
   public static Set<String> removeItemFromInventory(String item) {
-
     String usedItem = item.toUpperCase();
     if (itemArray.contains(usedItem)) {
       itemArray.remove(usedItem);
@@ -77,13 +57,6 @@ public class Inventory {
       System.out.println("You don't have " + item + " in your inventory.");
     }
     return itemArray;
-  }
-
-
-  public static void main(String[] args) throws IOException, ParseException, URISyntaxException {
-    addItemToInventory("Coral Reef");
-//    displayItemsInInventory();
-    removeItemFromInventory("Key");
   }
 }
 

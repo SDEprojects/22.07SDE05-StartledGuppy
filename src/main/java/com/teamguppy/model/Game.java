@@ -157,7 +157,7 @@ public class Game {
     } else if (verb.equals("learn")) {
       learnAboutRoom(currentLocation);
     } else if (verb.equals("talk") && noun.equals("turtle")) {
-      turtleTalk();
+      checkIfUserUsesCorrectItem(currentLocation, noun.toLowerCase());
     } else {
 //      System.out.println(
 //          "You try to talk to the " + noun + ", but the " + noun + " doesn't talk back...");
@@ -166,15 +166,25 @@ public class Game {
   }
 
   private void checkIfUserUsesCorrectItem(Room location, String noun) {
-    if (noun.equals("squid") || noun.equals("medicine") || noun.equals("cloak")) {
-      removeMonster(location, noun.toUpperCase());
-      currentInventory = Inventory.removeItemFromInventory(noun.toUpperCase());
-    } else if (noun.equals("key")) {
-      if (location.getName().equals("Engine Room")) {
-        System.out.println("You found Guppy. Key can be used to get Guppy.");
-      } else {
-        System.out.println("You can't use key here. You can use key to get Guppy.");
+    if (!currentInventory.isEmpty()) {
+      if (noun.equals("squid") || noun.equals("medicine") || noun.equals("cloak")) {
+        removeMonster(location, noun.toUpperCase());
+        currentInventory = Inventory.removeItemFromInventory(noun.toUpperCase());
+      } else if (noun.equals("key")) {
+        if (location.getName().equals("Engine Room")) {
+          System.out.println("You found Guppy. Key can be used to get Guppy.");
+        } else {
+          System.out.println("You can't use key here. You can use key to get Guppy.");
+        }
       }
+    } else if (noun.equals("turtle")) {
+      if (location.getName().equals("Bridge")) {
+        turtleTalk();
+      } else {
+        System.out.println("You try to talk to the turtle, but the turtle is not in this room.");
+      }
+    }else {
+      System.out.println("Your inventory doesn't have " + noun);
     }
   }
 
@@ -193,10 +203,11 @@ public class Game {
         break;
       case "west":
         room = currentLocation.getWest();
-    }if(room != null){
+    }
+    if (room != null) {
       setCurrentLocation(room);
-    }else{
-      System.out.println("Oops, there's nothing there");
+    } else {
+      System.out.println("Oops, there's nothing there in that direction.");
     }
   }
 
@@ -278,7 +289,6 @@ public class Game {
         System.out.println("Your are now in " + currentLocation);
       }
     }
-//    gameMap.removeAnimalFromRoom(gameMap, monster);
   }
 
   public static void roomDescription(Room location)
@@ -297,16 +307,6 @@ public class Game {
     String animal = location.getAnimal();
     if (animal != null) {
       Learn.learnAboutOceanAnimal(animal);
-    }
-  }
-
-  public void addItemToInventory(String location, String noun)
-      throws IOException, ParseException, URISyntaxException {
-    String item = Location.itemsInRoom(location);
-    if (item != null && item.equals(noun)) {
-      currentInventory = Inventory.addItemToInventory(item);
-    } else {
-      System.out.println("There is no " + noun + " in this room.");
     }
   }
 
