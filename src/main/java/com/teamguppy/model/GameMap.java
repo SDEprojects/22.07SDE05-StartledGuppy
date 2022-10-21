@@ -3,10 +3,10 @@ package com.teamguppy.model;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import javax.annotation.processing.Generated;
 
@@ -29,19 +29,19 @@ public class GameMap {
   public GameMap createMap() {
     Gson gson = new Gson();
     BufferedReader br = null;
-    GameMap location;
+    GameMap location = null;
 
     try {
-      br = new BufferedReader(new FileReader("src/main/resources/data/location.json"));
-      location = gson.fromJson(br, GameMap.class);
+      JsonReader reader = new JsonReader(
+          new BufferedReader(new InputStreamReader(GameMap.class.getResourceAsStream("/data/location.json"))));
+
+      location = gson.fromJson(reader, GameMap.class);
 
       if (location != null) {
         for (Room loc : location.getLocations()) {
         }
         System.out.println("game map created");
       }
-    } catch (FileNotFoundException e) {
-      throw new RuntimeException(e);
     } finally {
       if (br != null) {
         try {
@@ -73,7 +73,7 @@ public class GameMap {
     Room updatedRoom = null;
     if (map != null) {
       for (Room loc : map.getLocations()) {
-        if (loc.getItem()!=null && loc.getItem().equals(item)) {
+        if (loc.getItem() != null && loc.getItem().equals(item)) {
           loc.deleteItem(item);
         }
       }

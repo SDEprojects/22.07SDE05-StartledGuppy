@@ -27,10 +27,10 @@ public class Game {
 
   public Game() {
     setGameMap(gameMap);
-    String startingLocation = "Ocean Floor";
     setCurrentLocation(startingLocation);
     this.currentInventory = new HashSet<>();
     System.out.println(currentLocation);
+    setCurrentItem("star");
   }
 
   public void setGameMap(GameMap gameMap) {
@@ -76,7 +76,6 @@ public class Game {
           }
         }
       } while (validStartInput(command));
-
     }
   }
 
@@ -144,10 +143,9 @@ public class Game {
         con.displayPlayerWins();
 //          System.exit(0);
       }
-    } else if (verb.equals("get") || verb.equals("grab") && noun.toLowerCase().equals(currentItem.toLowerCase())) {
+    } else if (verb.equals("get") && noun.toLowerCase().equals(currentItem.toLowerCase())) {
         currentInventory = Inventory.addItemToInventory(currentItem);
         gameMap.removeItemFromRoom(gameMap, currentItem);
-
     } else if (verb.equals("use")) {
       currentInventory = Inventory.removeItemFromInventory(noun);
       Inventory.displayItemsInInventory();
@@ -158,8 +156,9 @@ public class Game {
     } else if (verb.equals("talk") && noun.equals("turtle")) {
       turtleTalk();
     } else {
-      System.out.println(
-          "You try to talk to the " + noun + ", but the " + noun + " doesn't talk back...");
+//      System.out.println(
+//          "You try to talk to the " + noun + ", but the " + noun + " doesn't talk back...");
+      System.out.println("There's nothing you can do with " + noun + "here. ");
     }
   }
 
@@ -250,6 +249,7 @@ public class Game {
   public void itemsInRoom(Room location) {
     currentLocation.displayItems(currentLocation);
     setCurrentItem(location.getItem());
+
     }
 
 
