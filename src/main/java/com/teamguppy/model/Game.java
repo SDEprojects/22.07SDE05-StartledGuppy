@@ -133,7 +133,7 @@ public class Game {
 //      }
     if (verb.equals("help")) {
       userHelp();
-    } else if(verb.equals("save")) {
+    } else if (verb.equals("save")) {
       Inventory.saveInventoryToJson(currentInventory);
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
       findLocationByDirection(noun.toLowerCase());
@@ -144,24 +144,23 @@ public class Game {
         con.displayPlayerWins();
 //          System.exit(0);
       }
-    } else if (verb.equals("get") && currentItem != null && noun.toLowerCase().equals(currentItem.toLowerCase())) {
-//        if (noun.toLowerCase().equals("guppy")) {
-//          sound.playGuppy();
-//        }
-        sound.playGetItem();
-        currentInventory = Inventory.addItemToInventory(currentItem);
-        gameMap.removeItemFromRoom(gameMap, currentItem);
-    } else if (verb.equals("use")) {
-      sound.playUseItem();
-      currentInventory = Inventory.removeItemFromInventory(noun);
-      Inventory.displayItemsInInventory();
     } else if (verb.equals("get") && currentItem != null && noun.toLowerCase()
         .equals(currentItem.toLowerCase())) {
+      sound.playGetItem();
       currentInventory = Inventory.addItemToInventory(currentItem);
-//      getItemCondition(currentItem);
       gameMap.removeItemFromRoom(gameMap, currentItem);
     } else if (verb.equals("use")) {
+      sound.playUseItem();
       checkIfUserUsesCorrectItem(currentLocation, noun.toLowerCase());
+//      currentInventory = Inventory.removeItemFromInventory(noun);
+//      Inventory.displayItemsInInventory();
+//    } else if (verb.equals("get") && currentItem != null && noun.toLowerCase()
+//        .equals(currentItem.toLowerCase())) {
+//      currentInventory = Inventory.addItemToInventory(currentItem);
+////      getItemCondition(currentItem);
+//      gameMap.removeItemFromRoom(gameMap, currentItem);
+//    } else if (verb.equals("use")) {
+//      checkIfUserUsesCorrectItem(currentLocation, noun.toLowerCase());
 //      Inventory.displayItemsInInventory();
     } else if (verb.equals("look") || verb.equals("examine")) {
       displayItemDescription(noun);
@@ -194,7 +193,7 @@ public class Game {
       } else {
         System.out.println("You try to talk to the turtle, but the turtle is not in this room.");
       }
-    }else {
+    } else {
       System.out.println("Your inventory doesn't have " + noun);
     }
   }
@@ -289,9 +288,9 @@ public class Game {
       sound.playJellyfish();
       System.out.println("Jiggly Jellyfish: I'm the Jiggly Jellyfish monster!");
       System.out.println("Jiggly Jellyfish: Going to give you a Jiggly Jellyfish sting!");
-      System.out.println("Jiggly Jellyfish: You'll never stop me!\n");
-          "You have encountered a giant Goblin Shark monster in here!"
-              + "The Jellyfish stung you and you took some damage");
+      System.out.println("Jiggly Jellyfish: You'll never stop me!\n"
+          + "You have encountered a giant Goblin Shark monster in here!"
+          + "The Jellyfish stung you and you took some damage");
       if (currentInventory.contains("MEDICINE")) {
         System.out.println(
             "You can use your medicine to heal yourself.");
