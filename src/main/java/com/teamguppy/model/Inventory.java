@@ -1,6 +1,7 @@
 package com.teamguppy.model;
 
 
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.File;
@@ -42,19 +43,23 @@ public class Inventory {
 
         itemArray.add(item.toUpperCase());
         removeItemFromInventory("Key");
-        displayItemsInInventory(itemArray);
 
+        displayItemsInInventory();
+
+        displayItemsInInventory(itemArray);
       } else {
         System.out.println("You can't get Guppy. You need Key to get Guppy.");
       }
     } else {
       System.out.println(item);
       itemArray.add(item.toUpperCase());
-      ;
     }
     return itemArray;
   }
 
+  public static void displayItemsInInventory() {
+    System.out.println("Your inventory: " + itemArray);
+    }
   public static void displayItemsInInventory(Set<String> array) {
     if (array != null) {
       System.out.println("Your inventory: " + array);
@@ -64,7 +69,6 @@ public class Inventory {
     }
   }
   public static Set<String> removeItemFromInventory(String item) {
-
     String usedItem = item.toUpperCase();
     if (itemArray.contains(usedItem)) {
       itemArray.remove(usedItem);
@@ -75,6 +79,7 @@ public class Inventory {
     }
     return itemArray;
   }
+}
 
   public static void saveInventoryToJson(Set<String> itemArray) {
 
@@ -153,5 +158,3 @@ public class Inventory {
 //    removeItemFromInventory("Key");
     }
   }
-
-
