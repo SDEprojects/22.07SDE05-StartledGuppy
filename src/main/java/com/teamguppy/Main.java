@@ -17,10 +17,10 @@ public class Main {
     View view = new View();
 
     Sound sound = new Sound();
-//    sound.playSound();
+    sound.playBackgroundMusic();
 
 
-    Controller controller = new Controller(game, view);
+    Controller controller = new Controller(game, view, sound);
     controller.displayGameTitle();
     controller.displayAboutGame();
     controller.displayCommands();
