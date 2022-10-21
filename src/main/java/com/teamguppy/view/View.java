@@ -28,9 +28,9 @@ public class View {
   private final String COMMANDS =
       "\n=================== Game Commands ===================\n"
       + "go/swim/move [north, south, east, west]\n"
-      + "get/grab     [key, medicine, blood grenade, cloak]\n"
-      + "look/examine [key, medicine, blood grenade, cloak]\n"
-      + "use          [key, medicine, blood grenade, cloak]\n"
+      + "get/grab     [key, medicine, squid, cloak, guppy]\n"
+      + "look/examine [key, medicine, squid, cloak]\n"
+      + "use          [key, medicine, squid, cloak]\n"
       + "talk         [turtle]\n"
       + "learn        Displays educational information about a location or sea animal\n"
       + "help         Displays a list of game commands";
@@ -39,18 +39,15 @@ public class View {
       "\nAhh...a Startled Guppy you say?\n"
         + "Saw one flapping by no more than an hour ago heading south in a hurry.\n"
         + "But be careful...legend has it those who delve deeper into this ship don't always...return.",
+
       "I think I saw a wee little guppy...but I can't be quite sure...\n"
         + "My memory isn't very good these days.\n"
         + "Try talking to me again later and I might remember something.",
+
       "Guppies shouldn't be around here, you know?\n"
         + "However, I do recall seeing a Startled Guppy.\n"
         + "I believe they headed deeper into this sunk ship."
   );
-//    {
-//      "\nA...Startled Guppy you say?\n"
-//      + "Saw one flapping by no more than an hour ago heading south in a hurry.\n"
-//      + "But be careful...legend has it those who delve deeper into this ship don't always...return."
-//  };
 
   private final String PLAYER_WINS =
       " __     ______  _    _     __          _______ _   _   _ _ \n"

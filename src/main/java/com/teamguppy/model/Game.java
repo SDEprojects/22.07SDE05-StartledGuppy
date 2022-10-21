@@ -2,6 +2,7 @@ package com.teamguppy.model;
 
 import com.teamguppy.controller.Controller;
 import com.teamguppy.view.Learn;
+import com.teamguppy.view.Sound;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -14,6 +15,7 @@ public class Game {
 
   private static Room currentLocation;
   private Controller con = new Controller();
+  private Sound sound = new Sound();
   //  private ArrayList<String> currentInventory1 = new ArrayList<>();
   private Boolean wounded = false;
   //  private static final String startingLocation = "Ocean Floor";
@@ -144,10 +146,15 @@ public class Game {
         con.displayPlayerWins();
 //          System.exit(0);
       }
-    } else if (verb.equals("get") && currentItem != null &&noun.toLowerCase().equals(currentItem.toLowerCase())) {
+    } else if (verb.equals("get") && currentItem != null && noun.toLowerCase().equals(currentItem.toLowerCase())) {
+//        if (noun.toLowerCase().equals("guppy")) {
+//          sound.playGuppy();
+//        }
+        sound.playGetItem();
         currentInventory = Inventory.addItemToInventory(currentItem);
         gameMap.removeItemFromRoom(gameMap, currentItem);
     } else if (verb.equals("use")) {
+      sound.playUseItem();
       currentInventory = Inventory.removeItemFromInventory(noun);
       Inventory.displayItemsInInventory();
     } else if (verb.equals("look") || verb.equals("examine")) {
@@ -204,7 +211,10 @@ public class Game {
   // the player will be sent back to the starting place.
   public void encounterMonster(String monster) {
     if (monster.equals("Goblin Shark")) {
-      System.out.println("There’s a big scary Goblin Shark monster in here!");
+      System.out.println("There’s a big scary Goblin Shark monster in here!\n");
+      sound.playGoblinShark();
+      System.out.println("Goblin Shark: I'm a crazy goblin shark, rawr!");
+      System.out.println("Goblin Shark: I'm going to eat you, rawr, rawr!\n");
       if (currentInventory.contains("MEDICINE")) {
         System.out.println("You’ve taken some damage from the Goblin Shark, but you can use your medicine to heal yourself.");
         wounded = true;
@@ -222,7 +232,11 @@ public class Game {
 
     if (monster.equals("Jellyfish")) {
       System.out.println(
-          "There’s a jiggly Jellyfish monster in this room!!  Oh, what should I do?!");
+          "There’s a jiggly Jellyfish monster in this room!! Oh, what ever should I do?!\n");
+      sound.playJellyfish();
+      System.out.println("Jiggly Jellyfish: I'm the Jiggly Jellyfish monster!");
+      System.out.println("Jiggly Jellyfish: Going to give you a Jiggly Jellyfish sting!");
+      System.out.println("Jiggly Jellyfish: You'll never stop me!\n");
       if (currentInventory.contains("MEDICINE")) {
         System.out.println(
             "The Jellyfish stung you and you took some damage, but you can use your medicine to heal yourself.");
