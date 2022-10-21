@@ -35,27 +35,51 @@ public class Inventory {
   }
 
 
-
   public static Set<String> addItemToInventory(String item) {
-    itemArray.add(item.toUpperCase());
-    displayItemsInInventory();
+    if (item.equals("guppy")) {
+      if (itemArray.contains("KEY")) {
+        itemArray.add(item.toUpperCase());
+        removeItemFromInventory("Key");
+        displayItemsInInventory();
+
+      } else {
+        System.out.println("You can't get Guppy. You need Key to get Guppy.");
+      }
+    } else {
+      itemArray.add(item.toUpperCase());
+      ;
+    }
     return itemArray;
   }
 
+//  private Set<String> getItemCondition(String noun) {
+//    if (noun.equals("guppy")) {
+//      if (currentInventory.contains("KEY")) {
+//        currentInventory = Inventory.removeItemFromInventory("KEY");
+//        currentInventory = Inventory.addItemToInventory(noun);
+//      } else {
+//        System.out.println("You can't get Guppy.");
+//      }
+//    } else {
+//      currentInventory = Inventory.addItemToInventory(noun);
+//    }
+//    return currentInventory;
+//  }
+
   public static void displayItemsInInventory() {
-    System.out.println(itemArray);
+    System.out.println("Your inventory: " + itemArray);
   }
 
   public static Set<String> removeItemFromInventory(String item) {
 
     String usedItem = item.toUpperCase();
-      if (itemArray.contains(usedItem)) {
-        itemArray.remove(usedItem);
-        System.out.println("Your have used " + item + " from your inventory");
-        return itemArray;
-      }else {
-        System.out.println("You don't have " + item + " in your inventory.");
-      }
+    if (itemArray.contains(usedItem)) {
+      itemArray.remove(usedItem);
+      System.out.println("Your have used " + item + " from your inventory");
+      return itemArray;
+    } else {
+      System.out.println("You don't have " + item + " in your inventory.");
+    }
     return itemArray;
   }
 
