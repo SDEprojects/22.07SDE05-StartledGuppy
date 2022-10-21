@@ -18,7 +18,7 @@ public class Game {
   private Boolean wounded = false;
   //  private static final String startingLocation = "Ocean Floor";
   private static final String startingLocation = "Ocean Floor";
-  private Set<String> currentInventory;
+  private Set<String> currentInventory = new HashSet<>();
 
   private GameMap gameMap = new GameMap();
 
@@ -28,9 +28,7 @@ public class Game {
   public Game() {
     setGameMap(gameMap);
     setCurrentLocation(startingLocation);
-    this.currentInventory = new HashSet<>();
-    System.out.println(currentLocation);
-//    setCurrentItem("star");
+    currentInventory = Inventory.findInventoryInJson();
   }
 
   public void setGameMap(GameMap gameMap) {
@@ -118,9 +116,8 @@ public class Game {
     do {
       noun = "";
       roomDescription(currentLocation);
-      Inventory.displayItemsInInventory();
+      Inventory.displayItemsInInventory(currentInventory);
       System.out.println("\nWhat would you like to do next? ");
-      System.out.println(currentItem);
       String input = userInput();
       String[] arr = input.toLowerCase().split(" ");
       verb = arr[0];
@@ -134,11 +131,12 @@ public class Game {
 //      }
     if (verb.equals("help")) {
       userHelp();
+    } else if(verb.equals("save")) {
+      Inventory.saveInventoryToJson(currentInventory);
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
       findLocationByDirection(noun.toLowerCase());
       itemsInRoom(currentLocation);
       checkMonster(currentLocation);
-      Inventory.displayItemsInInventory();
 
       if (playerWins()) {
         con.displayPlayerWins();
@@ -335,7 +333,7 @@ public class Game {
   private static Boolean validMove(String move) {
     Set<String> moves = new HashSet<>(
         Arrays.asList("go", "swim", "move", "get", "grab", "look", "examine", "help", "talk", "use",
-            "learn"));
+            "learn", "save"));
     if (moves.contains(move)) {
       return true;
     } else {
