@@ -28,7 +28,7 @@ public class Game {
   public Game() {
     setGameMap(gameMap);
     setCurrentLocation(startingLocation);
-    this.currentInventory = new HashSet<>();
+    currentInventory = Inventory.findInventoryInJson();
   }
 
   public void setGameMap(GameMap gameMap) {
@@ -116,7 +116,6 @@ public class Game {
     do {
       noun = "";
       roomDescription(currentLocation);
-      currentInventory = Inventory.findInventoryInJson();
       Inventory.displayItemsInInventory(currentInventory);
       System.out.println("\nWhat would you like to do next? ");
       String input = userInput();
