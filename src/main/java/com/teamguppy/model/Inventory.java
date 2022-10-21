@@ -22,6 +22,7 @@ public class Inventory {
 //  private static Set<String> itemArray = new HashSet<>(Arrays.asList("guppy")); // Was using to test with guppy in inventory
 
   public Inventory(Set<String> inventory) {
+    itemArray = findInventoryInJson();
 
   }
 
@@ -40,7 +41,7 @@ public class Inventory {
       if (itemArray.contains("KEY")) {
         itemArray.add(item.toUpperCase());
         removeItemFromInventory("Key");
-        displayItemsInInventory();
+        displayItemsInInventory(itemArray);
 
       } else {
         System.out.println("You can't get Guppy. You need Key to get Guppy.");
@@ -52,24 +53,14 @@ public class Inventory {
     return itemArray;
   }
 
-//  private Set<String> getItemCondition(String noun) {
-//    if (noun.equals("guppy")) {
-//      if (currentInventory.contains("KEY")) {
-//        currentInventory = Inventory.removeItemFromInventory("KEY");
-//        currentInventory = Inventory.addItemToInventory(noun);
-//      } else {
-//        System.out.println("You can't get Guppy.");
-//      }
-//    } else {
-//      currentInventory = Inventory.addItemToInventory(noun);
-//    }
-//    return currentInventory;
-//  }
-
-  public static void displayItemsInInventory() {
-    System.out.println("Your inventory: " + itemArray);
+  public static void displayItemsInInventory(Set<String> array) {
+    if (array != null) {
+      System.out.println("Your inventory: " + array);
+    }
+    if (array == null) {
+      System.out.println("You have nothing in your inventory");
+    }
   }
-
   public static Set<String> removeItemFromInventory(String item) {
 
     String usedItem = item.toUpperCase();
@@ -110,7 +101,7 @@ public class Inventory {
     }
   }
 
-  public static void findInventoryInJson() {
+  public static Set<String> findInventoryInJson() {
     InputStream inputStream = null;
     Set<String> inventory = null;
     File file = new File("testing.json");
@@ -119,55 +110,33 @@ public class Inventory {
         // create Gson instance
 //        inputStream = new FileInputStream(file);
         FileReader fileReader = new FileReader(file);
-        Type type = new TypeToken<Set<String>>(){}.getType();
+        Type type = new TypeToken<Set<String>>() {
+        }.getType();
         Gson gson = new Gson();
 
 //
         theList = gson.fromJson(fileReader, type);
-        Set<String> aSet = inputStream.
-
+        fileReader.close();
+//        System.out.println(theList);
 
       } catch (FileNotFoundException e) {
         throw new RuntimeException(e);
-      } finally{
-        if (inputStream != null){
-          try{
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      } finally {
+        if (inputStream != null) {
+          try {
             inputStream.close();
           } catch (IOException e) {
             throw new RuntimeException(e);
           }
         }
-//        Type type = new TypeToken<ArrayList<Inventory>>() {
-//        }.getType();
-//        Gson gson = new Gson();
-//
-//        theList = gson.fromJson(fileReader, type);
-//        theList.toArray();
-//        fileReader.close();
-//        for (String i : theList)
-//          System.out.println(i);
-
-        //      for(Inventory user : array) {
-        //        System.out.println(user);
-        //      }
-        // convert a JSON string to a User object
-
-        // print user object
-
-
       }
-//    return (Set<String>) inventory;
     }
-
-//  private static Inventory createInventoryObject(Set<String> itemArray) {
-//    Inventory inventory = new Inventory(itemArray);
-//
-//    Gson gson = new Gson();
-//    Set<String> json = Collections.singleton(gson.toJson(itemArray));
-//
-//    System.out.println("inventory saved");
-//    return json;
-//  }
+    else{
+      theList = new HashSet<>();
+    }
+    return theList;
   }
     public static void main (String[]args){
 

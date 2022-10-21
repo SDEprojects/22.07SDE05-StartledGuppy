@@ -18,7 +18,7 @@ public class Game {
   private Boolean wounded = false;
   //  private static final String startingLocation = "Ocean Floor";
   private static final String startingLocation = "Ocean Floor";
-  private Set<String> currentInventory;
+  private Set<String> currentInventory = new HashSet<>();
 
   private GameMap gameMap = new GameMap();
 
@@ -29,8 +29,6 @@ public class Game {
     setGameMap(gameMap);
     setCurrentLocation(startingLocation);
     this.currentInventory = new HashSet<>();
-    System.out.println(currentLocation);
-//    setCurrentItem("star");
   }
 
   public void setGameMap(GameMap gameMap) {
@@ -118,9 +116,9 @@ public class Game {
     do {
       noun = "";
       roomDescription(currentLocation);
-      Inventory.displayItemsInInventory();
+//      currentInventory = Inventory.findInventoryInJson();
+      Inventory.displayItemsInInventory(currentInventory);
       System.out.println("\nWhat would you like to do next? ");
-      System.out.println(currentItem);
       String input = userInput();
       String[] arr = input.toLowerCase().split(" ");
       verb = arr[0];
@@ -140,8 +138,7 @@ public class Game {
       findLocationByDirection(noun.toLowerCase());
       itemsInRoom(currentLocation);
       checkMonster(currentLocation);
-      Inventory.displayItemsInInventory();
-
+//      Inventory.displayItemsInInventory(currentInventory);
       if (playerWins()) {
         con.displayPlayerWins();
 //          System.exit(0);
