@@ -116,7 +116,7 @@ public class Game {
     do {
       noun = "";
       roomDescription(currentLocation);
-//      currentInventory = Inventory.findInventoryInJson();
+      currentInventory = Inventory.findInventoryInJson();
       Inventory.displayItemsInInventory(currentInventory);
       System.out.println("\nWhat would you like to do next? ");
       String input = userInput();

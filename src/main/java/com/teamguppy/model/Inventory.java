@@ -94,6 +94,7 @@ public class Inventory {
         FileWriter fileWriter = new FileWriter(file);
         gson.toJson(itemArray, fileWriter);
         fileWriter.close();
+        System.out.println("Inventory created and saved!");
 
       } catch (IOException e) {
         throw new RuntimeException(e);
