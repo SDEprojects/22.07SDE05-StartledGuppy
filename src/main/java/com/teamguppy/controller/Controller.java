@@ -3,9 +3,7 @@ package com.teamguppy.controller;
 import com.teamguppy.model.Game;
 import com.teamguppy.view.Sound;
 import com.teamguppy.view.View;
-import java.io.IOException;
 import java.net.URISyntaxException;
-import org.json.simple.parser.ParseException;
 
 public class Controller {
 
@@ -17,7 +15,7 @@ public class Controller {
   public Controller() {
   }
 
-  public Controller(Game game, Sound sound, View view) {
+  public Controller(Game game, View view, Sound sound) {
     super();
     this.game = game;
     this.view = view;
@@ -27,7 +25,7 @@ public class Controller {
   public void checkSavedMap(){
     game.checkSavedGame();
   }
-  public void landingRoom() throws IOException, ParseException, URISyntaxException {
+  public void landingRoom() throws  URISyntaxException {
     game.landingRoom();
   }
 
