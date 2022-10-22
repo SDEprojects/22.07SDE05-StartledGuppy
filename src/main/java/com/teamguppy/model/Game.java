@@ -13,7 +13,7 @@ import org.json.simple.parser.ParseException;
 public class Game {
 
   private static Room currentLocation;
-  private Controller con = new Controller();
+  private Controller con = new Controller(game, view, sound);
   //  private ArrayList<String> currentInventory1 = new ArrayList<>();
   private Boolean wounded = false;
   //  private static final String startingLocation = "Ocean Floor";
@@ -28,7 +28,7 @@ public class Game {
   public Game() {
     setGameMap(gameMap);
     setCurrentLocation(startingLocation);
-    currentInventory = Inventory.findInventoryInJson();
+    currentInventory=new HashSet<>();
   }
 
   public void setGameMap(GameMap gameMap) {
@@ -56,6 +56,19 @@ public class Game {
     return currentInventory;
   }
 
+  public void checkSavedGame(){
+    Boolean savedGame = gameMap.checkSavedGame();
+    if(savedGame) {
+      System.out.println("You have saved game. Do you want to continue your previous game?");
+      String input =userInput();
+      if(input.toLowerCase().equals("yes")){
+        gameMap = gameMap.openSavedMap();
+        currentInventory=Inventory.findInventoryInJson();
+      }if(input.toLowerCase().equals("no")){
+        System.out.println("Creating new game...");
+      }
+    }
+  }
   public void landingRoom() throws IOException, ParseException, URISyntaxException {
     String command = null;
     try (Scanner sc = new Scanner(System.in)) {
@@ -133,6 +146,7 @@ public class Game {
       userHelp();
     } else if(verb.equals("save")) {
       Inventory.saveInventoryToJson(currentInventory);
+      gameMap.saveGameMaptoJson(gameMap);
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
       findLocationByDirection(noun.toLowerCase());
       itemsInRoom(currentLocation);

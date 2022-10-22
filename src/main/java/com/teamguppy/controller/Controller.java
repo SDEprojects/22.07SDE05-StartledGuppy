@@ -1,11 +1,10 @@
 package com.teamguppy.controller;
 
 import com.teamguppy.model.Game;
+import com.teamguppy.view.Sound;
 import com.teamguppy.view.View;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Collections;
 import org.json.simple.parser.ParseException;
 
 public class Controller {
@@ -13,7 +12,7 @@ public class Controller {
 
   private static View view;
 
-  public Controller() {
+  public Controller(Game game, View view, Sound sound) {
 
   }
 
@@ -23,6 +22,9 @@ public class Controller {
     this.view = view;
   }
 
+  public void checkSavedMap(){
+    game.checkSavedGame();
+  }
   public void landingRoom() throws IOException, ParseException, URISyntaxException {
     game.landingRoom();
   }

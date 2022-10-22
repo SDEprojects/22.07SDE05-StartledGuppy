@@ -15,23 +15,18 @@ public class Main {
 
     Game game = new Game();
     View view = new View();
-
     Sound sound = new Sound();
 //    sound.playSound();
+    Controller controller = new Controller(game, view, sound);
 
-
-    Controller controller = new Controller(game, view);
     controller.displayGameTitle();
     controller.displayAboutGame();
     controller.displayCommands();
+    controller.checkSavedMap();
     try {
       controller.landingRoom();
-    } catch (IOException e) {
-      System.out.println(e);
-    } catch (ParseException e) {
-      System.out.println(e);
     } catch (URISyntaxException e) {
-      System.out.println(e);
+      throw new RuntimeException(e);
     }
   }
 }
