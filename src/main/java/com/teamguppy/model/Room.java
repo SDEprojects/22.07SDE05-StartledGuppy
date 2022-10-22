@@ -1,7 +1,16 @@
 package com.teamguppy.model;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
 import javax.annotation.processing.Generated;
 
 @Generated("jsonschema2pojo")
@@ -114,11 +123,70 @@ public class Room {
     }
   }
 
-
   public static void displayItems(Room location) {
     if (location.getItem() !=null ){
       System.out.println("This room has " + location.getItem());
     }
+  }
+
+  public void saveCurrentLocationToJson(String location) {
+    File file = new File("savedCurrentLocation.json");
+
+    Gson gson = new Gson();
+
+    if (file.exists()) {
+
+      try (FileWriter writer = new FileWriter(file)) {
+        gson.toJson(location, writer);
+
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      System.out.println("Saving your game...");
+    } else {
+      try {
+        FileWriter fileWriter = new FileWriter(file);
+        gson.toJson(location, fileWriter);
+        fileWriter.close();
+        System.out.println("Saving your game... ");
+
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    }
+  }
+
+
+  public static String openSavedCurrentLocation() {
+    InputStream inputStream = null;
+    String location = null;
+    File file = new File("savedCurrentLocation.json");
+
+    if (file.exists()) {
+      try {
+        FileReader fileReader = new FileReader(file);
+        Gson gson = new Gson();
+        Type type = new TypeToken<String>() {
+        }.getType();
+        location = gson.fromJson(fileReader, type);
+        fileReader.close();
+
+      } catch (FileNotFoundException e) {
+        throw new RuntimeException(e);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      } finally {
+        if (inputStream != null) {
+          try {
+            inputStream.close();
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+        }
+      }
+    }
+    System.out.println(location);
+    return location;
   }
 }
 

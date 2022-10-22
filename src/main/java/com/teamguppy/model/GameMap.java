@@ -3,7 +3,6 @@ package com.teamguppy.model;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,9 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Set;
 import javax.annotation.processing.Generated;
 
 @Generated("jsonschema2pojo")
@@ -116,13 +113,13 @@ public class GameMap {
       } catch (IOException e) {
         e.printStackTrace();
       }
-      System.out.println("Map json file saved!");
+      System.out.println("Saving your game...");
     } else {
       try {
         FileWriter fileWriter = new FileWriter(file);
         gson.toJson(map, fileWriter);
         fileWriter.close();
-        System.out.println("Map json file has  created and saved!");
+        System.out.println("Saving your game... ");
 
       } catch (IOException e) {
         throw new RuntimeException(e);
@@ -138,8 +135,8 @@ public class GameMap {
     try {
 
       FileReader fileReader = new FileReader("savedMap.json");
-      Type type = new TypeToken<Set<String>>() {
-      }.getType();
+//      Type type = new TypeToken<Set<String>>() {
+//      }.getType();
 
       location = gson.fromJson(fileReader, GameMap.class);
       if (location != null) {

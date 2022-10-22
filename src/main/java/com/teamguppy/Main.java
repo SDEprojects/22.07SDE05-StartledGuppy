@@ -14,11 +14,11 @@ public class Main {
   public static void main(String[] args) throws IOException, ParseException {
 
     Game game = new Game();
-    View view = new View();
     Sound sound = new Sound();
-//    sound.playSound();
-    Controller controller = new Controller(game, view, sound);
+    View view = new View();
+    Controller controller = new Controller(game, sound, view);
 
+    sound.playBackgroundMusic();
     controller.displayGameTitle();
     controller.displayAboutGame();
     controller.displayCommands();

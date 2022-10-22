@@ -42,17 +42,22 @@ public class Inventory {
 
         itemArray.add(item.toUpperCase());
         removeItemFromInventory("Key");
-        displayItemsInInventory(itemArray);
 
+        displayItemsInInventory();
+
+        displayItemsInInventory(itemArray);
       } else {
         System.out.println("This door is locked. You need Key to open this door.");
       }
     } else {
       System.out.println(item);
       itemArray.add(item.toUpperCase());
-      ;
     }
     return itemArray;
+  }
+
+  public static void displayItemsInInventory() {
+    System.out.println("Your inventory: " + itemArray);
   }
 
   public static void displayItemsInInventory(Set<String> array) {
@@ -63,8 +68,8 @@ public class Inventory {
       System.out.println("You have nothing in your inventory");
     }
   }
-  public static Set<String> removeItemFromInventory(String item) {
 
+  public static Set<String> removeItemFromInventory(String item) {
     String usedItem = item.toUpperCase();
     if (itemArray.contains(usedItem)) {
       itemArray.remove(usedItem);
@@ -76,28 +81,23 @@ public class Inventory {
     return itemArray;
   }
 
+
   public static void saveInventoryToJson(Set<String> itemArray) {
 
     File file = new File("savedInventory.json");
-
     Gson gson = new Gson();
 
     if (file.exists()) {
-
       try (FileWriter writer = new FileWriter(file)) {
         gson.toJson(itemArray, writer);
-
       } catch (IOException e) {
         e.printStackTrace();
       }
-      System.out.println("Inventory saved!");
     } else {
       try {
         FileWriter fileWriter = new FileWriter(file);
         gson.toJson(itemArray, fileWriter);
         fileWriter.close();
-        System.out.println("Inventory created and saved!");
-
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
@@ -106,7 +106,7 @@ public class Inventory {
 
   public static Set<String> findInventoryInJson() {
     InputStream inputStream = null;
-    Set<String> inventory = null;
+//    Set<String> inventory = null;
     File file = new File("savedInventory.json");
     if (file.exists()) {
       try {
@@ -135,23 +135,21 @@ public class Inventory {
           }
         }
       }
-    }
-    else{
+    } else {
       theList = new HashSet<>();
     }
     return theList;
   }
-    public static void main (String[]args){
+
+  public static void main(String[] args) {
 
 //    addItemToInventory("Coral Reef");
 //    addItemToInventory("testing");
 //    System.out.println(itemArray + "check");
 //    saveInventoryToJson(itemArray);
-      findInventoryInJson();
+    findInventoryInJson();
 
 //    displayItemsInInventory();
 //    removeItemFromInventory("Key");
-    }
   }
-
-
+}
