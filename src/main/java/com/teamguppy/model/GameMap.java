@@ -5,6 +5,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -94,6 +98,74 @@ public class GameMap {
       System.out.println("no map found");
     }
     return map;
+  }
+
+  public void saveGameMaptoJson(GameMap map){
+    File file = new File("savedMap.json");
+
+    Gson gson = new Gson();
+
+    if (file.exists()) {
+
+      try (FileWriter writer = new FileWriter(file)) {
+        gson.toJson(map, writer);
+
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      System.out.println("Saving your game...");
+    } else {
+      try {
+        FileWriter fileWriter = new FileWriter(file);
+        gson.toJson(map, fileWriter);
+        fileWriter.close();
+        System.out.println("Saving your game... ");
+
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    }
+  }
+
+  public GameMap openSavedMap() {
+    Gson gson = new Gson();
+    BufferedReader br = null;
+    GameMap location = null;
+
+    try {
+
+      FileReader fileReader = new FileReader("savedMap.json");
+//      Type type = new TypeToken<Set<String>>() {
+//      }.getType();
+
+      location = gson.fromJson(fileReader, GameMap.class);
+      if (location != null) {
+        for (Room loc : location.getLocations()) {
+        }
+        System.out.println("Opening your game...\n");
+      }
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(e);
+    } finally {
+      if (br != null) {
+        try {
+          br.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+    return location;
+  }
+
+  public Boolean checkSavedGame(){
+    File file = new File("savedMap.json");
+
+    if (file.exists()){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   public static void main(String[] args) {

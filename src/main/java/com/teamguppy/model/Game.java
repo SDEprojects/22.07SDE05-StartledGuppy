@@ -14,8 +14,8 @@ import org.json.simple.parser.ParseException;
 public class Game {
 
   private static Room currentLocation;
-  private Controller con = new Controller();
   private Sound sound = new Sound();
+
   //  private ArrayList<String> currentInventory1 = new ArrayList<>();
   private Boolean wounded = false;
   //  private static final String startingLocation = "Ocean Floor";
@@ -26,11 +26,13 @@ public class Game {
 
   private String currentItem;
 
+  private Controller controller = new Controller();
+
 
   public Game() {
     setGameMap(gameMap);
     setCurrentLocation(startingLocation);
-    currentInventory = Inventory.findInventoryInJson();
+    currentInventory=new HashSet<>();
   }
 
   public void setGameMap(GameMap gameMap) {
@@ -58,8 +60,28 @@ public class Game {
     return currentInventory;
   }
 
-  public void landingRoom() throws IOException, ParseException, URISyntaxException {
+  public void checkSavedGame(){
+    Boolean savedGame = gameMap.checkSavedGame();
+    if (savedGame) {
+        System.out.println("You have saved game. Do you want to continue your previous game?");
+        String input = userInput();
+        if (input.toLowerCase().equals("yes")) {
+          gameMap = gameMap.openSavedMap();
+          currentInventory = Inventory.findInventoryInJson();
+          String savedLocation = Room.openSavedCurrentLocation();
+          System.out.println(savedLocation);
+          System.out.println(savedLocation + " 72");
+          setCurrentLocation(savedLocation);
+        } else if (input.toLowerCase().equals("no")) {
+          System.out.println("Creating new game...");
+        } else if (input.toLowerCase().equals("quit")) {
+          endGame();
+        }
+      }
+  }
+  public void landingRoom(){
     String command = null;
+    System.out.println(currentLocation);
     try (Scanner sc = new Scanner(System.in)) {
       label:
       do {
@@ -70,32 +92,37 @@ public class Game {
             case "yes":
               startGame();
               break label;
-            case "quit":
+            case "quit" :
+              endGame();
+              break label;
+            case "no" :
               endGame();
               break label;
           }
+        }else{
+          startGame();
         }
-      } while (validStartInput(command));
+      } while (!validStartInput(command));
     }
   }
 
 
   private static Boolean validStartInput(String input) {
-    if (!input.equals("yes") || !input.equals("quit")) {
-      System.out.println("Sorry, I don't understand");
+    if (!input.toLowerCase().equals("yes") || !input.toLowerCase().equals("quit") || !input.toLowerCase().equals("no")) {
+      System.out.println("Sorry, I don't understand. Please, type valid input.");
+      return false;
     }
-    return (true);
+    return true;
   }
 
-  private void startGame() throws IOException, ParseException, URISyntaxException {
+  private void startGame(){
     do {
       System.out.println("\n[Your current location is " + currentLocation.getName() + ".]");
       userMove();
     } while (true);
   }
 
-  private void endGame() throws IOException, ParseException, URISyntaxException {
-
+  private void endGame(){
     System.out.println(
         "Are you sure you wish to exit the game?\nEnter 'yes' to exit and 'no' to return.");
     String input = userInput();
@@ -110,7 +137,7 @@ public class Game {
   // we can make function for each verb, and call the function in here
 
 
-  private void userMove() throws IOException, ParseException, URISyntaxException {
+  private void userMove(){
     boolean validMove;
     String verb;
     String noun;
@@ -135,13 +162,15 @@ public class Game {
       userHelp();
     } else if (verb.equals("save")) {
       Inventory.saveInventoryToJson(currentInventory);
+      gameMap.saveGameMaptoJson(gameMap);
+      currentLocation.saveCurrentLocationToJson(currentLocation.getName());
     } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
       findLocationByDirection(noun.toLowerCase());
       itemsInRoom(currentLocation);
       checkMonster(currentLocation);
 
       if (playerWins()) {
-        con.displayPlayerWins();
+        controller.displayPlayerWins();
 //          System.exit(0);
       }
     } else if (verb.equals("get") && currentItem != null && noun.toLowerCase()
@@ -310,8 +339,7 @@ public class Game {
     }
   }
 
-  public static void roomDescription(Room location)
-      throws IOException, ParseException, URISyntaxException {
+  public static void roomDescription(Room location) {
     Room.roomDescription(location);
   }
 
@@ -329,7 +357,7 @@ public class Game {
     }
   }
 
-  public static void displayItemDescription(String item) throws IOException, ParseException {
+  public static void displayItemDescription(String item){
     Item.findDescription(item);
   }
 
@@ -343,11 +371,11 @@ public class Game {
   }
 
   public void userHelp() {
-    con.displayCommands();
+    controller.displayCommands();
   }
 
   public void turtleTalk() {
-    con.displayTurtleTalk();
+    controller.displayTurtleTalk();
   }
 
   // validate user's move input

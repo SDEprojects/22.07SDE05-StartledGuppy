@@ -47,7 +47,7 @@ public class Inventory {
 
         displayItemsInInventory(itemArray);
       } else {
-        System.out.println("You can't get Guppy. You need Key to get Guppy.");
+        System.out.println("This door is locked. You need Key to open this door.");
       }
     } else {
       System.out.println(item);
@@ -84,26 +84,20 @@ public class Inventory {
 
   public static void saveInventoryToJson(Set<String> itemArray) {
 
-    File file = new File("testing.json");
-
+    File file = new File("savedInventory.json");
     Gson gson = new Gson();
 
     if (file.exists()) {
-
       try (FileWriter writer = new FileWriter(file)) {
         gson.toJson(itemArray, writer);
-
       } catch (IOException e) {
         e.printStackTrace();
       }
-      System.out.println("Inventory saved!");
     } else {
       try {
         FileWriter fileWriter = new FileWriter(file);
         gson.toJson(itemArray, fileWriter);
         fileWriter.close();
-        System.out.println("Inventory created and saved!");
-
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
@@ -112,8 +106,8 @@ public class Inventory {
 
   public static Set<String> findInventoryInJson() {
     InputStream inputStream = null;
-    Set<String> inventory = null;
-    File file = new File("testing.json");
+//    Set<String> inventory = null;
+    File file = new File("savedInventory.json");
     if (file.exists()) {
       try {
         // create Gson instance

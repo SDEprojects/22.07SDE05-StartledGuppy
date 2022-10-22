@@ -3,19 +3,16 @@ package com.teamguppy.controller;
 import com.teamguppy.model.Game;
 import com.teamguppy.view.Sound;
 import com.teamguppy.view.View;
-import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Collections;
-import org.json.simple.parser.ParseException;
 
 public class Controller {
+
   private static Game game;
   private static View view;
   private static Sound sound;
 
-  public Controller() {
 
+  public Controller() {
   }
 
   public Controller(Game game, View view, Sound sound) {
@@ -25,7 +22,10 @@ public class Controller {
     this.sound = sound;
   }
 
-  public void landingRoom() throws IOException, ParseException, URISyntaxException {
+  public void checkSavedMap(){
+    game.checkSavedGame();
+  }
+  public void landingRoom() throws  URISyntaxException {
     game.landingRoom();
   }
 
@@ -57,4 +57,7 @@ public class Controller {
     System.out.println(view.getPlayerWins());
   }
 
+  public void playBackgroundMusic() {
+    sound.playBackgroundMusic();
+  }
 }
