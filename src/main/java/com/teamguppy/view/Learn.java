@@ -7,7 +7,7 @@ public class Learn {
   public static HashMap<String, String> learnAboutOcean = new HashMap<>() {{
     put("Ocean Floor",
         "1. The ocean floor is the bottom of the ocean.\n"
-            + "2. The ocean floor covers more than 70 percent of the planet’s surface.It has many levels.");
+            + "2. The ocean floor covers more than 70 percent of the planet’s surface.");
     put("Mariana Trench",
         "1. The Mariana Trench is the deepest oceanic trench on Earth.\n"
             + "2. It is located in the western Pacific Ocean about 200 kilometres (124 mi) east of the Mariana Islands");
@@ -45,6 +45,7 @@ public class Learn {
             + "4. The Goblin Shark Shrinks When It Gets Older.\n"
             + "5. Goblin Sharks Will Eat Just About Anything.");
   }};
+
   private static final String ENCOUNTER_GOBLIN_SHARK =
       "There’s a big scary Goblin Shark monster in here!\n"
       + "\nGoblin Shark: I'm a crazy goblin shark, rawr!\n"
