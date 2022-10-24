@@ -142,7 +142,7 @@ public class GameMap {
       if (location != null) {
         for (Room loc : location.getLocations()) {
         }
-        System.out.println("Opening your game...\n");
+        System.out.println("Opening your saved game...\n");
       }
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e);

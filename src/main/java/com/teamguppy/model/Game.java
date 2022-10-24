@@ -3,16 +3,28 @@ package com.teamguppy.model;
 import com.teamguppy.controller.Controller;
 import com.teamguppy.view.Learn;
 import com.teamguppy.view.Sound;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
-import org.json.simple.parser.ParseException;
 
 public class Game {
 
+  // TODO Use constant.equals instead of equals(constant) to avoid null pointer exception
+  /*
+    This will avoid explicit null check to the variable being null
+    String name = getName();
+    if (name != null && name.equals("Some Room Name")) {
+    }
+
+    // Below 2 code are null safe
+    This could be written as
+    if ("Some Room Name".equals(name)) {
+    }
+
+    if (Objects.equals("Some Room Name", name)) {
+    }
+   */
   private static Room currentLocation;
   private Sound sound = new Sound();
 
@@ -32,7 +44,7 @@ public class Game {
   public Game() {
     setGameMap(gameMap);
     setCurrentLocation(startingLocation);
-    currentInventory=new HashSet<>();
+    currentInventory = new HashSet<>();
   }
 
   public void setGameMap(GameMap gameMap) {
@@ -60,46 +72,53 @@ public class Game {
     return currentInventory;
   }
 
-  public void checkSavedGame(){
+  public void checkSavedGame() {
     Boolean savedGame = gameMap.checkSavedGame();
-    if (savedGame) {
+    Boolean validInput = true;
+    do {
+      if (savedGame) {
         System.out.println("You have saved game. Do you want to continue your previous game?");
         String input = userInput();
         if (input.toLowerCase().equals("yes")) {
           gameMap = gameMap.openSavedMap();
           currentInventory = Inventory.findInventoryInJson();
           String savedLocation = Room.openSavedCurrentLocation();
-          System.out.println(savedLocation);
-          System.out.println(savedLocation + " 72");
           setCurrentLocation(savedLocation);
+          setCurrentItem(currentLocation.getItem());
+          validInput = true;
         } else if (input.toLowerCase().equals("no")) {
           System.out.println("Creating new game...");
+          validInput = true;
         } else if (input.toLowerCase().equals("quit")) {
           endGame();
+          validInput = true;
+        } else {
+          System.out.println("Plese, type 'yes' or 'no'.");
+          validInput = false;
         }
       }
+    }while (!validInput);
   }
-  public void landingRoom(){
+
+  public void landingRoom() {
     String command = null;
-    System.out.println(currentLocation);
+
     try (Scanner sc = new Scanner(System.in)) {
       label:
       do {
         if (currentLocation.getName().equals("Ocean Floor")) {
           System.out.println("\nEnter 'yes' to continue and 'quit' to end the game.");
-          command = sc.nextLine();
+          command = sc.nextLine().toLowerCase().trim();;
           switch (command) {
             case "yes":
               startGame();
               break label;
-            case "quit" :
-              endGame();
-              break label;
-            case "no" :
+            case "quit":
+            case "no":
               endGame();
               break label;
           }
-        }else{
+        } else {
           startGame();
         }
       } while (!validStartInput(command));
@@ -108,26 +127,28 @@ public class Game {
 
 
   private static Boolean validStartInput(String input) {
-    if (!input.toLowerCase().equals("yes") || !input.toLowerCase().equals("quit") || !input.toLowerCase().equals("no")) {
+    if (!input.toLowerCase().equals("yes") || !input.toLowerCase().equals("quit")
+        || !input.toLowerCase().equals("no")) {
       System.out.println("Sorry, I don't understand. Please, type valid input.");
       return false;
     }
     return true;
   }
 
-  private void startGame(){
+  private void startGame() {
     do {
       System.out.println("\n[Your current location is " + currentLocation.getName() + ".]");
       userMove();
     } while (true);
   }
 
-  private void endGame(){
+  private void endGame() {
     System.out.println(
         "Are you sure you wish to exit the game?\nEnter 'yes' to exit and 'no' to return.");
     String input = userInput();
     if (input.equals("yes")) {
       System.out.println("Bye! See you later.");
+      System.exit(0);
     } else if (input.equals("no")) {
       landingRoom();
     }
@@ -137,7 +158,7 @@ public class Game {
   // we can make function for each verb, and call the function in here
 
 
-  private void userMove(){
+  private void userMove() {
     boolean validMove;
     String verb;
     String noun;
@@ -155,18 +176,17 @@ public class Game {
         noun = arr[1];
       }
     } while (!(validMove && validItem(noun)));
-//      if (currentLocation.toString().equals("Ocean Floor")) {
-//        System.out.println("TEST WIN!");
-//      }
     if (verb.equals("help")) {
       userHelp();
     } else if (verb.equals("save")) {
       Inventory.saveInventoryToJson(currentInventory);
       gameMap.saveGameMaptoJson(gameMap);
       currentLocation.saveCurrentLocationToJson(currentLocation.getName());
-    } else if (verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
+    } else if ( !wounded && verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
+
       findLocationByDirection(noun.toLowerCase());
       itemsInRoom(currentLocation);
+      wounded = checkMonster(currentLocation);
       checkMonster(currentLocation);
       if ("guppy".equals(currentItem)) {
         controller.displayGuppyAsciiArt();
@@ -187,7 +207,7 @@ public class Game {
       }
       if (playerWins()) {
         controller.displayPlayerWins();
-//          System.exit(0);
+        endGame();
       }
     } else if (verb.equals("get") && currentItem != null && noun.toLowerCase()
         .equals(currentItem.toLowerCase())) {
@@ -197,16 +217,6 @@ public class Game {
     } else if (verb.equals("use")) {
       sound.playUseItem();
       checkIfUserUsesCorrectItem(currentLocation, noun.toLowerCase());
-//      currentInventory = Inventory.removeItemFromInventory(noun);
-//      Inventory.displayItemsInInventory();
-//    } else if (verb.equals("get") && currentItem != null && noun.toLowerCase()
-//        .equals(currentItem.toLowerCase())) {
-//      currentInventory = Inventory.addItemToInventory(currentItem);
-////      getItemCondition(currentItem);
-//      gameMap.removeItemFromRoom(gameMap, currentItem);
-//    } else if (verb.equals("use")) {
-//      checkIfUserUsesCorrectItem(currentLocation, noun.toLowerCase());
-//      Inventory.displayItemsInInventory();
     } else if (verb.equals("look") || verb.equals("examine")) {
       displayItemDescription(noun);
     } else if (verb.equals("learn")) {
@@ -214,28 +224,33 @@ public class Game {
     } else if (verb.equals("talk") && noun.equals("turtle")) {
       checkIfUserUsesCorrectItem(currentLocation, noun.toLowerCase());
     } else {
-//      System.out.println(
-//          "You try to talk to the " + noun + ", but the " + noun + " doesn't talk back...");
-      System.out.println("There's nothing you can do with " + noun + " here. ");
+      System.out.println("Please, check the commands. ");
     }
   }
+
 
   private void checkIfUserUsesCorrectItem(Room location, String noun) {
     if (!currentInventory.isEmpty()) {
       if (noun.equals("squid") || noun.equals("medicine") || noun.equals("cloak")) {
         removeMonster(location, noun.toUpperCase());
-        currentInventory = Inventory.removeItemFromInventory(noun.toUpperCase());
+        currentInventory = Inventory.removeItemFromInventory(currentInventory, noun.toUpperCase());
+        wounded = false;
+        System.out.println( noun);
+        System.out.println(currentInventory);
       } else if (noun.equals("key")) {
         if (location.getName().equals("Engine Room")) {
-          System.out.println("You found Guppy. Key can be used to get Guppy.");
+          System.out.println("You found Guppy. Now, you can go back to ths Ocean Floor with Guppy.");
+          currentInventory.add(currentItem.toUpperCase());
+          currentInventory.remove("KEY");
         } else {
           System.out.println("You can't use key here. You can use key to get Guppy.");
         }
       }
-    } else if (noun.equals("turtle")) {
+    } if (noun.equals("turtle")) {
       if (location.getName().equals("Bridge")) {
         controller.displayTurtleAsciiArt();
         turtleTalk();
+        System.out.println("turtle" + currentLocation.getAnimal());
       } else {
         System.out.println("You try to talk to the turtle, but the turtle is not in this room.");
       }
@@ -252,7 +267,7 @@ public class Game {
         room = currentLocation.getSouth();
         break;
       case "north":
-        room = currentLocation.getNorth();
+          room = currentLocation.getNorth();
         break;
       case "east":
         room = currentLocation.getEast();
@@ -267,38 +282,44 @@ public class Game {
     }
   }
 
-  public void checkMonster(Room currentLocation) {
+
+
+  public boolean checkMonster(Room currentLocation) {
     String goblinShark = "Goblin Shark";
     String jellyFish = "Jellyfish";
     String turtle = "Turtle";
     String monster = currentLocation.getAnimal();
     if (monster != null) {
       if (monster.equals(goblinShark)) {
-        encounterMonster(goblinShark);
+        wounded = encounterMonster(goblinShark);
       } else if (monster.equals(jellyFish)) {
+        wounded = encounterMonster(jellyFish);
         encounterMonster(jellyFish);
       } else if (monster.equals(turtle)) {
         encounterMonster(turtle);
       }
     }
+    return wounded;
   }
 
   private void removeMonster(Room location, String item) {
     String monster = location.getAnimal();
 //    if (monster != null) {
-    if (monster.equals("Goblin Shark")) {
+    if ("Goblin Shark".equals(monster)) {
       if ((item.equals("MEDICINE") && currentInventory.contains("MEDICINE")) || ((
           item.equals("SQUID") && currentInventory.contains("SQUID")))) {
         gameMap.removeAnimalFromRoom(gameMap, monster);
         System.out.println(monster + " is out of the way.");
       }
     }
-    if (monster.equals("Jellyfish")) {
+    if ("Jellyfish".equals(monster)) {
       if ((item.equals("MEDICINE") && currentInventory.contains("MEDICINE")) || ((
           item.equals("CLOAK") && currentInventory.contains("CLOAK")))) {
         gameMap.removeAnimalFromRoom(gameMap, monster);
         System.out.println(monster + " is out of the way.");
       }
+    }else {
+      System.out.println("There's no monster here");
     }
   }
 
@@ -306,19 +327,13 @@ public class Game {
   // when the players go to the monster room, this function will be called.
   // This will check the user's inventory and if there's no item that can be used against moster,
   // the player will be sent back to the starting place.
-  public void encounterMonster(String monster) {
+  public boolean encounterMonster(String monster) {
     if (monster.equals("Goblin Shark")) {
-      controller.displayGoblinSharkAsciiArt();
-      System.out.println("There’s a big scary Goblin Shark monster in here!\n");
+      Learn.encounterGoblinSharkPrint();
       sound.playGoblinShark();
-      System.out.println("Goblin Shark: I'm a crazy goblin shark, rawr!");
-      System.out.println("Goblin Shark: I'm going to eat you, rawr, rawr!\n");
-      System.out.println("You have encountered a giant Goblin Shark monster in here!"
-          + "You’ve taken some damage from the Goblin Shark.");
       if (currentInventory.contains("MEDICINE")) {
         System.out.println("You can use your medicine to heal yourself.");
         wounded = true;
-        // need use item function here
       } else if (currentInventory.contains("SQUID")) {
         System.out.println(
             "You can use squid from your inventory to blind the Goblin Shark with squid ink!");
@@ -333,6 +348,8 @@ public class Game {
       }
     }
     if (monster.equals("Jellyfish")) {
+      Learn.encounterJellyfishPrint();
+      sound.playJellyfish();
       controller.displayJellyfishAsciiArt();
       System.out.println(
           "There’s a jiggly Jellyfish monster in this room!! Oh, what ever should I do?!\n");
@@ -362,7 +379,7 @@ public class Game {
     if (monster.equals("Turtle")) {
       controller.displayTurtleAsciiArt();
       System.out.println("There's a friendly turtle in this room, maybe they can help us!");
-    }
+    }return wounded;
   }
 
   public static void roomDescription(Room location) {
@@ -383,14 +400,14 @@ public class Game {
     }
   }
 
-  public static void displayItemDescription(String item){
+  public static void displayItemDescription(String item) {
     Item.findDescription(item);
   }
 
   public boolean playerWins() {
     boolean playerWon = false;
-    if (currentLocation.getName().equals(startingLocation) && Inventory.getItemArray()
-        .contains("GUPPY")) {
+
+    if (currentLocation.getName().equals(startingLocation) && currentInventory.contains("GUPPY")) {
       playerWon = true;
     }
     return playerWon;

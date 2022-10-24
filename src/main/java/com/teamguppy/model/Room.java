@@ -137,6 +137,8 @@ public class Room {
   public static void displayItems(Room location) {
     if (location.getItem() !=null ){
       System.out.println("This room has " + location.getItem());
+    }if("guppy".equals(location.getItem())){
+      System.out.println("Guppy is in locked door. Please, use your key to open the door and save Guppy!");
     }
   }
 
@@ -153,13 +155,11 @@ public class Room {
       } catch (IOException e) {
         e.printStackTrace();
       }
-      System.out.println("Saving your game...");
     } else {
       try {
         FileWriter fileWriter = new FileWriter(file);
         gson.toJson(location, fileWriter);
         fileWriter.close();
-        System.out.println("Saving your game... ");
 
       } catch (IOException e) {
         throw new RuntimeException(e);
@@ -196,7 +196,6 @@ public class Room {
         }
       }
     }
-    System.out.println(location);
     return location;
   }
 }

@@ -28,12 +28,13 @@ public class View {
   private final String COMMANDS =
       "\n=================== Game Commands ===================\n"
       + "go/swim/move [north, south, east, west]\n"
-      + "get/grab     [key, medicine, squid, cloak, guppy]\n"
+      + "get/grab     [key, medicine, squid, cloak]\n"
       + "look/examine [key, medicine, squid, cloak]\n"
       + "use          [key, medicine, squid, cloak]\n"
       + "talk         [turtle]\n"
       + "learn        Displays educational information about a location or sea animal\n"
-      + "help         Displays a list of game commands";
+      + "help         Displays a list of game commands\n"
+      + "save         Save the current game";
 
   private List<String> TURTLE_TALK = Arrays.asList(
       "\nAhh...a Startled Guppy you say?\n"
