@@ -93,7 +93,7 @@ public class Game {
           endGame();
           validInput = true;
         } else {
-          System.out.println("Plese, type 'yes' or 'no'.");
+          System.out.println("Please, type 'yes' or 'no'.");
           validInput = false;
         }
       }

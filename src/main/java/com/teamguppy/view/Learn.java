@@ -46,10 +46,10 @@ public class Learn {
             + "5. Goblin Sharks Will Eat Just About Anything.");
   }};
   private static final String ENCOUNTER_GOBLIN_SHARK = "There’s a big scary Goblin Shark monster in here!\n"
-      + "Goblin Shark: I'm a crazy goblin shark, rawr!"
+      + "\nGoblin Shark: I'm a crazy goblin shark, rawr!\n"
       + "Goblin Shark: I'm going to eat you, rawr, rawr!\n"
-      + "You have encountered a giant Goblin Shark monster in here!"
-      + "You’ve taken some damage from the Goblin Shark.";
+      + "\nYou have encountered a giant Goblin Shark monster in here!\n"
+      + "You’ve taken some damage from the Goblin Shark.\n";
 
   private static final String ENCOUNTER_JELLYFISH = "There’s a jiggly Jellyfish monster in this room!! Oh, what ever should I do?!\n"
       + "Jiggly Jellyfish: I'm the Jiggly Jellyfish monster!"
