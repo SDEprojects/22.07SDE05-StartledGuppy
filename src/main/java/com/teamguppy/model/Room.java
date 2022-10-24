@@ -155,13 +155,11 @@ public class Room {
       } catch (IOException e) {
         e.printStackTrace();
       }
-      System.out.println("Saving your game...");
     } else {
       try {
         FileWriter fileWriter = new FileWriter(file);
         gson.toJson(location, fileWriter);
         fileWriter.close();
-        System.out.println("Saving your game... ");
 
       } catch (IOException e) {
         throw new RuntimeException(e);
@@ -198,7 +196,6 @@ public class Room {
         }
       }
     }
-    System.out.println(location);
     return location;
   }
 }

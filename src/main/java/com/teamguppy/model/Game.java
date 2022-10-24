@@ -74,21 +74,30 @@ public class Game {
 
   public void checkSavedGame() {
     Boolean savedGame = gameMap.checkSavedGame();
-    if (savedGame) {
-      System.out.println("You have saved game. Do you want to continue your previous game?");
-      String input = userInput();
-      if (input.toLowerCase().equals("yes")) {
-        gameMap = gameMap.openSavedMap();
-        currentInventory = Inventory.findInventoryInJson();
-        String savedLocation = Room.openSavedCurrentLocation();
-        setCurrentLocation(savedLocation);
-        setCurrentItem(currentLocation.getItem());
-      } else if (input.toLowerCase().equals("no")) {
-        System.out.println("Creating new game...");
-      } else if (input.toLowerCase().equals("quit")) {
-        endGame();
+    Boolean validInput = true;
+    do {
+      if (savedGame) {
+        System.out.println("You have saved game. Do you want to continue your previous game?");
+        String input = userInput();
+        if (input.toLowerCase().equals("yes")) {
+          gameMap = gameMap.openSavedMap();
+          currentInventory = Inventory.findInventoryInJson();
+          String savedLocation = Room.openSavedCurrentLocation();
+          setCurrentLocation(savedLocation);
+          setCurrentItem(currentLocation.getItem());
+          validInput = true;
+        } else if (input.toLowerCase().equals("no")) {
+          System.out.println("Creating new game...");
+          validInput = true;
+        } else if (input.toLowerCase().equals("quit")) {
+          endGame();
+          validInput = true;
+        } else {
+          System.out.println("Plese, type 'yes' or 'no'.");
+          validInput = false;
+        }
       }
-    }
+    }while (!validInput);
   }
 
   public void landingRoom() {
