@@ -16,12 +16,10 @@ public class Game {
     String name = getName();
     if (name != null && name.equals("Some Room Name")) {
     }
-
     // Below 2 code are null safe
     This could be written as
     if ("Some Room Name".equals(name)) {
     }
-
     if (Objects.equals("Some Room Name", name)) {
     }
    */
@@ -449,4 +447,3 @@ public class Game {
   }
 
 }
-

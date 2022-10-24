@@ -25,7 +25,7 @@ public class Learn {
             + "2. Reefs are formed of colonies of coral polyps held together by calcium carbonate.");
     put("Seaweed Forest",
         "1. Seaweeds have what are called holdfasts instead of roots.\n"
-        + "2. These holdfasts merely hold the plant in place rather than absorbing any nutrients like roots.");
+            + "2. These holdfasts merely hold the plant in place rather than absorbing any nutrients like roots.");
   }};
 
   public static HashMap<String, String> learnAboutOceanAnimal = new HashMap<>() {{
@@ -48,18 +48,18 @@ public class Learn {
 
   private static final String ENCOUNTER_GOBLIN_SHARK =
       "There’s a big scary Goblin Shark monster in here!\n"
-      + "\nGoblin Shark: I'm a crazy goblin shark, rawr!\n"
-      + "Goblin Shark: I'm going to eat you, rawr, rawr!\n"
-      + "\nYou have encountered a giant Goblin Shark monster in here!\n"
-      + "You’ve taken some damage from the Goblin Shark.\n";
+          + "\nGoblin Shark: I'm a crazy goblin shark, rawr!\n"
+          + "Goblin Shark: I'm going to eat you, rawr, rawr!\n"
+          + "\nYou have encountered a giant Goblin Shark monster in here!\n"
+          + "You’ve taken some damage from the Goblin Shark.\n";
 
   private static final String ENCOUNTER_JELLYFISH =
       "\nThere’s a jiggly Jellyfish monster in this room!! Oh, what ever should I do?!\n"
-      + "\nJiggly Jellyfish: I'm the Jiggly Jellyfish monster!\n"
-      + "Jiggly Jellyfish: Going to give you a Jiggly Jellyfish sting!\n"
-      + "Jiggly Jellyfish: You'll never stop me!\n"
-      + "\nYou have encountered a giant Goblin Shark monster in here!\n"
-      + "The Jellyfish stung you and you took some damage.\n";
+          + "\nJiggly Jellyfish: I'm the Jiggly Jellyfish monster!\n"
+          + "Jiggly Jellyfish: Going to give you a Jiggly Jellyfish sting!\n"
+          + "Jiggly Jellyfish: You'll never stop me!\n"
+          + "\nYou have encountered a giant Goblin Shark monster in here!\n"
+          + "The Jellyfish stung you and you took some damage.\n";
 
   public static void learnAboutOceanForest(String noun) {
     if (learnAboutOcean.containsKey(noun)) {
@@ -91,4 +91,3 @@ public class Learn {
   }
 
 }
-
