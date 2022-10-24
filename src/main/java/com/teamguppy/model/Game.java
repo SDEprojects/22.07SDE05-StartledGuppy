@@ -252,7 +252,6 @@ public class Game {
       if (location.getName().equals("Bridge")) {
         controller.displayTurtleAsciiArt();
         turtleTalk();
-        System.out.println("turtle" + currentLocation.getAnimal());
       } else {
         System.out.println("You try to talk to the turtle, but the turtle is not in this room.");
       }
