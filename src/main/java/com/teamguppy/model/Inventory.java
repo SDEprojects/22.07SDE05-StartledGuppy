@@ -23,7 +23,6 @@ public class Inventory {
 
   public Inventory(Set<String> inventory) {
     itemArray = findInventoryInJson();
-
   }
 
 
@@ -37,27 +36,18 @@ public class Inventory {
 
 
   public static Set<String> addItemToInventory(String item) {
+//    itemArray.add(item.toUpperCase());
     if (item.equals("guppy")) {
       if (itemArray.contains("KEY")) {
-
         itemArray.add(item.toUpperCase());
         removeItemFromInventory("Key");
-
-        displayItemsInInventory();
-
-        displayItemsInInventory(itemArray);
       } else {
-        System.out.println("This door is locked. You need Key to open this door.");
+        System.out.println("You need KEY in your inventory to get guppy!");
       }
     } else {
-      System.out.println(item);
       itemArray.add(item.toUpperCase());
     }
     return itemArray;
-  }
-
-  public static void displayItemsInInventory() {
-    System.out.println("Your inventory: " + itemArray);
   }
 
   public static void displayItemsInInventory(Set<String> array) {

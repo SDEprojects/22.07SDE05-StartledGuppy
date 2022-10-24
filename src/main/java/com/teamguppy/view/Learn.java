@@ -45,6 +45,18 @@ public class Learn {
             + "4. The Goblin Shark Shrinks When It Gets Older.\n"
             + "5. Goblin Sharks Will Eat Just About Anything.");
   }};
+  private static final String ENCOUNTER_GOBLIN_SHARK = "There’s a big scary Goblin Shark monster in here!\n"
+      + "Goblin Shark: I'm a crazy goblin shark, rawr!"
+      + "Goblin Shark: I'm going to eat you, rawr, rawr!\n"
+      + "You have encountered a giant Goblin Shark monster in here!"
+      + "You’ve taken some damage from the Goblin Shark.";
+
+  private static final String ENCOUNTER_JELLYFISH = "There’s a jiggly Jellyfish monster in this room!! Oh, what ever should I do?!\n"
+      + "Jiggly Jellyfish: I'm the Jiggly Jellyfish monster!"
+      + "Jiggly Jellyfish: Going to give you a Jiggly Jellyfish sting!"
+      + "Jiggly Jellyfish: You'll never stop me!\n"
+      + "You have encountered a giant Goblin Shark monster in here!"
+      + "The Jellyfish stung you and you took some damage.";
 
   public static void learnAboutOceanForest(String noun) {
     if (learnAboutOcean.containsKey(noun)) {
@@ -61,6 +73,13 @@ public class Learn {
     } else {
       System.out.println("There is nothing interesting to learn.");
     }
+  }
+
+  public static void encounterGoblinSharkPrint(){
+    System.out.println(ENCOUNTER_GOBLIN_SHARK);
+  }
+  public static void encounterJellyfishPrint(){
+    System.out.println(ENCOUNTER_JELLYFISH);
   }
 
   public static void main(String[] args) {
