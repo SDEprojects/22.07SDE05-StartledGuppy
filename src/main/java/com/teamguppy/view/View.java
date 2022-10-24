@@ -60,6 +60,11 @@ public class View {
       + "                                                           \n"
       + "Startled Guppy has been rescued and you got them back home safely!";
 
+  private final String guppyTalk =
+      "\nStartled Guppy: Daddy...Mommy, is, is that you?\n"
+      + "Startled Guppy: It, it is you!\n"
+      + "Startled Guppy: I've been rescued!";
+
   public String getGameTitle() {
     return GAME_TITLE;
   }
@@ -79,6 +84,10 @@ public class View {
 
   public String getPlayerWins() {
     return PLAYER_WINS;
+  }
+
+  public String getGuppyTalk() {
+    return guppyTalk;
   }
 
 
