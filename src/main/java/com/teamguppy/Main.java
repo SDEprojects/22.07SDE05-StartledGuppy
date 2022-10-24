@@ -16,7 +16,7 @@ public class Main {
     View view = new View();
     Controller controller = new Controller(game, view, sound );
 
-//    sound.playBackgroundMusic();
+    sound.playBackgroundMusic();
     controller.displayGameTitle();
     controller.displayAboutGame();
     controller.displayCommands();

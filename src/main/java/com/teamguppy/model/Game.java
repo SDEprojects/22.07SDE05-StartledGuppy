@@ -93,7 +93,7 @@ public class Game {
           endGame();
           validInput = true;
         } else {
-          System.out.println("Plese, type 'yes' or 'no'.");
+          System.out.println("Please, type 'yes' or 'no'.");
           validInput = false;
         }
       }
@@ -203,6 +203,8 @@ public class Game {
       learnAboutRoom(currentLocation);
     } else if (verb.equals("talk") && noun.equals("turtle")) {
       checkIfUserUsesCorrectItem(currentLocation, noun.toLowerCase());
+    } else if (verb.equals("quit")){
+      endGame();
     } else {
       System.out.println("Please, check the commands. ");
     }
@@ -256,7 +258,6 @@ public class Game {
       if (location.getName().equals("Bridge")) {
         controller.displayTurtleAsciiArt();
         turtleTalk();
-        System.out.println("turtle" + currentLocation.getAnimal());
       } else {
         System.out.println("You try to talk to the turtle, but the turtle is not in this room.");
       }
@@ -418,7 +419,7 @@ public class Game {
   private static Boolean validMove(String move) {
     Set<String> moves = new HashSet<>(
         Arrays.asList("go", "swim", "move", "get", "grab", "look", "examine", "help", "talk", "use",
-            "learn", "save"));
+            "learn", "save", "quit"));
     if (moves.contains(move)) {
       return true;
     } else {
