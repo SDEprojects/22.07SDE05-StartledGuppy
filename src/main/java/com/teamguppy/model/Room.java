@@ -37,6 +37,9 @@ public class Room {
   @SerializedName("item")
   @Expose
   private String item;
+  @SerializedName("image")
+  @Expose
+  private String image;
 
   public String getName() {
     return name;
@@ -100,6 +103,14 @@ public class Room {
 
   public void deleteAnimal(String animal) {
     this.animal = null;
+  }
+
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
   }
 
   public static void roomDescription(Room location) {

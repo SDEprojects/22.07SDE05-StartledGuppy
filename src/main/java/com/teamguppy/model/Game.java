@@ -169,8 +169,21 @@ public class Game {
       itemsInRoom(currentLocation);
       checkMonster(currentLocation);
       if ("guppy".equals(currentItem)) {
+        controller.displayGuppyAsciiArt();
         controller.displayGuppyTalk();
         sound.playGuppy();
+      }
+      if ("Medicine".equals(currentItem)) {
+        controller.displayMedicineAsciiArt();
+      }
+      if ("Key".equals(currentItem)) {
+        controller.displayKeyAsciiArt();
+      }
+      if ("Squid".equals(currentItem)) {
+        controller.displaySquidAsciiArt();
+      }
+      if ("Cloak".equals(currentItem)) {
+        controller.displayCloakAsciiArt();
       }
       if (playerWins()) {
         controller.displayPlayerWins();
@@ -221,6 +234,7 @@ public class Game {
       }
     } else if (noun.equals("turtle")) {
       if (location.getName().equals("Bridge")) {
+        controller.displayTurtleAsciiArt();
         turtleTalk();
       } else {
         System.out.println("You try to talk to the turtle, but the turtle is not in this room.");
@@ -256,12 +270,15 @@ public class Game {
   public void checkMonster(Room currentLocation) {
     String goblinShark = "Goblin Shark";
     String jellyFish = "Jellyfish";
+    String turtle = "Turtle";
     String monster = currentLocation.getAnimal();
     if (monster != null) {
       if (monster.equals(goblinShark)) {
         encounterMonster(goblinShark);
       } else if (monster.equals(jellyFish)) {
         encounterMonster(jellyFish);
+      } else if (monster.equals(turtle)) {
+        encounterMonster(turtle);
       }
     }
   }
@@ -291,6 +308,7 @@ public class Game {
   // the player will be sent back to the starting place.
   public void encounterMonster(String monster) {
     if (monster.equals("Goblin Shark")) {
+      controller.displayGoblinSharkAsciiArt();
       System.out.println("There’s a big scary Goblin Shark monster in here!\n");
       sound.playGoblinShark();
       System.out.println("Goblin Shark: I'm a crazy goblin shark, rawr!");
@@ -315,6 +333,7 @@ public class Game {
       }
     }
     if (monster.equals("Jellyfish")) {
+      controller.displayJellyfishAsciiArt();
       System.out.println(
           "There’s a jiggly Jellyfish monster in this room!! Oh, what ever should I do?!\n");
       sound.playJellyfish();
@@ -339,6 +358,10 @@ public class Game {
         setCurrentLocation(startingLocation);
         System.out.println("Your are now in " + currentLocation);
       }
+    }
+    if (monster.equals("Turtle")) {
+      controller.displayTurtleAsciiArt();
+      System.out.println("There's a friendly turtle in this room, maybe they can help us!");
     }
   }
 
