@@ -1,6 +1,5 @@
 package com.teamguppy.model;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Iterator;
@@ -13,34 +12,35 @@ import org.json.simple.parser.ParseException;
 public class Item {
 
   private String name;
-  private String description;
 
 
-  public Item(String name, String description) {
+
+  public Item(String name) {
     this.name = name;
-    this.description = description;
   }
 
   public void setName(String name) {
     this.name = name;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+
 
   public String getName() {
     return name;
   }
 
-  public String getDescription() {
-    return description;
-  }
 
-  public static void findDescription(String item) throws IOException, ParseException {
+  public static void findDescription(String item) {
     JSONParser parser = new JSONParser();
     String file = "data/item.json";
-    Object obj = parser.parse(new InputStreamReader(Item.class.getClassLoader().getResourceAsStream(file)));
+    Object obj = null;
+    try {
+      obj = parser.parse(new InputStreamReader(Item.class.getClassLoader().getResourceAsStream(file)));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    } catch (ParseException e) {
+      throw new RuntimeException(e);
+    }
     JSONObject jsonObject = (JSONObject) obj;
     //make the input in lower case to find in from item.json.
     String parsingItem = item.toLowerCase();
@@ -56,6 +56,9 @@ public class Item {
       }
     }
   }
+
+
+
 }
 
 
