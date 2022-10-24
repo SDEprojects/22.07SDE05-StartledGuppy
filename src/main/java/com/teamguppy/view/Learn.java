@@ -45,18 +45,20 @@ public class Learn {
             + "4. The Goblin Shark Shrinks When It Gets Older.\n"
             + "5. Goblin Sharks Will Eat Just About Anything.");
   }};
-  private static final String ENCOUNTER_GOBLIN_SHARK = "There’s a big scary Goblin Shark monster in here!\n"
+  private static final String ENCOUNTER_GOBLIN_SHARK =
+      "There’s a big scary Goblin Shark monster in here!\n"
       + "\nGoblin Shark: I'm a crazy goblin shark, rawr!\n"
       + "Goblin Shark: I'm going to eat you, rawr, rawr!\n"
       + "\nYou have encountered a giant Goblin Shark monster in here!\n"
       + "You’ve taken some damage from the Goblin Shark.\n";
 
-  private static final String ENCOUNTER_JELLYFISH = "There’s a jiggly Jellyfish monster in this room!! Oh, what ever should I do?!\n"
-      + "Jiggly Jellyfish: I'm the Jiggly Jellyfish monster!"
-      + "Jiggly Jellyfish: Going to give you a Jiggly Jellyfish sting!"
+  private static final String ENCOUNTER_JELLYFISH =
+      "\nThere’s a jiggly Jellyfish monster in this room!! Oh, what ever should I do?!\n"
+      + "\nJiggly Jellyfish: I'm the Jiggly Jellyfish monster!\n"
+      + "Jiggly Jellyfish: Going to give you a Jiggly Jellyfish sting!\n"
       + "Jiggly Jellyfish: You'll never stop me!\n"
-      + "You have encountered a giant Goblin Shark monster in here!"
-      + "The Jellyfish stung you and you took some damage.";
+      + "\nYou have encountered a giant Goblin Shark monster in here!\n"
+      + "The Jellyfish stung you and you took some damage.\n";
 
   public static void learnAboutOceanForest(String noun) {
     if (learnAboutOcean.containsKey(noun)) {
