@@ -168,7 +168,10 @@ public class Game {
       findLocationByDirection(noun.toLowerCase());
       itemsInRoom(currentLocation);
       checkMonster(currentLocation);
-
+      if ("guppy".equals(currentItem)) {
+        controller.displayGuppyTalk();
+        sound.playGuppy();
+      }
       if (playerWins()) {
         controller.displayPlayerWins();
 //          System.exit(0);
@@ -318,7 +321,7 @@ public class Game {
       System.out.println("Jiggly Jellyfish: I'm the Jiggly Jellyfish monster!");
       System.out.println("Jiggly Jellyfish: Going to give you a Jiggly Jellyfish sting!");
       System.out.println("Jiggly Jellyfish: You'll never stop me!\n"
-          + "You have encountered a giant Goblin Shark monster in here!"
+          + "\nYou have encountered a Jiggly Jellyfish monster in here!\n"
           + "The Jellyfish stung you and you took some damage");
       if (currentInventory.contains("MEDICINE")) {
         System.out.println(

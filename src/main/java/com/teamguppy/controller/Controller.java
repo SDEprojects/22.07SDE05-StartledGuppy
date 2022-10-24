@@ -60,4 +60,8 @@ public class Controller {
   public void playBackgroundMusic() {
     sound.playBackgroundMusic();
   }
+
+  public void displayGuppyTalk() {
+    System.out.println(view.getGuppyTalk());
+  }
 }
