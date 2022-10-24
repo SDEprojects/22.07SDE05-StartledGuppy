@@ -162,9 +162,6 @@ public class Game {
       String input = userInput();
       String[] arr = input.toLowerCase().split(" ");
       verb = arr[0];
-      if(wounded){
-        encounterMonster(currentLocation.getAnimal());
-      }
       validMove = validMove(verb);
       if (arr.length == 2) {
         noun = arr[1];
@@ -180,9 +177,25 @@ public class Game {
 
       findLocationByDirection(noun.toLowerCase());
       itemsInRoom(currentLocation);
-      System.out.println(currentLocation.getAnimal());
       wounded = checkMonster(currentLocation);
-
+      checkMonster(currentLocation);
+      if ("guppy".equals(currentItem)) {
+        controller.displayGuppyAsciiArt();
+        controller.displayGuppyTalk();
+        sound.playGuppy();
+      }
+      if ("Medicine".equals(currentItem)) {
+        controller.displayMedicineAsciiArt();
+      }
+      if ("Key".equals(currentItem)) {
+        controller.displayKeyAsciiArt();
+      }
+      if ("Squid".equals(currentItem)) {
+        controller.displaySquidAsciiArt();
+      }
+      if ("Cloak".equals(currentItem)) {
+        controller.displayCloakAsciiArt();
+      }
       if (playerWins()) {
         controller.displayPlayerWins();
         endGame();
@@ -226,6 +239,7 @@ public class Game {
       }
     } if (noun.equals("turtle")) {
       if (location.getName().equals("Bridge")) {
+        controller.displayTurtleAsciiArt();
         turtleTalk();
         System.out.println("turtle" + currentLocation.getAnimal());
       } else {
@@ -264,12 +278,16 @@ public class Game {
   public boolean checkMonster(Room currentLocation) {
     String goblinShark = "Goblin Shark";
     String jellyFish = "Jellyfish";
+    String turtle = "Turtle";
     String monster = currentLocation.getAnimal();
     if (monster != null) {
       if (monster.equals(goblinShark)) {
         wounded = encounterMonster(goblinShark);
       } else if (monster.equals(jellyFish)) {
         wounded = encounterMonster(jellyFish);
+        encounterMonster(jellyFish);
+      } else if (monster.equals(turtle)) {
+        encounterMonster(turtle);
       }
     }
     return wounded;
@@ -323,6 +341,15 @@ public class Game {
     if (monster.equals("Jellyfish")) {
       Learn.encounterJellyfishPrint();
       sound.playJellyfish();
+      controller.displayJellyfishAsciiArt();
+      System.out.println(
+          "There’s a jiggly Jellyfish monster in this room!! Oh, what ever should I do?!\n");
+      sound.playJellyfish();
+      System.out.println("Jiggly Jellyfish: I'm the Jiggly Jellyfish monster!");
+      System.out.println("Jiggly Jellyfish: Going to give you a Jiggly Jellyfish sting!");
+      System.out.println("Jiggly Jellyfish: You'll never stop me!\n"
+          + "\nYou have encountered a Jiggly Jellyfish monster in here!\n"
+          + "The Jellyfish stung you and you took some damage");
       if (currentInventory.contains("MEDICINE")) {
         System.out.println(
             "You can use your medicine to heal yourself.");
@@ -340,7 +367,10 @@ public class Game {
         System.out.println("Your are now in " + currentLocation);
       }
     }
-    return wounded;
+    if (monster.equals("Turtle")) {
+      controller.displayTurtleAsciiArt();
+      System.out.println("There's a friendly turtle in this room, maybe they can help us!");
+    }return wounded;
   }
 
   public static void roomDescription(Room location) {
@@ -367,6 +397,7 @@ public class Game {
 
   public boolean playerWins() {
     boolean playerWon = false;
+
     if (currentLocation.getName().equals(startingLocation) && currentInventory.contains("GUPPY")) {
       playerWon = true;
     }
