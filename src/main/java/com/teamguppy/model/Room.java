@@ -126,6 +126,8 @@ public class Room {
   public static void displayItems(Room location) {
     if (location.getItem() !=null ){
       System.out.println("This room has " + location.getItem());
+    }if("guppy".equals(location.getItem())){
+      System.out.println("Guppy is in locked door. Please, use your key to open the door and save Guppy!");
     }
   }
 

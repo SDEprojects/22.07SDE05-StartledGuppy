@@ -39,8 +39,7 @@ public class Inventory {
 //    itemArray.add(item.toUpperCase());
     if (item.equals("guppy")) {
       if (itemArray.contains("KEY")) {
-        itemArray.add(item.toUpperCase());
-        removeItemFromInventory("Key");
+        System.out.println("Please, use Key to open this door.");
       } else {
         System.out.println("You need KEY in your inventory to get guppy!");
       }
@@ -59,7 +58,8 @@ public class Inventory {
     }
   }
 
-  public static Set<String> removeItemFromInventory(String item) {
+  public static Set<String> removeItemFromInventory(Set<String> array, String item) {
+    setItemArray(array);
     String usedItem = item.toUpperCase();
     if (itemArray.contains(usedItem)) {
       itemArray.remove(usedItem);

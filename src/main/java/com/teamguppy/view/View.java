@@ -28,7 +28,7 @@ public class View {
   private final String COMMANDS =
       "\n=================== Game Commands ===================\n"
       + "go/swim/move [north, south, east, west]\n"
-      + "get/grab     [key, medicine, squid, cloak, guppy]\n"
+      + "get/grab     [key, medicine, squid, cloak]\n"
       + "look/examine [key, medicine, squid, cloak]\n"
       + "use          [key, medicine, squid, cloak]\n"
       + "talk         [turtle]\n"
