@@ -97,7 +97,7 @@ public class Game {
           validInput = false;
         }
       }
-    }while (!validInput);
+    } while (!validInput);
   }
 
   public void landingRoom() {
@@ -108,7 +108,8 @@ public class Game {
       do {
         if (currentLocation.getName().equals("Ocean Floor")) {
           System.out.println("\nEnter 'yes' to continue and 'quit' to end the game.");
-          command = sc.nextLine().toLowerCase().trim();;
+          command = sc.nextLine().toLowerCase().trim();
+          ;
           switch (command) {
             case "yes":
               startGame();
@@ -121,19 +122,19 @@ public class Game {
         } else {
           startGame();
         }
-      } while (!validStartInput(command));
+//      } while (!validStartInput(command));
+      } while (true);
     }
   }
 
-
-  private static Boolean validStartInput(String input) {
-    if (!input.toLowerCase().equals("yes") || !input.toLowerCase().equals("quit")
-        || !input.toLowerCase().equals("no")) {
-      System.out.println("Sorry, I don't understand. Please, type valid input.");
-      return false;
-    }
-    return true;
-  }
+//  private static Boolean validStartInput(String input) {
+//    if (!input.toLowerCase().equals("yes") || !input.toLowerCase().equals("quit")
+//        || !input.toLowerCase().equals("no")) {
+//      System.out.println("Sorry, I don't understand. Please, type valid input.");
+//      return false;
+//    }
+//    return true;
+//  }
 
   private void startGame() {
     do {
@@ -182,33 +183,12 @@ public class Game {
       Inventory.saveInventoryToJson(currentInventory);
       gameMap.saveGameMaptoJson(gameMap);
       currentLocation.saveCurrentLocationToJson(currentLocation.getName());
-    } else if ( !wounded && verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
-
+    } else if (!wounded && verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
       findLocationByDirection(noun.toLowerCase());
       itemsInRoom(currentLocation);
-      wounded = checkMonster(currentLocation);
+//      wounded = checkMonster(currentLocation);
       checkMonster(currentLocation);
-      if ("guppy".equals(currentItem)) {
-        controller.displayGuppyAsciiArt();
-        controller.displayGuppyTalk();
-        sound.playGuppy();
-      }
-      if ("Medicine".equals(currentItem)) {
-        controller.displayMedicineAsciiArt();
-      }
-      if ("Key".equals(currentItem)) {
-        controller.displayKeyAsciiArt();
-      }
-      if ("Squid".equals(currentItem)) {
-        controller.displaySquidAsciiArt();
-      }
-      if ("Cloak".equals(currentItem)) {
-        controller.displayCloakAsciiArt();
-      }
-      if (playerWins()) {
-        controller.displayPlayerWins();
-        endGame();
-      }
+      displayAsciiArt();
     } else if (verb.equals("get") && currentItem != null && noun.toLowerCase()
         .equals(currentItem.toLowerCase())) {
       sound.playGetItem();
@@ -228,6 +208,30 @@ public class Game {
     }
   }
 
+  private void displayAsciiArt() {
+    if ("guppy".equals(currentItem)) {
+      controller.displayGuppyAsciiArt();
+      controller.displayGuppyTalk();
+      sound.playGuppy();
+    }
+    if ("Medicine".equals(currentItem)) {
+      controller.displayMedicineAsciiArt();
+    }
+    if ("Key".equals(currentItem)) {
+      controller.displayKeyAsciiArt();
+    }
+    if ("Squid".equals(currentItem)) {
+      controller.displaySquidAsciiArt();
+    }
+    if ("Cloak".equals(currentItem)) {
+      controller.displayCloakAsciiArt();
+    }
+    if (playerWins()) {
+      controller.displayPlayerWins();
+      endGame();
+    }
+  }
+
 
   private void checkIfUserUsesCorrectItem(Room location, String noun) {
     if (!currentInventory.isEmpty()) {
@@ -235,18 +239,20 @@ public class Game {
         removeMonster(location, noun.toUpperCase());
         currentInventory = Inventory.removeItemFromInventory(currentInventory, noun.toUpperCase());
         wounded = false;
-        System.out.println( noun);
+        System.out.println(noun);
         System.out.println(currentInventory);
       } else if (noun.equals("key")) {
         if (location.getName().equals("Engine Room")) {
-          System.out.println("You found Guppy. Now, you can go back to ths Ocean Floor with Guppy.");
+          System.out.println(
+              "You found Guppy. Now, you can go back to ths Ocean Floor with Guppy.");
           currentInventory.add(currentItem.toUpperCase());
           currentInventory.remove("KEY");
         } else {
           System.out.println("You can't use key here. You can use key to get Guppy.");
         }
       }
-    } if (noun.equals("turtle")) {
+    }
+    if (noun.equals("turtle")) {
       if (location.getName().equals("Bridge")) {
         controller.displayTurtleAsciiArt();
         turtleTalk();
@@ -267,7 +273,7 @@ public class Game {
         room = currentLocation.getSouth();
         break;
       case "north":
-          room = currentLocation.getNorth();
+        room = currentLocation.getNorth();
         break;
       case "east":
         room = currentLocation.getEast();
@@ -283,7 +289,6 @@ public class Game {
   }
 
 
-
   public boolean checkMonster(Room currentLocation) {
     String goblinShark = "Goblin Shark";
     String jellyFish = "Jellyfish";
@@ -292,9 +297,9 @@ public class Game {
     if (monster != null) {
       if (monster.equals(goblinShark)) {
         wounded = encounterMonster(goblinShark);
+        System.out.println("Use medicine or cloak to get rid of monster.");
       } else if (monster.equals(jellyFish)) {
         wounded = encounterMonster(jellyFish);
-        encounterMonster(jellyFish);
       } else if (monster.equals(turtle)) {
         encounterMonster(turtle);
       }
@@ -304,7 +309,6 @@ public class Game {
 
   private void removeMonster(Room location, String item) {
     String monster = location.getAnimal();
-//    if (monster != null) {
     if ("Goblin Shark".equals(monster)) {
       if ((item.equals("MEDICINE") && currentInventory.contains("MEDICINE")) || ((
           item.equals("SQUID") && currentInventory.contains("SQUID")))) {
@@ -318,7 +322,7 @@ public class Game {
         gameMap.removeAnimalFromRoom(gameMap, monster);
         System.out.println(monster + " is out of the way.");
       }
-    }else {
+    } else {
       System.out.println("There's no monster here");
     }
   }
@@ -338,12 +342,10 @@ public class Game {
         System.out.println(
             "You can use squid from your inventory to blind the Goblin Shark with squid ink!");
         wounded = true;
-        // need use item function here
       } else {
         System.out.println(
             "You are sent back to Ocean Floor.\n"
                 + "You need to get medicine to heal yourself when encounter Goblin Shark, or a squid to sneak past the Goblin shark monster!\n");
-//        System.out.println("Your are now in " + currentLocation.getName());
         setCurrentLocation(startingLocation);
       }
     }
@@ -351,19 +353,10 @@ public class Game {
       Learn.encounterJellyfishPrint();
       sound.playJellyfish();
       controller.displayJellyfishAsciiArt();
-      System.out.println(
-          "There’s a jiggly Jellyfish monster in this room!! Oh, what ever should I do?!\n");
-      sound.playJellyfish();
-      System.out.println("Jiggly Jellyfish: I'm the Jiggly Jellyfish monster!");
-      System.out.println("Jiggly Jellyfish: Going to give you a Jiggly Jellyfish sting!");
-      System.out.println("Jiggly Jellyfish: You'll never stop me!\n"
-          + "\nYou have encountered a Jiggly Jellyfish monster in here!\n"
-          + "The Jellyfish stung you and you took some damage");
       if (currentInventory.contains("MEDICINE")) {
         System.out.println(
             "You can use your medicine to heal yourself.");
         wounded = true;
-        // need use item function here
       } else if (currentInventory.contains("CLOAK")) {
         System.out.println(
             "You can use cloak to sneak past the Jellyfish monster!");
@@ -373,13 +366,13 @@ public class Game {
             "You are sent back to Ocean Floor.\n"
                 + "You need to get medicine to heal yourself when encounter Jellyfish, or a cloak to sneak past the Jellyfish monster!\n");
         setCurrentLocation(startingLocation);
-        System.out.println("Your are now in " + currentLocation);
       }
     }
     if (monster.equals("Turtle")) {
       controller.displayTurtleAsciiArt();
       System.out.println("There's a friendly turtle in this room, maybe they can help us!");
-    }return wounded;
+    }
+    return wounded;
   }
 
   public static void roomDescription(Room location) {
