@@ -64,4 +64,36 @@ public class Controller {
   public void displayGuppyTalk() {
     System.out.println(view.getGuppyTalk());
   }
+
+  public void displayGoblinSharkAsciiArt() {
+    System.out.println(view.getGoblinSharkAsciiArt());
+  }
+
+  public void displayJellyfishAsciiArt() {
+    System.out.println(view.getJellyfishAsciiArt());
+  }
+
+  public void displayGuppyAsciiArt() {
+    System.out.println(view.getGuppyAsciiArt());
+  }
+
+  public void displayTurtleAsciiArt() {
+    System.out.println(view.getTurtleAsciiArt());
+  }
+
+  public void displayCloakAsciiArt() {
+    System.out.println(view.getCloakAsciiArt());
+  }
+
+  public void displayMedicineAsciiArt() {
+    System.out.println(view.getMedicineAsciiArt());
+  }
+
+  public void displayKeyAsciiArt() {
+    System.out.println(view.getKeyAsciiArt());
+  }
+
+  public void displaySquidAsciiArt() {
+    System.out.println(view.getSquidAsciiArt());
+  }
 }
