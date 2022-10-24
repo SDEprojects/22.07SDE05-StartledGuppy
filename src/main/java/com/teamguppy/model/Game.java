@@ -390,7 +390,7 @@ public class Game {
   public boolean playerWins() {
     boolean playerWon = false;
     if (currentLocation.getName().equals(startingLocation) && Inventory.getItemArray()
-        .contains("guppy")) {
+        .contains("GUPPY")) {
       playerWon = true;
     }
     return playerWon;
