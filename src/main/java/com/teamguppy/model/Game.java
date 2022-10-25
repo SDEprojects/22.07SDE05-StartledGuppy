@@ -10,21 +10,6 @@ import java.util.Set;
 
 public class Game {
 
-  // TODO Use constant.equals instead of equals(constant) to avoid null pointer exception
-  /*
-    This will avoid explicit null check to the variable being null
-    String name = getName();
-    if (name != null && name.equals("Some Room Name")) {
-    }
-
-    // Below 2 code are null safe
-    This could be written as
-    if ("Some Room Name".equals(name)) {
-    }
-
-    if (Objects.equals("Some Room Name", name)) {
-    }
-   */
   private static Room currentLocation;
   private Sound sound = new Sound();
 
@@ -187,12 +172,6 @@ public class Game {
       findLocationByDirection(noun.toLowerCase());
       itemsInRoom(currentLocation);
       wounded = checkMonster(currentLocation);
-      checkMonster(currentLocation);
-      if ("guppy".equals(currentItem)) {
-        controller.displayGuppyAsciiArt();
-        controller.displayGuppyTalk();
-        sound.playGuppy();
-      }
       if ("Medicine".equals(currentItem)) {
         controller.displayMedicineAsciiArt();
       }
@@ -244,6 +223,9 @@ public class Game {
           System.out.println("You found Guppy. Now, you can go back to ths Ocean Floor with Guppy.");
           currentInventory.add(currentItem.toUpperCase());
           currentInventory.remove("KEY");
+          controller.displayGuppyAsciiArt();
+          controller.displayGuppyTalk();
+          sound.playGuppy();
         } else {
           System.out.println("You can't use key here. You can use key to get Guppy.");
         }
@@ -295,7 +277,6 @@ public class Game {
         wounded = encounterMonster(goblinShark);
       } else if (monster.equals(jellyFish)) {
         wounded = encounterMonster(jellyFish);
-        encounterMonster(jellyFish);
       } else if (monster.equals(turtle)) {
         encounterMonster(turtle);
       }
@@ -332,6 +313,7 @@ public class Game {
     if (monster.equals("Goblin Shark")) {
       Learn.encounterGoblinSharkPrint();
       sound.playGoblinShark();
+      controller.displayGoblinSharkAsciiArt();
       if (currentInventory.contains("MEDICINE")) {
         System.out.println("You can use your medicine to heal yourself.");
         wounded = true;
