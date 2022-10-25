@@ -107,19 +107,10 @@ public class Game {
         } else {
           startGame();
         }
-//      } while (!validStartInput(command));
       } while (true);
     }
   }
-
-//  private static Boolean validStartInput(String input) {
-//    if (!input.toLowerCase().equals("yes") || !input.toLowerCase().equals("quit")
-//        || !input.toLowerCase().equals("no")) {
-//      System.out.println("Sorry, I don't understand. Please, type valid input.");
-//      return false;
-//    }
-//    return true;
-//  }
+  
 
   private void startGame() {
     do {
@@ -153,6 +144,9 @@ public class Game {
       noun = "";
       roomDescription(currentLocation);
       Inventory.displayItemsInInventory(currentInventory);
+      if (wounded) {
+        System.out.println("Please, use item to get out of the monster attack");
+      }
       System.out.println("\nWhat would you like to do next? ");
       String input = userInput();
       String[] arr = input.toLowerCase().split(" ");
@@ -161,9 +155,9 @@ public class Game {
       if (arr.length == 2) {
         noun = arr[1];
       }
-      if (wounded) {
-        System.out.println("Please, use item to get out of the monster attack");
-      }
+//      if (wounded) {
+//        System.out.println("Please, use item to get out of the monster attack");
+//      }
     } while (!(validMove && validItem(noun)));
     if (verb.equals("help")) {
       userHelp();
@@ -175,23 +169,7 @@ public class Game {
       findLocationByDirection(noun.toLowerCase());
       itemsInRoom(currentLocation);
       wounded = checkMonster(currentLocation);
-      if ("Medicine".equals(currentItem)) {
-        controller.displayMedicineAsciiArt();
-      }
-      if ("Key".equals(currentItem)) {
-        controller.displayKeyAsciiArt();
-      }
-      if ("Squid".equals(currentItem)) {
-        controller.displaySquidAsciiArt();
-      }
-      if ("Cloak".equals(currentItem)) {
-        controller.displayCloakAsciiArt();
-      }
-      if (playerWins()) {
-        controller.displayPlayerWins();
-        endGame();
-      }
-
+      displayAsciiArt();
     } else if (verb.equals("get") && currentItem != null && noun.toLowerCase()
         .equals(currentItem.toLowerCase())) {
       sound.playGetItem();
@@ -214,11 +192,6 @@ public class Game {
   }
 
   private void displayAsciiArt() {
-    if ("guppy".equals(currentItem)) {
-      controller.displayGuppyAsciiArt();
-      controller.displayGuppyTalk();
-      sound.playGuppy();
-    }
     if ("Medicine".equals(currentItem)) {
       controller.displayMedicineAsciiArt();
     }
@@ -233,19 +206,20 @@ public class Game {
     }
     if (playerWins()) {
       controller.displayPlayerWins();
-      endGame();
+      System.exit(0);
     }
   }
 
 
   private void checkIfUserUsesCorrectItem(Room location, String noun) {
-    if (!currentInventory.isEmpty()) {
+    if (currentInventory.isEmpty()) {
+      System.out.println("Your inventory doesn't have " + noun);
+    }
+    else {
       if (noun.equals("squid") || noun.equals("medicine") || noun.equals("cloak")) {
         removeMonster(location, noun.toUpperCase());
         currentInventory = Inventory.removeItemFromInventory(currentInventory, noun.toUpperCase());
         wounded = false;
-        System.out.println(noun);
-        System.out.println(currentInventory);
       } else if (noun.equals("key")) {
         if (location.getName().equals("Engine Room")) {
           System.out.println(
@@ -267,8 +241,6 @@ public class Game {
       } else {
         System.out.println("You try to talk to the turtle, but the turtle is not in this room.");
       }
-    } else {
-      System.out.println("Your inventory doesn't have " + noun);
     }
   }
 
