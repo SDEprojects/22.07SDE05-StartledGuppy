@@ -10,19 +10,6 @@ import java.util.Set;
 
 public class Game {
 
-  // TODO Use constant.equals instead of equals(constant) to avoid null pointer exception
-  /*
-    This will avoid explicit null check to the variable being null
-    String name = getName();
-    if (name != null && name.equals("Some Room Name")) {
-    }
-    // Below 2 code are null safe
-    This could be written as
-    if ("Some Room Name".equals(name)) {
-    }
-    if (Objects.equals("Some Room Name", name)) {
-    }
-   */
   private static Room currentLocation;
   private Sound sound = new Sound();
 
@@ -120,19 +107,10 @@ public class Game {
         } else {
           startGame();
         }
-//      } while (!validStartInput(command));
       } while (true);
     }
   }
-
-//  private static Boolean validStartInput(String input) {
-//    if (!input.toLowerCase().equals("yes") || !input.toLowerCase().equals("quit")
-//        || !input.toLowerCase().equals("no")) {
-//      System.out.println("Sorry, I don't understand. Please, type valid input.");
-//      return false;
-//    }
-//    return true;
-//  }
+  
 
   private void startGame() {
     do {
@@ -166,6 +144,9 @@ public class Game {
       noun = "";
       roomDescription(currentLocation);
       Inventory.displayItemsInInventory(currentInventory);
+      if (wounded) {
+        System.out.println("Please, use item to get out of the monster attack");
+      }
       System.out.println("\nWhat would you like to do next? ");
       String input = userInput();
       String[] arr = input.toLowerCase().split(" ");
@@ -174,6 +155,9 @@ public class Game {
       if (arr.length == 2) {
         noun = arr[1];
       }
+//      if (wounded) {
+//        System.out.println("Please, use item to get out of the monster attack");
+//      }
     } while (!(validMove && validItem(noun)));
     if (verb.equals("help")) {
       userHelp();
@@ -184,8 +168,7 @@ public class Game {
     } else if (!wounded && verb.equals("go") || verb.equals("swim") || verb.equals("move")) {
       findLocationByDirection(noun.toLowerCase());
       itemsInRoom(currentLocation);
-//      wounded = checkMonster(currentLocation);
-      checkMonster(currentLocation);
+      wounded = checkMonster(currentLocation);
       displayAsciiArt();
     } else if (verb.equals("get") && currentItem != null && noun.toLowerCase()
         .equals(currentItem.toLowerCase())) {
@@ -209,11 +192,6 @@ public class Game {
   }
 
   private void displayAsciiArt() {
-    if ("guppy".equals(currentItem)) {
-      controller.displayGuppyAsciiArt();
-      controller.displayGuppyTalk();
-      sound.playGuppy();
-    }
     if ("Medicine".equals(currentItem)) {
       controller.displayMedicineAsciiArt();
     }
@@ -228,25 +206,29 @@ public class Game {
     }
     if (playerWins()) {
       controller.displayPlayerWins();
-      endGame();
+      System.exit(0);
     }
   }
 
 
   private void checkIfUserUsesCorrectItem(Room location, String noun) {
-    if (!currentInventory.isEmpty()) {
+    if (currentInventory.isEmpty()) {
+      System.out.println("Your inventory doesn't have " + noun);
+    }
+    else {
       if (noun.equals("squid") || noun.equals("medicine") || noun.equals("cloak")) {
         removeMonster(location, noun.toUpperCase());
         currentInventory = Inventory.removeItemFromInventory(currentInventory, noun.toUpperCase());
         wounded = false;
-        System.out.println(noun);
-        System.out.println(currentInventory);
       } else if (noun.equals("key")) {
         if (location.getName().equals("Engine Room")) {
           System.out.println(
               "You found Guppy. Now, you can go back to ths Ocean Floor with Guppy.");
           currentInventory.add(currentItem.toUpperCase());
           currentInventory.remove("KEY");
+          controller.displayGuppyAsciiArt();
+          controller.displayGuppyTalk();
+          sound.playGuppy();
         } else {
           System.out.println("You can't use key here. You can use key to get Guppy.");
         }
@@ -259,8 +241,6 @@ public class Game {
       } else {
         System.out.println("You try to talk to the turtle, but the turtle is not in this room.");
       }
-    } else {
-      System.out.println("Your inventory doesn't have " + noun);
     }
   }
 
@@ -334,6 +314,7 @@ public class Game {
     if (monster.equals("Goblin Shark")) {
       Learn.encounterGoblinSharkPrint();
       sound.playGoblinShark();
+      controller.displayGoblinSharkAsciiArt();
       if (currentInventory.contains("MEDICINE")) {
         System.out.println("You can use your medicine to heal yourself.");
         wounded = true;
