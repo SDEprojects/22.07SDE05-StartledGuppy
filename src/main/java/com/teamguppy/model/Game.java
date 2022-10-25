@@ -160,6 +160,9 @@ public class Game {
       if (arr.length == 2) {
         noun = arr[1];
       }
+      if (wounded) {
+        System.out.println("Please, use item to get out of the monster attack");
+      }
     } while (!(validMove && validItem(noun)));
     if (verb.equals("help")) {
       userHelp();
@@ -286,7 +289,6 @@ public class Game {
 
   private void removeMonster(Room location, String item) {
     String monster = location.getAnimal();
-//    if (monster != null) {
     if ("Goblin Shark".equals(monster)) {
       if ((item.equals("MEDICINE") && currentInventory.contains("MEDICINE")) || ((
           item.equals("SQUID") && currentInventory.contains("SQUID")))) {
@@ -334,14 +336,8 @@ public class Game {
       Learn.encounterJellyfishPrint();
       sound.playJellyfish();
       controller.displayJellyfishAsciiArt();
-      System.out.println(
-          "There’s a jiggly Jellyfish monster in this room!! Oh, what ever should I do?!\n");
       sound.playJellyfish();
-      System.out.println("Jiggly Jellyfish: I'm the Jiggly Jellyfish monster!");
-      System.out.println("Jiggly Jellyfish: Going to give you a Jiggly Jellyfish sting!");
-      System.out.println("Jiggly Jellyfish: You'll never stop me!\n"
-          + "\nYou have encountered a Jiggly Jellyfish monster in here!\n"
-          + "The Jellyfish stung you and you took some damage");
+
       if (currentInventory.contains("MEDICINE")) {
         System.out.println(
             "You can use your medicine to heal yourself.");
