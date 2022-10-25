@@ -7,7 +7,7 @@ public class Learn {
   public static HashMap<String, String> learnAboutOcean = new HashMap<>() {{
     put("Ocean Floor",
         "1. The ocean floor is the bottom of the ocean.\n"
-            + "2. The ocean floor covers more than 70 percent of the planet’s surface.It has many levels.");
+            + "2. The ocean floor covers more than 70 percent of the planet’s surface.");
     put("Mariana Trench",
         "1. The Mariana Trench is the deepest oceanic trench on Earth.\n"
             + "2. It is located in the western Pacific Ocean about 200 kilometres (124 mi) east of the Mariana Islands");
@@ -25,7 +25,7 @@ public class Learn {
             + "2. Reefs are formed of colonies of coral polyps held together by calcium carbonate.");
     put("Seaweed Forest",
         "1. Seaweeds have what are called holdfasts instead of roots.\n"
-        + "2. These holdfasts merely hold the plant in place rather than absorbing any nutrients like roots.");
+            + "2. These holdfasts merely hold the plant in place rather than absorbing any nutrients like roots.");
   }};
 
   public static HashMap<String, String> learnAboutOceanAnimal = new HashMap<>() {{
@@ -45,18 +45,21 @@ public class Learn {
             + "4. The Goblin Shark Shrinks When It Gets Older.\n"
             + "5. Goblin Sharks Will Eat Just About Anything.");
   }};
-  private static final String ENCOUNTER_GOBLIN_SHARK = "There’s a big scary Goblin Shark monster in here!\n"
-      + "Goblin Shark: I'm a crazy goblin shark, rawr!"
-      + "Goblin Shark: I'm going to eat you, rawr, rawr!\n"
-      + "You have encountered a giant Goblin Shark monster in here!"
-      + "You’ve taken some damage from the Goblin Shark.";
 
-  private static final String ENCOUNTER_JELLYFISH = "There’s a jiggly Jellyfish monster in this room!! Oh, what ever should I do?!\n"
-      + "Jiggly Jellyfish: I'm the Jiggly Jellyfish monster!"
-      + "Jiggly Jellyfish: Going to give you a Jiggly Jellyfish sting!"
-      + "Jiggly Jellyfish: You'll never stop me!\n"
-      + "You have encountered a giant Goblin Shark monster in here!"
-      + "The Jellyfish stung you and you took some damage.";
+  private static final String ENCOUNTER_GOBLIN_SHARK =
+      "There’s a big scary Goblin Shark monster in here!\n"
+          + "\nGoblin Shark: I'm a crazy goblin shark, rawr!\n"
+          + "Goblin Shark: I'm going to eat you, rawr, rawr!\n"
+          + "\nYou have encountered a giant Goblin Shark monster in here!\n"
+          + "You’ve taken some damage from the Goblin Shark.\n";
+
+  private static final String ENCOUNTER_JELLYFISH =
+      "\nThere’s a jiggly Jellyfish monster in this room!! Oh, what ever should I do?!\n"
+          + "\nJiggly Jellyfish: I'm the Jiggly Jellyfish monster!\n"
+          + "Jiggly Jellyfish: Going to give you a Jiggly Jellyfish sting!\n"
+          + "Jiggly Jellyfish: You'll never stop me!\n"
+          + "\nYou have encountered a giant Goblin Shark monster in here!\n"
+          + "The Jellyfish stung you and you took some damage.\n";
 
   public static void learnAboutOceanForest(String noun) {
     if (learnAboutOcean.containsKey(noun)) {
@@ -88,4 +91,3 @@ public class Learn {
   }
 
 }
-
